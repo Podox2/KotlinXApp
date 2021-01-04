@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
     private val connectivityReceiver = ConnectivityReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //setTheme(R.style.Theme_ZorroVPN)
+        setTheme(R.style.Theme_KotlinX)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
+        /*remove default colors for icons (even if tint set in layout)
+          colors from selector (ic_tab_selector) will be used*/
         bottomNavigationView.itemIconTintList = null
 
         val navGraphIds = listOf(

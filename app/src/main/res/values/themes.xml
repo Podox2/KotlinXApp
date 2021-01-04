@@ -17,4 +17,12 @@
     <style name="SplashTheme" parent="Theme.KotlinX">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
+
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/bottom_nav_view_text_size</item>
+    </style>
+
+    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/bottom_nav_view_text_size_active</item>
+    </style>
 </resources>
