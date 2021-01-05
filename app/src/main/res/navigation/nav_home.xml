@@ -13,11 +13,19 @@
         <action
             android:id="@+id/action_homeFragment_to_CLFinalsFragment"
             app:destination="@id/CLFinalsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_CLCountdownFragment"
+            app:destination="@id/CLCountdownFragment" />
     </fragment>
     <fragment
         android:id="@+id/CLFinalsFragment"
         android:name="com.podorozhniak.kotlinx.practice.view.clrecview.CLFinalsFragment"
         android:label="CLFinalsFragment"
-        tools:layout="@layout/cl_final_list_item" >
+        tools:layout="@layout/fragment_cl_finals" >
     </fragment>
+    <fragment
+        android:id="@+id/CLCountdownFragment"
+        android:name="com.podorozhniak.kotlinx.practice.view.clcountdown.CLCountdownFragment"
+        android:label="CLCountdownFragment"
+        tools:layout="@layout/fragment_cl_countdown"/>
 </navigation>

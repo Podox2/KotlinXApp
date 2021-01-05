@@ -97,4 +97,7 @@ dependencies {
 
     //preferences
     implementation "androidx.preference:preference-ktx:1.1.1"
+
+    //lottie
+    implementation "com.airbnb.android:lottie:3.4.2"
 }

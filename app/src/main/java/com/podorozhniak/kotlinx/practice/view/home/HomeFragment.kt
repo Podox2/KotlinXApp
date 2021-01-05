@@ -17,8 +17,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnCl.setOnClickListener {
+        binding.btnClFinals.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCLFinalsFragment())
+        }
+        binding.btnClCountdown.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCLCountdownFragment())
         }
     }
 }

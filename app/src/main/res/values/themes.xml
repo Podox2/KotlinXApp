@@ -26,4 +26,9 @@
     <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">@dimen/bottom_nav_view_text_size_active</item>
     </style>
+
+    <style name="TextSwitcherStyle" parent="Theme.KotlinX">
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

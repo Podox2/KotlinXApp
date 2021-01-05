@@ -11,13 +11,12 @@ object DateUtil {
     fun getDifference(context: Context): String {
         val currentDate = Calendar.getInstance().time
         //val stringDate: String = dateFormat.format(currentDate)
-        val matchDateString = "15.08.2020 22:00"
+        val matchDateString = "15.05.2021 22:00"
         val matchDate = SimpleDateFormat("dd.MM.yyyy HH:mm").parse(matchDateString)
         return getBeautyTimeFormat(context, currentDate, matchDate!!)
     }
 
     private fun getBeautyTimeFormat(context: Context, currentDate: Date, mathDate: Date): String {
-
         var diffInMilliseconds = mathDate.time - currentDate.time
 
         if(diffInMilliseconds < 0) {
