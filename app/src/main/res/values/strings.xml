@@ -15,4 +15,10 @@
     <string name="stop_simple_work">Stop simple work</string>
     <string name="start_periodic_work">Start periodic work</string>
     <string name="stop_periodic_work">Stop periodic work</string>
+
+    <!--    cl finals-->
+    <string name="search">Search</string>
+    <string name="show_cl_finals_list">Show CL finals list</string>
+    <string name="to_be_continued">To be continued…</string>
+    <string name="thats_all_falks">That\'s all falks!</string>
 </resources>
