@@ -1,15 +1,21 @@
-package com.podorozhniak.kotlinx.practice
+package com.podorozhniak.kotlinx.practice.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
+import com.podorozhniak.kotlinx.practice.di.appContext
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
+    companion object {
+        const val TAG_TEST = "TAG_TEST"
+    }
     abstract val layoutId: Int
     lateinit var binding: B
 
@@ -31,5 +37,10 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
             findNavController().navigateUp()
         }
     }
+
+    protected fun toast(text: String) =
+        Toast.makeText(appContext, text, Toast.LENGTH_SHORT).show()
+
+    protected fun log(text: String) = Log.d(TAG_TEST, text)
 
 }

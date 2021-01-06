@@ -24,4 +24,40 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_cl_finals"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_change_status_bar_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/change_status_bar_color"
+        app:backgroundTint="@color/blue"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cl_countdown"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_get_display_sizes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_display_sizes"
+        app:backgroundTint="@color/blue"
+        app:layout_constraintTop_toBottomOf="@+id/btn_change_status_bar_color"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_memory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/check_memory"
+        app:backgroundTint="@color/blue"
+        app:layout_constraintTop_toBottomOf="@+id/btn_get_display_sizes"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test"
+        app:backgroundTint="@color/blue"
+        app:layout_constraintTop_toBottomOf="@+id/btn_memory"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

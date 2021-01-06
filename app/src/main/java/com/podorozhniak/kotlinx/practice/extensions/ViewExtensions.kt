@@ -2,9 +2,11 @@ package com.podorozhniak.kotlinx.practice.extensions
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieAnimationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.awaitClose
@@ -32,6 +34,10 @@ fun View.setPaddingTop(paddingTop: Int) {
     this.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
 }
 
+fun View.setPaddingBottom(paddingBottom: Int) {
+    this.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+}
+
 fun View.setMarginTop(margin: Int) {
     val marginLayoutParams = layoutParams as ViewGroup.MarginLayoutParams
     marginLayoutParams.topMargin = margin
@@ -46,11 +52,7 @@ fun View.setMarginBottom(margin: Int) {
     invalidate()
 }
 
-fun View.setPaddingBottom(paddingBottom: Int) {
-    this.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
-}
-
-fun View.setAnimationColor(colorFromId: Int, colorToId: Int) {
+fun View.setAnimationBackgroundColor(colorFromId: Int, colorToId: Int) {
     val colorFrom = ContextCompat.getColor(context, colorFromId)
     val colorTo = ContextCompat.getColor(context, colorToId)
     val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)

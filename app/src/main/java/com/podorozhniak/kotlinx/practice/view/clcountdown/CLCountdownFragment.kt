@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentClCountdownBinding
-import com.podorozhniak.kotlinx.practice.BaseFragment
-import com.podorozhniak.kotlinx.practice.extensions.appContext
-import com.podorozhniak.kotlinx.practice.util.DateUtil
+import com.podorozhniak.kotlinx.practice.base.BaseFragment
+import com.podorozhniak.kotlinx.practice.di.appContext
+import com.podorozhniak.kotlinx.practice.util.getDifference
 
 class CLCountdownFragment : BaseFragment<FragmentClCountdownBinding>(){
     override val layoutId: Int
@@ -28,7 +28,7 @@ class CLCountdownFragment : BaseFragment<FragmentClCountdownBinding>(){
         val delay = 1000L
         handler.postDelayed(object : Runnable {
             override fun run() {
-                binding.tvRemainingTime.setText(DateUtil.getDifference(appContext))
+                binding.tvRemainingTime.setText(getDifference(appContext))
                 handler.postDelayed(this, delay)
             }
         }, delay)

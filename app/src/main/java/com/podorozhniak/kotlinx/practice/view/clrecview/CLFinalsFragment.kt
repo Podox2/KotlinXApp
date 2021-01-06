@@ -9,7 +9,7 @@ import androidx.appcompat.widget.SearchView
 import com.google.android.material.snackbar.Snackbar
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentClFinalsBinding
-import com.podorozhniak.kotlinx.practice.BaseFragment
+import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import java.util.*
 
 class CLFinalsFragment : BaseFragment<FragmentClFinalsBinding>(){

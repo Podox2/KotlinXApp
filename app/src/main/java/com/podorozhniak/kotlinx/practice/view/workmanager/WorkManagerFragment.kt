@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentWorkManagerBinding
-import com.podorozhniak.kotlinx.practice.BaseFragment
+import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import com.podorozhniak.kotlinx.practice.connection.worker.MyWorkManager
 
 class WorkManagerFragment : BaseFragment<FragmentWorkManagerBinding>() {

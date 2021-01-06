@@ -26,4 +26,10 @@
     <string name="show_cl_countdown">Show CL countdown</string>
     <string name="label_text">Champions League will resume \n on Friday 7 August at 22:00</string>
     <string name="cl_started">YOU ARE FREE!!!</string>
+
+    <!--    home-->
+    <string name="change_status_bar_color">Change status bar color</string>
+    <string name="test">Test</string>
+    <string name="get_display_sizes">Get display sizes</string>
+    <string name="check_memory">Check memory</string>
 </resources>

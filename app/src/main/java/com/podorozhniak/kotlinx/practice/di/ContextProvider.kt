@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.extensions
+package com.podorozhniak.kotlinx.practice.di
 
 import android.content.Context
 import org.koin.java.KoinJavaComponent

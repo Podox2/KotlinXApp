@@ -2,7 +2,7 @@ package com.podorozhniak.kotlinx.practice.connection.worker
 
 import android.util.Log
 import androidx.work.*
-import com.podorozhniak.kotlinx.practice.extensions.appContext
+import com.podorozhniak.kotlinx.practice.di.appContext
 import java.util.concurrent.TimeUnit
 
 class MyWorkManager {
