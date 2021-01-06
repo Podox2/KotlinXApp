@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.view.custom
+package com.podorozhniak.kotlinx.practice.util.customview
 
 import android.animation.Animator
 import android.animation.ValueAnimator

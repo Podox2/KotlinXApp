@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.util
+package com.podorozhniak.kotlinx.practice.util.viewhelper
 
 import android.content.Intent
 import android.net.Uri

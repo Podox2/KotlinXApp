@@ -6,7 +6,7 @@ import androidx.activity.OnBackPressedCallback
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentWebviewBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
-import com.podorozhniak.kotlinx.practice.util.ProgressWebViewClient
+import com.podorozhniak.kotlinx.practice.util.viewhelper.ProgressWebViewClient
 
 class WebViewFragment : BaseFragment<FragmentWebviewBinding>() {
 

@@ -32,4 +32,18 @@
     <string name="test">Test</string>
     <string name="get_display_sizes">Get display sizes</string>
     <string name="check_memory">Check memory</string>
+    <string name="change_nav_bar_color">Change nav bar color</string>
+    <string name="show_flash_animation">Show flash animation</string>
+    <string name="hide_system_ui">Hide system UI</string>
+    <string name="name">Name</string>
+    <string name="bad_user_name">Should contain 3&#8211;32 characters. Letters and \' - allowed</string>
+    <string name="bad_phone">Bad phone</string>
+    <string name="bad_email">Bad email</string>
+    <string name="required">Required</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="ui_changes">UI changes</string>
+    <string name="log_info">Log info</string>
+    <string name="inputs">Inputs</string>
+    <string name="handler">Handler</string>
+    <string name="password">Password</string>
 </resources>

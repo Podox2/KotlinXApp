@@ -1,11 +1,11 @@
-package com.podorozhniak.kotlinx.practice.view.custom
+package com.podorozhniak.kotlinx.practice.util.customview
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.google.android.material.textfield.TextInputEditText
 
-class ClearEditText : TextInputEditText {
+class ClearTextEditText : TextInputEditText {
 
     private var clickListener: DrawableClickListener? = null
 

@@ -1,11 +1,11 @@
 package com.podorozhniak.kotlinx.practice.extensions
 
 import com.google.android.material.textfield.TextInputLayout
-import com.podorozhniak.kotlinx.practice.view.custom.ClearEditText
+import com.podorozhniak.kotlinx.practice.util.customview.ClearTextEditText
 
 
-fun ClearEditText.clearText(layout: TextInputLayout) {
-    setClearClickListener(object : ClearEditText.DrawableClickListener {
+fun ClearTextEditText.clearText(layout: TextInputLayout) {
+    setClearClickListener(object : ClearTextEditText.DrawableClickListener {
         override fun onClick() {
             if (layout.error?.isNotBlank() == true) {
                 layout.error = ""

@@ -19,6 +19,10 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
+    <style name="NoSplashTheme" parent="Theme.KotlinX">
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">@dimen/bottom_nav_view_text_size</item>
     </style>
@@ -30,5 +34,25 @@
     <style name="TextSwitcherStyle" parent="Theme.KotlinX">
         <item name="android:textSize">24sp</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="errorEnabled">true</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="android:textColorHint">@color/blue</item>
+    </style>
+
+    <style name="EditTextAuth">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="TextInputLayoutPasswordStyle" parent="TextInputLayoutStyle">
+        <item name="passwordToggleEnabled">true</item>
     </style>
 </resources>

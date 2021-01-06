@@ -3,6 +3,10 @@ package com.podorozhniak.kotlinx.practice.extensions
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.res.Resources
+import android.graphics.Rect
+import android.os.SystemClock
+import android.util.TypedValue
+import android.view.TouchDelegate
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -98,6 +102,36 @@ inline fun View.addOnPressedSelector(
     return this
 }
 
+fun <T : View> T?.onSafeClick(
+    delay: Long = 500,
+    onClick: (view: T) -> Unit = {}
+) {
+    this?.setOnClickListener(SafeClickListener(delay, onClick))
+}
+
+class SafeClickListener<T : View>(
+    delayTime: Long,
+    private val onSafeCLick: (T) -> Unit
+) : View.OnClickListener {
+    private val durationMillis: Long = delayTime
+    private var lastTimeClicked: Long = 0
+    override fun onClick(v: View) {
+        when {
+            durationMillis <= 0 -> {
+                onSafeCLick(v as T)
+                return
+            }
+            SystemClock.elapsedRealtime() - lastTimeClicked < durationMillis -> {
+                return
+            }
+            else -> {
+                lastTimeClicked = SystemClock.elapsedRealtime()
+                onSafeCLick(v as T)
+            }
+        }
+    }
+}
+
 /**
  * Safe onClick listener
  */
@@ -117,6 +151,25 @@ fun <T : View> T?.onClick(
         }.debounce(delayMs).onEach {
             action(view)
         }.launchIn(scope)
+    }
+}
+
+//doesn't work?
+fun View.increaseTouchArea(dp: Float) {
+    val increasedArea = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dp,
+        Resources.getSystem().displayMetrics
+    ).toInt()
+    val parent = parent as View
+    parent.post {
+        val rect = Rect()
+        getHitRect(rect)
+        rect.top -= increasedArea
+        rect.left -= increasedArea
+        rect.bottom += increasedArea
+        rect.right += increasedArea
+        parent.touchDelegate = TouchDelegate(rect, this)
     }
 }
 

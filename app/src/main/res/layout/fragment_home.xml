@@ -1,63 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".practice.view.home.HomeFragment">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_cl_finals"
-        android:layout_width="wrap_content"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/show_cl_finals_list"
-        app:backgroundTint="@color/blue"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_cl_countdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_cl_countdown"
-        app:backgroundTint="@color/blue"
-        app:layout_constraintTop_toBottomOf="@+id/btn_cl_finals"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_change_status_bar_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/change_status_bar_color"
-        app:backgroundTint="@color/blue"
-        app:layout_constraintTop_toBottomOf="@+id/btn_cl_countdown"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cl_finals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_cl_finals_list"
+                app:backgroundTint="@color/blue" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_get_display_sizes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/get_display_sizes"
-        app:backgroundTint="@color/blue"
-        app:layout_constraintTop_toBottomOf="@+id/btn_change_status_bar_color"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cl_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_cl_countdown"
+                app:backgroundTint="@color/blue"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_memory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/check_memory"
-        app:backgroundTint="@color/blue"
-        app:layout_constraintTop_toBottomOf="@+id/btn_get_display_sizes"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_changes"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test"
-        app:backgroundTint="@color/blue"
-        app:layout_constraintTop_toBottomOf="@+id/btn_memory"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_change_status_bar_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_status_bar_color"
+                app:backgroundTint="@color/blue"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_change_nav_bar_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_nav_bar_color"
+                app:backgroundTint="@color/blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_memory" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_hide_system_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hide_system_ui"
+                app:backgroundTint="@color/blue" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_show_flash_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_flash_animation"
+                app:backgroundTint="@color/blue"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/log_info"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_get_display_sizes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/get_display_sizes"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_memory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/check_memory"
+                app:backgroundTint="@color/blue" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_handler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/handler"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_test"
+                android:layout_width="150dp"
+                android:layout_height="75dp"
+                android:text="@string/test"
+                app:backgroundTint="@color/blue"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inputs"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_first_name"
+                style="@style/TextInputLayoutStyle"
+                android:textColor="@color/white">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_first_name"
+                    style="@style/EditTextAuth"
+                    android:hint="@string/name"
+                    android:imeOptions="actionNext"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_phone_number"
+                style="@style/TextInputLayoutStyle">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_phone_number"
+                    style="@style/EditTextAuth"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:imeOptions="actionDone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_password"
+                style="@style/TextInputLayoutPasswordStyle">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    style="@style/EditTextAuth"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:imeOptions="actionDone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

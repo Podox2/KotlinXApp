@@ -105,3 +105,18 @@ fun Activity.getDisplaySizeInPx(): Point {
     return size
 }
 
+fun Activity.getDrawableIdByName(drawableName: String) =
+    this.applicationContext.resources.getIdentifier(
+        drawableName,
+        "drawable",
+        this.applicationContext.packageName
+    )
+
+fun Activity.getRawIdByName(rawName: String) =
+    this.applicationContext.resources.getIdentifier(
+        rawName,
+        "raw",
+        this.applicationContext.packageName
+    )
+
+

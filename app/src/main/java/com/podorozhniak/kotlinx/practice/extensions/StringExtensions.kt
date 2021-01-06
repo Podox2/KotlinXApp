@@ -116,3 +116,6 @@ fun String.isOnlyDigits(): Boolean{
 fun String.isLetter() = "^[a-zA-Z]$".toRegex().matches(this)
 
 
+fun String.isNameValid() = "[A-Za-z'-]+".toRegex().matches(this)
+
+

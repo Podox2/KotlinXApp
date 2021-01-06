@@ -8,6 +8,9 @@ import org.koin.java.KoinJavaComponent.get
 import kotlin.math.roundToInt
 
 object Screen {
+    /*updates in {@link MainActivity}*/
+    var screenCutout = 0
+
     fun convertDpToPx(dp: Float) : Float = dp * Resources.getSystem().displayMetrics.density
 
     fun convertPxToDp(px: Float) : Float = px / Resources.getSystem().displayMetrics.density

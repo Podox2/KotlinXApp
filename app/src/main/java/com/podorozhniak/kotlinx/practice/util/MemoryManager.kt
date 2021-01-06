@@ -44,6 +44,16 @@ object MemoryManager {
         return resultBuffer.toString()
     }
 
+    //RAM?
+    fun logMemory() {
+        Log.i(
+            "TAG_TEST", String.format(
+                "Total memory = %s kb",
+                (Runtime.getRuntime().totalMemory() / 1024).toInt()
+            )
+        )
+    }
+
     //should check RAM
     fun checkMemory(activityManager: ActivityManager){
         val mi = ActivityManager.MemoryInfo()
