@@ -34,6 +34,8 @@
     <string name="check_memory">Check memory</string>
     <string name="change_nav_bar_color">Change nav bar color</string>
     <string name="show_flash_animation">Show flash animation</string>
+    <string name="show_shake_animation">Show shake animation</string>
+    <string name="fragment_transition_animation">Fragment transitions animations</string>
     <string name="hide_system_ui">Hide system UI</string>
     <string name="name">Name</string>
     <string name="bad_user_name">Should contain 3&#8211;32 characters. Letters and \' - allowed</string>
@@ -46,4 +48,16 @@
     <string name="inputs">Inputs</string>
     <string name="handler">Handler</string>
     <string name="password">Password</string>
+
+
+    <!--    fragment transitions animations-->
+    <string name="slide_up_down">Slide up/down</string>
+    <string name="slide_up_down_offset">Slide up/down with delay before anim</string>
+    <string name="ios_like">iOS-like (Donut)</string>
+    <string name="fades">Fade in/out</string>
+    <string name="cards">Cards</string>
+    <string name="slides">Slides</string>
+    <string name="diagonal">Diagonal</string>
+    <string name="rotate">Rotate</string>
+    <string name="pulse">Pulse</string>
 </resources>

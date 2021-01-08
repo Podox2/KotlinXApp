@@ -1,5 +1,6 @@
 package com.podorozhniak.kotlinx.practice.view.home
 
+import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Bundle
@@ -7,24 +8,37 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialFade
+import com.google.android.material.transition.MaterialFadeThrough
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentHomeBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import com.podorozhniak.kotlinx.practice.di.appContext
 import com.podorozhniak.kotlinx.practice.extensions.*
+import com.podorozhniak.kotlinx.practice.util.MemoryManager
+import com.podorozhniak.kotlinx.practice.util.Screen
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextFormatter
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextFormatter.Companion.PHONE_PATTERN
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextWatcher
-import com.podorozhniak.kotlinx.practice.util.MemoryManager
-import com.podorozhniak.kotlinx.practice.util.Screen
 import com.podorozhniak.kotlinx.practice.view.MainActivity
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+    companion object {
+        private const val SHAKE_ANIMATION_DURATION = 500L
+    }
 
     override val layoutId: Int
         get() = R.layout.fragment_home
 
     override fun onCreateViewBinding(view: View) = FragmentHomeBinding.bind(view)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFade().apply {
+            duration = 150L
+        }
+        exitTransition = MaterialFadeThrough()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,6 +51,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 /*val navOptions =
                     NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()*/
                 findNavController().navigate(R.id.action_homeFragment_to_CLCountdownFragment)
+            }
+            btnFragmentsTransitionAnimation.onClick {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransitionsAnimationsFragment())
             }
 
             //UI changes
@@ -54,6 +71,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
             btnShowFlashAnimation.onClick {
                 showFlashAnimation()
+            }
+            btnShowShakeAnimation.onClick {
+                showShakeAnimation()
             }
 
             //info
@@ -132,6 +152,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         log("available memory - ${MemoryManager.getAvailableInternalMemorySize()}")
         log("${MemoryManager.logMemory()}")
         MemoryManager.checkMemory((appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager))
+    }
+
+    private fun showShakeAnimation() {
+        ObjectAnimator
+            .ofFloat(
+                binding.btnShowShakeAnimation,
+                "translationX",
+                0f,
+                25f,
+                -25f,
+                25f,
+                -25f,
+                15f,
+                -15f,
+                6f,
+                -6f,
+                0f
+            )
+            .setDuration(SHAKE_ANIMATION_DURATION)
+            .start()
     }
 }
 

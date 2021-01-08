@@ -35,6 +35,13 @@
                 android:text="@string/show_cl_countdown"
                 app:backgroundTint="@color/blue"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_fragments_transition_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_transition_animation"
+                app:backgroundTint="@color/blue"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,6 +75,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/show_flash_animation"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_show_shake_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_shake_animation"
                 app:backgroundTint="@color/blue"/>
 
             <TextView

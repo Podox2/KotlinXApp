@@ -3,7 +3,7 @@
      android:interpolator="@android:anim/linear_interpolator" >
 
     <rotate
-            android:duration="1000"
+            android:duration="@integer/slow_animation_duration"
             android:fromDegrees="0"
             android:pivotX="50%"
             android:pivotY="50%"

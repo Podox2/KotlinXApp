@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_CLCountdownFragment"
             app:destination="@id/CLCountdownFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_transitionsAnimationsFragment"
+            app:destination="@id/transitionsAnimationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/CLFinalsFragment"
@@ -28,4 +31,17 @@
         android:name="com.podorozhniak.kotlinx.practice.view.clcountdown.CLCountdownFragment"
         android:label="CLCountdownFragment"
         tools:layout="@layout/fragment_cl_countdown"/>
+    <fragment
+        android:id="@+id/transitionsAnimationsFragment"
+        android:name="com.podorozhniak.kotlinx.practice.view.home.TransitionsAnimationsFragment"
+        android:label="fragment_transitions_animations"
+        tools:layout="@layout/fragment_transitions_animations" >
+        <action
+            android:id="@+id/action_transitionsAnimationsFragment_to_toOpenFragment"
+            app:destination="@id/toOpenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/toOpenFragment"
+        android:name="com.podorozhniak.kotlinx.practice.view.home.ToOpenFragment"
+        android:label="ToOpenFragment" />
 </navigation>

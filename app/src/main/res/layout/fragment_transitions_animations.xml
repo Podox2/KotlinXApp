@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".practice.view.home.TransitionsAnimationsFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_slides_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/slide_up_down"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_slides_up_offset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/slide_up_down_offset"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_slides"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/slides"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cards"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ios_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ios_like"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_fades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fades"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_diagonal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/diagonal"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_rotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rotate"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_pulse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pulse"/>
+
+</LinearLayout>
