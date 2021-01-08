@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "129317284769",
+    "project_id": "kotlinxapp",
+    "storage_bucket": "kotlinxapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129317284769:android:535fa33488d48b8d0cf9e0",
+        "android_client_info": {
+          "package_name": "com.podorozhniak.kotlinx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129317284769-6sfp8kj0gv4vqlsiqa71q281gc5b34d1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHkZx9iqT_0fCwvYEaH4Ee2yhIT87jR-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129317284769-6sfp8kj0gv4vqlsiqa71q281gc5b34d1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
