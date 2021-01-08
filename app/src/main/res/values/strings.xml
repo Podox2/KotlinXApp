@@ -47,6 +47,7 @@
     <string name="log_info">Log info</string>
     <string name="inputs">Inputs</string>
     <string name="handler">Handler</string>
+    <string name="measure_time">Measure time</string>
     <string name="password">Password</string>
 
 

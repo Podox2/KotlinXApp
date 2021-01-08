@@ -145,6 +145,13 @@
                 app:backgroundTint="@color/blue"/>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_measure_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/measure_time"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_test"
                 android:layout_width="150dp"
                 android:layout_height="75dp"
@@ -176,7 +183,7 @@
                     style="@style/EditTextAuth"
                     android:hint="@string/phone_number"
                     android:inputType="phone"
-                    android:imeOptions="actionDone"/>
+                    android:imeOptions="actionNext"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

@@ -3,13 +3,11 @@ package com.podorozhniak.kotlinx.practice.view.home
 import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFade
@@ -21,12 +19,15 @@ import com.podorozhniak.kotlinx.practice.di.appContext
 import com.podorozhniak.kotlinx.practice.extensions.*
 import com.podorozhniak.kotlinx.practice.util.MemoryManager
 import com.podorozhniak.kotlinx.practice.util.Screen
+import com.podorozhniak.kotlinx.practice.util.getDrawable
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextFormatter
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextFormatter.Companion.PHONE_PATTERN
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextWatcher
 import com.podorozhniak.kotlinx.practice.view.MainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.system.measureTimeMillis
+import kotlin.time.ExperimentalTime
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     companion object {
@@ -48,6 +49,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         exitTransition = MaterialFadeThrough()
     }
 
+    @ExperimentalStdlibApi
+    @ExperimentalTime
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
@@ -105,6 +108,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     toast("from looper")
                 }, 3_000)
             }
+            var numbers: List<Int>
+            btnMeasureTime.onClick {
+                lifecycleScope.launch {
+                    val elapsedTimeMillis = measureTimeMillis {
+                        numbers = buildList {
+                            addAll(0..100)
+                            shuffle()
+                            sortDescending()
+                        }
+                        delay(1_000)
+                    }
+                    log("${numbers.first()}") // 100
+                    log("(The operation took $elapsedTimeMillis ms)")
+                }
+            }
 
             //to get real view sizes in px
             btnTest.post {
@@ -144,6 +162,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 ) { etPhoneNumber, tiPhoneNumber ->
                         etPhoneNumber.isPhoneValid(tiPhoneNumber)
                 })
+
+            etPassword.setOnEditorActionListener { _, actionId, _ ->
+                when (actionId) {
+                    EditorInfo.IME_ACTION_DONE -> {
+                        requireActivity().hideKeyboard()
+                        toast("action done")
+                        true
+                    }
+                    else -> false
+                }
+            }
         }
     }
 
@@ -227,11 +256,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
             .setDuration(SHAKE_ANIMATION_DURATION)
             .start()
-    }
-
-    fun getDrawable(@DrawableRes drawableRes: Int?): Drawable? {
-        if (drawableRes == null) return null
-        return ContextCompat.getDrawable(appContext, drawableRes)
     }
 }
 
