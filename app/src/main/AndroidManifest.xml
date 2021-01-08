@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/SplashTheme">
-        <activity android:name=".practice.view.MainActivity">
+        <activity android:name=".practice.view.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

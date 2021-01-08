@@ -21,6 +21,40 @@
             android:layout_marginEnd="16dp"
             android:orientation="vertical">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp">
+
+                <!--   switch height manages by height of thumb-->
+                <!--   switch width manages by height of thumb and app:switchMinWidth-->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/custom_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:thumb="@drawable/thumb_white_circle"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:switchMinWidth="@dimen/switch_track_size"
+                    app:track="@drawable/switch_track_unchecked"
+                    app:trackTint="@color/dark"
+                    tools:checked="true" />
+
+                <com.podorozhniak.kotlinx.practice.util.customview.DotProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="@dimen/progress_size"
+                    android:layout_height="@dimen/progress_size"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/custom_switch"
+                    app:layout_constraintEnd_toEndOf="@+id/custom_switch"
+                    app:layout_constraintTop_toTopOf="@+id/custom_switch" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cl_finals"
                 android:layout_width="wrap_content"

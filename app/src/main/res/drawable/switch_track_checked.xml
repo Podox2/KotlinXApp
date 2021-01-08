@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <layer-list>
+
+            <item android:state_checked="false">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:type="linear"
+                        android:angle="0"
+                        android:startColor="#00FFDF"
+                        android:endColor="#00B6FF" />
+                    <corners android:radius="100sp"/>
+                    <size android:height="90dp"  />
+                    <size android:width="164dp"  />
+                </shape>
+            </item>
+
+            <item android:bottom="@dimen/switch_track_stroke_outer_size"
+                android:top="@dimen/switch_track_stroke_outer_size"
+                android:start="@dimen/switch_track_stroke_outer_size"
+                android:end="@dimen/switch_track_stroke_outer_size" >
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:type="linear"
+                        android:angle="0"
+                        android:startColor="#000000"
+                        android:endColor="#000000" />
+                    <corners android:radius="100sp"/>
+                </shape>
+            </item>
+
+            <item android:bottom="@dimen/switch_track_stroke_inner_size"
+                android:top="@dimen/switch_track_stroke_inner_size"
+                android:start="@dimen/switch_track_stroke_inner_size"
+                android:end="@dimen/switch_track_stroke_inner_size" >
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:type="linear"
+                        android:angle="0"
+                        android:startColor="#00FFDF"
+                        android:endColor="#00B6FF" />
+                    <corners android:radius="100sp"/>
+                </shape>
+            </item>
+
+        </layer-list>
+    </item>
+
+</selector>

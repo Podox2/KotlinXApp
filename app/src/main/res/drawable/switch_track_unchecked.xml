@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:type="linear"
+                        android:angle="0"
+                        android:startColor="#FF70AE"
+                        android:endColor="#FF9872" />
+                    <corners android:radius="100sp"/>
+                    <size android:height="@dimen/switch_thumb_size"  />
+                    <size android:width="@dimen/switch_track_size"  />
+                </shape>
+            </item>
+
+            <item android:bottom="@dimen/switch_track_stroke_outer_size"
+                android:top="@dimen/switch_track_stroke_outer_size"
+                android:start="@dimen/switch_track_stroke_outer_size"
+                android:end="@dimen/switch_track_stroke_outer_size" >
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/dark"/>
+                    <corners android:radius="100sp"/>
+                </shape>
+            </item>
+
+        </layer-list>
+    </item>
+</layer-list>

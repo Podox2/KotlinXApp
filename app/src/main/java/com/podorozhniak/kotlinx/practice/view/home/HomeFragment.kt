@@ -3,10 +3,14 @@ package com.podorozhniak.kotlinx.practice.view.home
 import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialFadeThrough
@@ -21,10 +25,14 @@ import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextFormatter
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextFormatter.Companion.PHONE_PATTERN
 import com.podorozhniak.kotlinx.practice.util.viewhelper.CustomTextWatcher
 import com.podorozhniak.kotlinx.practice.view.MainActivity
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     companion object {
         private const val SHAKE_ANIMATION_DURATION = 500L
+        private const val DELAY_TO_IMPROVE_PROGRESS_ANIM = 100L
+        private const val FAKE_LOADING = 2_000L
     }
 
     override val layoutId: Int
@@ -43,6 +51,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            customSwitch.trackDrawable = getDrawable(R.drawable.switch_track_unchecked)
+
+            customSwitch.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        switchOn()
+                    } else switchOff()
+
+            }
+
             //navigation
             btnClFinals.onClick {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCLFinalsFragment())
@@ -130,6 +147,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    private fun switchOn(){
+        showLoadingOnSwitch()
+    }
+
+    private fun switchOff() {
+        updateSwitch(false)
+    }
+
+    private fun showLoadingOnSwitch() {
+        lifecycleScope.launch {
+            binding.apply {
+                delay(DELAY_TO_IMPROVE_PROGRESS_ANIM)
+                customSwitch.isEnabled = false
+                progress.visibility = View.VISIBLE
+                delay(FAKE_LOADING)
+                progress.visibility = View.INVISIBLE
+                updateSwitch(true)
+            }
+        }
+    }
+
+    private fun updateSwitch(isOn: Boolean) {
+        binding.customSwitch.apply {
+            binding.progress.visibility = View.GONE
+            isEnabled = true
+            if (isOn) {
+                isChecked = true
+                thumbDrawable = getDrawable(R.drawable.thumb_white_circle_shield)
+                trackDrawable = getDrawable(R.drawable.switch_track_checked)
+            } else {
+                isChecked = false
+                trackDrawable = getDrawable(R.drawable.switch_track_unchecked)
+                thumbDrawable = getDrawable(R.drawable.thumb_white_circle)
+            }
+            invalidate()
+        }
+    }
+
     private fun getDisplaySizes() {
         log("density via context - ${Screen.getDisplayDensityViaContext(appContext)}")
         log("density - ${Screen.getDisplayDensity()}")
@@ -172,6 +227,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
             .setDuration(SHAKE_ANIMATION_DURATION)
             .start()
+    }
+
+    fun getDrawable(@DrawableRes drawableRes: Int?): Drawable? {
+        if (drawableRes == null) return null
+        return ContextCompat.getDrawable(appContext, drawableRes)
     }
 }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/thumb_white_circle" />
+
+    <item android:drawable="@drawable/ic_shield_blue"
+        android:bottom="22dp"
+        android:top="22dp"
+        android:left="22dp"
+        android:right="22dp"
+        />
+
+</layer-list>
