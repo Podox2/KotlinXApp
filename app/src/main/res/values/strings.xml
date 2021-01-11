@@ -36,6 +36,9 @@
     <string name="show_flash_animation">Show flash animation</string>
     <string name="show_shake_animation">Show shake animation</string>
     <string name="fragment_transition_animation">Fragment transitions animations</string>
+    <string name="fragment_ripple_animation">Fragment ripple animations</string>
+    <string name="fullscreen_dialog">Fullscreen dialog</string>
+    <string name="alert_dialog">Material alert dialog</string>
     <string name="hide_system_ui">Hide system UI</string>
     <string name="name">Name</string>
     <string name="bad_user_name">Should contain 3&#8211;32 characters. Letters and \' - allowed</string>
@@ -49,6 +52,8 @@
     <string name="handler">Handler</string>
     <string name="measure_time">Measure time</string>
     <string name="password">Password</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
 
 
     <!--    fragment transitions animations-->
@@ -61,4 +66,5 @@
     <string name="diagonal">Diagonal</string>
     <string name="rotate">Rotate</string>
     <string name="pulse">Pulse</string>
+    <string name="change_text">Change text</string>
 </resources>

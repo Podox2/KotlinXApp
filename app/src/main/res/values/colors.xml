@@ -13,5 +13,6 @@
     <color name="darkBlue">#04295C</color>
     <color name="dark">#041737</color>
     <color name="lightGreen">#00FFCB</color>
-    <color name="ripple_effect_color">#40ffffff</color>
+    <color name="ripple_effect_color">#80FF0000</color>
+    <color name="transparent">#00000000</color>
 </resources>

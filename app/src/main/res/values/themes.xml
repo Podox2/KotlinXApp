@@ -13,7 +13,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <!-- Customize your theme here. -->
+        <!--ripple color-->
+        <item name="colorControlHighlight">@color/ripple_effect_color</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.KotlinX">
@@ -55,5 +56,32 @@
 
     <style name="TextInputLayoutPasswordStyle" parent="TextInputLayoutStyle">
         <item name="passwordToggleEnabled">true</item>
+    </style>
+
+    <style name="NoInsetButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.KotlinX">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/purple_200</item>
+        <item name="android:navigationBarColor">@color/purple_200</item>
+    </style>
+
+    <style name="DialogAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 </resources>

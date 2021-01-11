@@ -76,6 +76,27 @@
                 android:text="@string/fragment_transition_animation"
                 app:backgroundTint="@color/blue"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_ripple_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_ripple_animation"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_fullscreen_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fullscreen_dialog"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_material_alert_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alert_dialog"
+                app:backgroundTint="@color/blue"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

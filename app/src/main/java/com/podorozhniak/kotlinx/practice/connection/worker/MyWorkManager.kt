@@ -9,14 +9,18 @@ class MyWorkManager {
     companion object {
         const val TAG_SIMPLE_WORK = "TAG_SIMPLE_WORK"
         const val TAG_PERIODIC_WORK = "TAG_PERIODIC_WORK"
+        const val KEY = "KEY"
         private const val CHECK_VPN_INTERVAL_MIN = 15
 
         fun startSimpleWork() {
+            val data = workDataOf(KEY to "value")
             Log.d(TAG_SIMPLE_WORK, "startSimpleWork")
             val oneTimeWorkRequest = OneTimeWorkRequest
                 .Builder(SimpleWork::class.java)
                 .addTag(TAG_SIMPLE_WORK)
+                .setInputData(data)
                 .build()
+
             WorkManager.getInstance(appContext).enqueue(oneTimeWorkRequest)
         }
 

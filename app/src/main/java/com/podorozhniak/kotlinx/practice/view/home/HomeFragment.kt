@@ -10,11 +10,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialFadeThrough
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentHomeBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
+import com.podorozhniak.kotlinx.practice.base.FullscreenDialogFragment
 import com.podorozhniak.kotlinx.practice.di.appContext
 import com.podorozhniak.kotlinx.practice.extensions.*
 import com.podorozhniak.kotlinx.practice.util.MemoryManager
@@ -74,6 +76,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
             btnFragmentsTransitionAnimation.onClick {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransitionsAnimationsFragment())
+            }
+            btnRippleAnimation.onClick {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRipplesFragment())
+            }
+            btnFullscreenDialog.onClick {
+                val fullscreenDialog = FullscreenDialogFragment()
+                //fullscreenDialog.isCancelable = false
+                fullscreenDialog.show(this@HomeFragment.childFragmentManager, fullscreenDialog.tag)
+            }
+            btnMaterialAlertDialog.onClick {
+                showMaterialAlertDialog()
             }
 
             //UI changes
@@ -256,6 +269,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
             .setDuration(SHAKE_ANIMATION_DURATION)
             .start()
+    }
+
+    private fun showMaterialAlertDialog() {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle("Title")
+            .setMessage("Message")
+            .setPositiveButton(getString(R.string.positive)) { dialog, _ ->
+                dialog.cancel()
+            }
+            .setNegativeButton(getString(R.string.negative)) { dialog, _ ->
+                dialog.cancel()
+            }
+            .create()
+            .show()
     }
 }
 

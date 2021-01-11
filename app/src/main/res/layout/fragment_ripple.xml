@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/blue"
+    tools:context=".practice.view.home.ToOpenFragment">
+
+    <android.widget.Button
+        android:id="@+id/btn_widget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/background_gradient_ripple"
+        android:padding="12dp"
+        android:text="android.widget.Button"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_appcompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/background_gradient_ripple"
+        android:padding="12dp"
+        android:text="androidx.appcompat.widget.AppCompatButton"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <!--    started from Android studio 4.1 background
+    doesn't work for Button and Material button
+    https://stackoverflow.com/questions/64722733/android-background-drawable-not-working-in-button-since-android-studio-4-1
+    app:background effects color, but not shape-->
+    <Button
+        android:id="@+id/btn_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/background_gradient_ripple"
+        android:padding="12dp"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_material_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/background_gradient_ripple"
+        android:padding="12dp"
+        android:text="MaterialButton"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+<!-- if doesn't work maybe parent layout should has background-->
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_close"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_margin="12dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_auth_data"
+        style="@style/NoInsetButton"
+        android:text="NoInsetButton"
+        app:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_personal_details" />
+
+</LinearLayout>
