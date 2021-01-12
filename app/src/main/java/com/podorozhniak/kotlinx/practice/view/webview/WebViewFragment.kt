@@ -35,6 +35,7 @@ class WebViewFragment : BaseFragment<FragmentWebviewBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.webView.apply {
+            settings.javaScriptEnabled = true
             webViewClient = ProgressWebViewClient(binding.progress)
             loadUrl(WEB_LINK)
         }

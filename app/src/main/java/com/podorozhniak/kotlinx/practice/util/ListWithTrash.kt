@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.theory.oop
+package com.podorozhniak.kotlinx.practice.util
 
 class ListWithTrash <T>(
     private val innerList: MutableList<T> = ArrayList<T>()

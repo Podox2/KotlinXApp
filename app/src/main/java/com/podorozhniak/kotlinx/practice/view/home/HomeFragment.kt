@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 import kotlin.time.ExperimentalTime
 
+
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     companion object {
         private const val SHAKE_ANIMATION_DURATION = 500L
@@ -64,7 +65,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     } else switchOff()
 
             }
-
             //navigation
             btnClFinals.onClick {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCLFinalsFragment())
@@ -164,7 +164,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     etFirstName,
                     tiFirstName
                 ) { etFirstName, tiFirstName ->
-                        etFirstName.isPersonNameValid(tiFirstName)
+                    etFirstName.isPersonNameValid(tiFirstName)
                 })
 
             etPhoneNumber.addTextChangedListener(
@@ -173,7 +173,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     tiPhoneNumber,
                     PHONE_PATTERN
                 ) { etPhoneNumber, tiPhoneNumber ->
-                        etPhoneNumber.isPhoneValid(tiPhoneNumber)
+                    etPhoneNumber.isPhoneValid(tiPhoneNumber)
                 })
 
             etPassword.setOnEditorActionListener { _, actionId, _ ->
@@ -186,6 +186,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     else -> false
                 }
             }
+
+            //обробка проведення екрану вгору і вниз і координати
+            /*root.setOnTouchListener(OnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    Toast.makeText(activity, "DOWN!!", Toast.LENGTH_SHORT).show()
+                    return@OnTouchListener true
+                }
+                if (event.action == MotionEvent.ACTION_UP) {
+                    Toast.makeText(activity, "UP!!", Toast.LENGTH_SHORT).show()
+                    return@OnTouchListener true
+                }
+                false
+            })
+
+            root.setOnTouchListener(OnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_MOVE) {
+                    val x = event.x.toString()
+                    val y = event.y.toString()
+                    log("$x, $y")
+                    return@OnTouchListener true
+                }
+                true
+            })*/
         }
     }
 

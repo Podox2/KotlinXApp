@@ -173,11 +173,10 @@ class CoroutinesActivity : AppCompatActivity() {
     }
 
     fun work(): Single<Int>{
-
         return Single.just(2)
     }
 
-    fun work2(): Int{
+    fun work2(): Int {
         SystemClock.sleep(3000)
         return 2
     }
