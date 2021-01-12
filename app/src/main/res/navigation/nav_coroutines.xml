@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_coroutines"
+    app:startDestination="@id/coroutineFragment">
+
+    <fragment
+        android:id="@+id/coroutineFragment"
+        android:name="com.podorozhniak.kotlinx.practice.view.home.CoroutineFragment"
+        android:label="CoroutineFragment"
+        tools:layout="@layout/fragment_coroutines"/>
+</navigation>

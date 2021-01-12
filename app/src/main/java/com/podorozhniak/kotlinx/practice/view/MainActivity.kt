@@ -130,8 +130,9 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
 
         val navGraphIds = listOf(
             R.navigation.nav_home,
-            R.navigation.nav_web_view,
-            R.navigation.nav_work_manager
+            R.navigation.nav_coroutines,
+            R.navigation.nav_work_manager,
+            R.navigation.nav_web_view
         )
 
         // Setup the bottom navigation view with a list of navigation graphs

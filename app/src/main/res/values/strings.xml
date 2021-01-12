@@ -11,6 +11,7 @@
     <string name="email_body">I want to get an individual subscription in Egnom app. Contact me please.\n\n\nSend from my Phone </string>
     <string name="send_email">Send email..</string>
     <string name="work_manager">Work Manager</string>
+    <string name="coroutines">Coroutines</string>
     <string name="start_simple_work">Start simple work</string>
     <string name="stop_simple_work">Stop simple work</string>
     <string name="start_periodic_work">Start periodic work</string>
@@ -67,4 +68,6 @@
     <string name="rotate">Rotate</string>
     <string name="pulse">Pulse</string>
     <string name="change_text">Change text</string>
+    <string name="start_the_coroutine">Start the coroutine</string>
+    <string name="second_activity">Second activity</string>
 </resources>
