@@ -1,5 +1,8 @@
 package com.podorozhniak.kotlinx.theory.coroutines;
 
+import com.podorozhniak.kotlinx.practice.data.remote.model.Message;
+import com.podorozhniak.kotlinx.practice.data.remote.service.MessagesService;
+
 import java.util.List;
 
 import io.reactivex.Single;
@@ -14,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RxJ {
 
-    MessageApi api;
+    MessagesService api;
     public void testRx() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://rawgit.com/startandroid/data/master/messages/")
@@ -22,7 +25,7 @@ public class RxJ {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        api = retrofit.create(MessageApi.class);
+        api = retrofit.create(MessagesService.class);
 
 
         CompositeDisposable compositeDisposable = new CompositeDisposable();

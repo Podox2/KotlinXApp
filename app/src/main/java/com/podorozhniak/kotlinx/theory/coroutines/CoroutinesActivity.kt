@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.podorozhniak.kotlinx.R
+import com.podorozhniak.kotlinx.practice.data.remote.model.Message
+import com.podorozhniak.kotlinx.practice.data.remote.service.MessagesService
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +25,7 @@ import java.util.concurrent.TimeUnit
 
 class CoroutinesActivity : AppCompatActivity() {
 
-    private lateinit var api: MessageApi
+    private lateinit var api: MessagesService
     private lateinit var single: Single<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,7 @@ class CoroutinesActivity : AppCompatActivity() {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
-        api = retrofit.create(MessageApi::class.java)
+        api = retrofit.create(MessagesService::class.java)
 
         val compositeDisposable = CompositeDisposable()
 

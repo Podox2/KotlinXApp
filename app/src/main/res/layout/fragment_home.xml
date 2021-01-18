@@ -30,6 +30,7 @@
                 <!--   switch width manages by height of thumb and app:switchMinWidth-->
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/custom_switch"
+                    android:theme="@style/SwitchMaterial.Theme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
@@ -57,10 +58,10 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cl_finals"
+                android:theme="@style/ButtonExample.Theme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/show_cl_finals_list"
-                app:backgroundTint="@color/blue" />
+                android:text="@string/show_cl_finals_list" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cl_countdown"

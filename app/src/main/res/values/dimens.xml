@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="bottom_nav_view_text_size">12sp</dimen>
-    <dimen name="bottom_nav_view_text_size_active">14sp</dimen>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--    switch-->
     <dimen name="switch_track_size">164dp</dimen>
@@ -10,4 +8,9 @@
     <dimen name="switch_thumb_size">90dp</dimen>
     <dimen name="switch_thumb_transparent_part_size">14dp</dimen>
     <dimen name="progress_size">50dp</dimen>
+
+    <dimen name="bottom_nav_view_text_size">12sp</dimen>
+    <dimen name="bottom_nav_view_text_size_active">14sp</dimen>
+<!--    <dimen name="design_bottom_navigation_label_padding" tools:override="true">11dp</dimen>-->
+<!--    <dimen name="design_bottom_navigation_margin" tools:override="true">9dp</dimen>-->
 </resources>

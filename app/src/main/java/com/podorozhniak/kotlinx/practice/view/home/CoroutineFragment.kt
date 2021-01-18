@@ -2,10 +2,9 @@ package com.podorozhniak.kotlinx.practice.view.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentCoroutinesBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
@@ -38,6 +37,9 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
                 //jobEtc()
                 //asyncAwait()
                 //scopes()
+            }
+            btnNetworkRequests.onClick {
+                findNavController().navigate(CoroutineFragmentDirections.actionCoroutineFragmentToNetworkRequestFragment())
             }
         }
     }
@@ -221,6 +223,5 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
         Thread.sleep(500L)
         return "longWork done"
     }
-
 }
 

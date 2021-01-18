@@ -9,5 +9,14 @@
         android:id="@+id/coroutineFragment"
         android:name="com.podorozhniak.kotlinx.practice.view.home.CoroutineFragment"
         android:label="CoroutineFragment"
-        tools:layout="@layout/fragment_coroutines"/>
+        tools:layout="@layout/fragment_coroutines">
+        <action
+            android:id="@+id/action_coroutineFragment_to_networkRequestFragment"
+            app:destination="@id/networkRequestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/networkRequestFragment"
+        android:name="com.podorozhniak.kotlinx.practice.view.network_request.NetworkRequestFragment"
+        android:label="fragment_network_request"
+        tools:layout="@layout/fragment_network_request" />
 </navigation>

@@ -8,6 +8,15 @@
     android:background="@color/blue"
     tools:context=".practice.view.home.ToOpenFragment">
 
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:textColor="@color/white"
+        android:layout_margin="12dp"
+        tools:text="No text"/>
+
     <android.widget.Button
         android:id="@+id/btn_widget"
         android:layout_width="wrap_content"

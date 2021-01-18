@@ -119,4 +119,18 @@ fun Activity.getRawIdByName(rawName: String) =
         this.applicationContext.packageName
     )
 
+fun Activity.ratioScreen(): Float {
+    return if (heightScreenInPx() > widthScreenInPx())
+        (heightScreenInPx() / widthScreenInPx()).toFloat()
+    else
+        (widthScreenInPx() / heightScreenInPx()).toFloat()
+}
+
+fun Activity.isLongScreen(): Boolean{
+    return ratioScreen() > 1.9
+}
+
+fun Activity.getDimensionDensity(res: Int): Float{
+    return resources.getDimension(res) / densityScreen()
+}
 

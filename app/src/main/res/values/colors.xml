@@ -16,3 +16,11 @@
     <color name="ripple_effect_color">#80FF0000</color>
     <color name="transparent">#00000000</color>
 </resources>
+
+<!--
+    integer colors https://developer.android.com/reference/android/graphics/Color
+    -1 - white
+    -65453 - red
+    -16777216 - black
+    0 - black
+-->
