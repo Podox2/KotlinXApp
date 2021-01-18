@@ -76,7 +76,11 @@ class NetworkRequestViewModel(private val messagesRepo: MessagesRepo) : BaseView
                     _infoFromRequest.postValue(
                         "get ${it.size} by Rx"
                     )
-                }, {})
+                }, {
+                    _infoFromRequest.postValue(
+                        it.localizedMessage
+                    )
+                })
         )
     }
 
