@@ -28,6 +28,12 @@ class NetworkRequestFragment : BaseFragment<FragmentNetworkRequestBinding>() {
             btnDoRequestAdapter.onClick {
                 viewModel.getInfoFromNetworkCallAdapter()
             }
+            btnDoRequestRx.onClick {
+                viewModel.getInfoFromNetworkRx()
+            }
+            btnDoRequestCall.onClick {
+                viewModel.getInfoFromNetworkCall()
+            }
         }
 
         viewModel.infoFromRequest.observe(viewLifecycleOwner) {

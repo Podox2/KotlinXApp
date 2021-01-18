@@ -17,6 +17,7 @@ import org.koin.dsl.module
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -78,6 +79,7 @@ fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .addCallAdapterFactory(ResultAdapterFactory())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
