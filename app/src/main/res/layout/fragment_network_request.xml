@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/blue"
     tools:context=".practice.view.network_request.NetworkRequestFragment">
 
@@ -12,7 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/do_request_simple"
-        android:layout_centerInParent="true"/>
+        android:layout_marginTop="48dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"/>
 
     <Button
         android:id="@+id/btn_do_request_ext"
@@ -47,11 +49,42 @@
         android:layout_centerInParent="true"/>
 
     <TextView
-        android:id="@+id/tv_info"
+        android:id="@+id/tv_info_manual_requests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:layout_marginTop="12dp"
         android:layout_below="@+id/btn_do_request_call"
+        android:layout_centerHorizontal="true"
+        tools:text="Info from request"/>
+
+    <TextView
+        android:id="@+id/tv_info_manual_requests_transformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/tv_info_manual_requests"
+        android:layout_centerHorizontal="true"
+        tools:text="Info from request"/>
+
+    <TextView
+        android:id="@+id/tv_info_periodic_request_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/tv_info_manual_requests_transformation"
+        android:layout_centerHorizontal="true"
+        tools:text="Info from request"/>
+
+    <TextView
+        android:id="@+id/tv_info_periodic_request_live_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/tv_info_periodic_request_flow"
         android:layout_centerHorizontal="true"
         tools:text="Info from request"/>
 

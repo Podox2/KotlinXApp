@@ -1,8 +1,6 @@
 package com.podorozhniak.kotlinx.practice.view.network_request
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.BaseViewModel
 import com.podorozhniak.kotlinx.practice.data.remote.model.Message
 import com.podorozhniak.kotlinx.practice.data.remote.repository.MessagesRepo
@@ -13,19 +11,65 @@ import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.asSuccess
 import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.isSuccess
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.random.Random
 
+@ExperimentalCoroutinesApi
 class NetworkRequestViewModel(private val messagesRepo: MessagesRepo) : BaseViewModel() {
-
-    private val _infoFromRequest = MutableLiveData<String>()
-    var infoFromRequest: LiveData<String> = _infoFromRequest
-
-    private val compositeDisposable = CompositeDisposable()
+    private val refreshIntervalMs: Long = 2000
+    var periodicRequestsCounter = 0
     var requestsCounter = 0
+    private val compositeDisposable = CompositeDisposable()
+
+    //реалізація через live data
+    private val _infoFromRequest = MutableLiveData<String>()
+    val infoFromRequest: LiveData<String>
+        get() = _infoFromRequest
+
+    val stringToStringTrans: LiveData<String> =
+        Transformations.map(_infoFromRequest) {
+            "transformed $it"
+        }
+
+    //реалізація через flow
+    private val _infoFromRequestFlow = MutableStateFlow("")
+    val infoFromRequestFlow: StateFlow<String> = _infoFromRequestFlow
+
+
+    //проста реалізація flow через flow builder
+    val latestNews: Flow<String> = flow {
+        while(true) {
+            val latestNews = fetchSomeInfo()
+            emit(latestNews) // Emits the result of the request to the flow
+            kotlinx.coroutines.delay(refreshIntervalMs) // Suspends the coroutine for some time
+        }
+    }
+
+    //можна зробити аналогічну реалізацію через лайв дату
+    //різницю не побачив. flow надає механізм операторів для зміни об'єктів, які приходять
+    val latestNewsLiveData: LiveData<String> = liveData (timeoutInMs = 5000L) {
+        while(true) {
+            val latestNews = fetchSomeInfo()
+            emit(latestNews) // Emits the result of the request to the flow
+            kotlinx.coroutines.delay(refreshIntervalMs) // Suspends the coroutine for some time
+        }
+    }
+
+    private fun fetchSomeInfo(): String {
+        periodicRequestsCounter++
+        val range = (1..30)
+        return "${range.random()}, counter = $periodicRequestsCounter"
+    }
+
 
     fun getInfoFromNetworkSimpleWay() {
         viewModelScope.launch {

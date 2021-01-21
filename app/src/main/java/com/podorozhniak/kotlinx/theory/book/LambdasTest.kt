@@ -1,24 +1,38 @@
 package com.podorozhniak.kotlinx.theory.book
 
 fun main(args: Array<String>) {
-    println("It's working!")
+    val letters = "Missss".count { char ->
+        char == 's'
+    }
+
+    val funcType: (Int, String) -> String
+    funcType = { i, s ->
+        "$i $s"
+    }
+
+    val funcType2 = { i: Int, s: String ->
+        "$i $s"
+    }
+
+    println(funcType(1, "s"))
+    println(funcType2(2, "z"))
 
     //
     println({
-        val currentYear = 2019
+        val currentYear = 2021
         "$currentYear is right now"
     }())
 
     //
     val showYear: () -> String = {
-        val currentYear = 2019
+        val currentYear = 2021
         "$currentYear is right now (value)"
     }
     println(showYear())
 
     //
     val showYearLaconic = {
-        val currentYear = 2019
+        val currentYear = 2021
         "$currentYear is right now (value) laconic"
     }
     println(showYearLaconic())
@@ -59,6 +73,9 @@ fun main(args: Array<String>) {
     funAsParamLaconic("string", ::showNumber) { s: String, n: Int ->
         "$s and $n"
     }
+
+    val numbers = listOf(-2, -1, 0, 1, 2)
+    println(numbers.filter(::isPositive))
 }
 
 inline fun funAsParamLaconic(s: String, funReferenceAsParameter: (Int) -> Unit, funAsParam: (String, Int) -> String): Boolean {
@@ -69,3 +86,5 @@ inline fun funAsParamLaconic(s: String, funReferenceAsParameter: (Int) -> Unit, 
     return true
 }
 fun showNumber(n: Int) = println("$n")
+
+fun isPositive(x: Int) = x > 0
