@@ -12,6 +12,15 @@ import com.podorozhniak.kotlinx.practice.extensions.lastChar
 import com.podorozhniak.kotlinx.theory.oop.Person
 import kotlin.properties.Delegates
 
+/*          Access
+*   Java                Kotlin
+*   public              public
+*   package             internal
+*   protected           protected
+*   private             private
+* */
+
+
 //public по замовчуванню
 //Any/Any? = Object
 //Unit = Void
@@ -72,7 +81,20 @@ fun funWithManyParametersButDefaultToo(
 //час виконання програми. її неможливо змінити
 const val NUMBER: Int = 5000
 
+/*extension ф-ція скомпілюється в ф-цію, в яку передається об'єкт (з типом String в даному випадку),
+ ну і для цього об'єкту не можна достукатись до private полів/методів
+* */
+fun String.extensionExample() {
+    this.plus(" some string")
+}
+
 class NewDayActivity : AppCompatActivity() {
+    //заміна статики в котліні
+    //companion - внутрішній static (при переведенні в байт-код?)
+    companion object {
+        const val TAG_ACTIVITY = "NewDayActivity"
+    }
+
     //можна не вказувати тип
     //val = final у Java (не можна змінити)
     //var звичайне посилання у Java (можна змінити)
@@ -80,15 +102,15 @@ class NewDayActivity : AppCompatActivity() {
     val counter = 0
     val counter2: Int = 0
 
-   /* Обычно, свойства, объявленные non-null типом, должны быть проинициализированы в конструкторе,
-   но иногда переменную нельзя сразу инициализировать (view ініціалізуються в onCreate()), сделать это можно чуть позже.
-   Для таких случаев придумали новый модификатор lateinit (отложенная инициализация).
-   Переменная обязательно должна быть изменяемой (var). Не должна относиться к примитивным
-   типам (Int, Double, Float и т.д). Не должна иметь собственных геттеров/сеттеров. Подобный
-   подход удобен во многих случаях, избегая проверки на null. В противном случае пришлось
-   бы постоянно использовать проверку или утверждение !!, что засоряет код. Если вы обратитесь
-   к переменной до её инициализации, то получите исключение "lateinit property ... hos not been
-   initialized" вместо NullPointerException.*/
+    /* Обычно, свойства, объявленные non-null типом, должны быть проинициализированы в конструкторе,
+    но иногда переменную нельзя сразу инициализировать (view ініціалізуються в onCreate()), сделать это можно чуть позже.
+    Для таких случаев придумали новый модификатор lateinit (отложенная инициализация).
+    Переменная обязательно должна быть изменяемой (var). Не должна относиться к примитивным
+    типам (Int, Double, Float и т.д). Не должна иметь собственных геттеров/сеттеров. Подобный
+    подход удобен во многих случаях, избегая проверки на null. В противном случае пришлось
+    бы постоянно использовать проверку или утверждение !!, что засоряет код. Если вы обратитесь
+    к переменной до её инициализации, то получите исключение "lateinit property ... hos not been
+    initialized" вместо NullPointerException.*/
     lateinit var textView: TextView
 
     /*simply allows a property to be initialized at a later time. notNull() is similar to lateinit.

@@ -1,5 +1,6 @@
 package com.podorozhniak.kotlinx.theory.book
 
+/*лямбда - невеликий фрагмент коду, який можна передавати в функції*/
 fun main(args: Array<String>) {
     val letters = "Missss".count { char ->
         char == 's'

@@ -5,6 +5,12 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.podorozhniak.kotlinx.practice.util.NotificationUtil.showNotification
 
+/*
+* при використанні FirebaseMessagingService сповіщення може прийти в трьох випадках
+* при запущеній аплікусі - в цьому випадку, сповіщення не буде показане (така політика Firebase),
+* але його можна обробити в FirebaseMessagingService - отримати дані і створити сповіщення самостійно
+* при закритій або згорнутій аплікусі - сповіщення буде показане автоматично
+* */
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     companion object {
         const val NOTIFICATION_TAG = "NOTIFICATION_TAG"
