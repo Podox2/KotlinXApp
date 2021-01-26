@@ -88,6 +88,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             btnMaterialAlertDialog.onClick {
                 showMaterialAlertDialog()
             }
+            btnSecondActivity.onClick {
+                (requireActivity() as MainActivity).openSecondActivity()
+            }
 
             //UI changes
             btnChangeStatusBarColor.onClick {

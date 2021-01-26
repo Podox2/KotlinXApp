@@ -11,7 +11,7 @@ import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import com.podorozhniak.kotlinx.practice.di.appContext
 import com.podorozhniak.kotlinx.practice.extensions.onClick
 import com.podorozhniak.kotlinx.practice.view.MainActivity
-import com.podorozhniak.kotlinx.practice.view.SecondActivity
+import com.podorozhniak.kotlinx.practice.view.secondactivity.SecondActivity
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 

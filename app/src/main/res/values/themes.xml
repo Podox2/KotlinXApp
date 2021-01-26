@@ -17,6 +17,8 @@
         <item name="colorControlHighlight">@color/ripple_effect_color</item>
     </style>
 
+    <style name="SecondActivity.Theme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+
     <style name="SwitchMaterial.Theme" parent="Theme.KotlinX">
         <item name="colorSecondary">@color/white</item>
     </style>

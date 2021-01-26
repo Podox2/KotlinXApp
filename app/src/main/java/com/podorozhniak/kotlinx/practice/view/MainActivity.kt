@@ -1,6 +1,7 @@
 package com.podorozhniak.kotlinx.practice.view
 
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
@@ -21,7 +22,7 @@ import com.podorozhniak.kotlinx.practice.connection.broadcastreceiver.Connectivi
 import com.podorozhniak.kotlinx.practice.extensions.disableTooltip
 import com.podorozhniak.kotlinx.practice.extensions.setupWithNavController
 import com.podorozhniak.kotlinx.practice.util.Screen
-import com.podorozhniak.kotlinx.practice.view.home.RipplesFragment
+import com.podorozhniak.kotlinx.practice.view.secondactivity.SecondActivity
 
 class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -164,5 +165,13 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         //return currentNavController?.value?.navigateUp() ?: false
         return Navigation.findNavController(this, R.id.main_nav_host_container).navigateUp()
                 || super.onSupportNavigateUp()
+    }
+
+    fun openSecondActivity() {
+        startActivity(
+            Intent(
+                this, SecondActivity::class.java
+            )
+        )
     }
 }
