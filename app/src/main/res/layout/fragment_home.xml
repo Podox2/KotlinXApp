@@ -105,6 +105,13 @@
                 android:text="@string/second_activity"
                 app:backgroundTint="@color/blue"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_third_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/third_activity"
+                app:backgroundTint="@color/blue"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -91,6 +91,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             btnSecondActivity.onClick {
                 (requireActivity() as MainActivity).openSecondActivity()
             }
+            btnThirdActivity.onClick {
+                (requireActivity() as MainActivity).openThirdActivityForResult()
+            }
 
             //UI changes
             btnChangeStatusBarColor.onClick {

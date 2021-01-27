@@ -41,6 +41,8 @@
     <string name="fullscreen_dialog">Fullscreen dialog</string>
     <string name="alert_dialog">Material alert dialog</string>
     <string name="second_activity">Second activity</string>
+    <string name="third_activity">Third Activity</string>
+    <string name="third_activity_send_data">Third Activity.\nPress to send data</string>
     <string name="hide_system_ui">Hide system UI</string>
     <string name="name">Name</string>
     <string name="bad_user_name">Should contain 3&#8211;32 characters. Letters and \' - allowed</string>

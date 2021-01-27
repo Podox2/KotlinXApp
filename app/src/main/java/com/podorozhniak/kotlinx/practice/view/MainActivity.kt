@@ -1,5 +1,6 @@
 package com.podorozhniak.kotlinx.practice.view
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -30,6 +32,15 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
     private var currentNavController: LiveData<NavController>? = null
 
     private val connectivityReceiver = ConnectivityReceiver()
+
+    var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            val dataValue = data?.getStringExtra("key")
+            Toast.makeText(this, dataValue, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_KotlinX)
@@ -115,7 +126,7 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connMgr.activeNetworkInfo
         if (networkInfo != null && networkInfo.isConnectedOrConnecting) {
-            Toast.makeText(this, "Connected to network", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Connected to network", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "No connection to network", Toast.LENGTH_SHORT).show()
         }
@@ -173,5 +184,12 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
                 this, SecondActivity::class.java
             )
         )
+        //this.overridePendingTransition(R.anim.slide_up, R.anim.wait)
+    }
+
+    fun openThirdActivityForResult() {
+        val intent = Intent(this, ThirdActivity::class.java)
+        resultLauncher.launch(intent)
+        this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }
