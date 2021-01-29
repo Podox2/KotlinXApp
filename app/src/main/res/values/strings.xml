@@ -42,6 +42,7 @@
     <string name="alert_dialog">Material alert dialog</string>
     <string name="second_activity">Second activity</string>
     <string name="third_activity">Third Activity</string>
+    <string name="view_pager">View Pager 2</string>
     <string name="third_activity_send_data">Third Activity.\nPress to send data</string>
     <string name="hide_system_ui">Hide system UI</string>
     <string name="name">Name</string>

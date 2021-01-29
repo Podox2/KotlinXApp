@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_ripplesFragment"
             app:destination="@id/ripplesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
     <fragment
         android:id="@+id/CLFinalsFragment"
@@ -53,4 +56,9 @@
         android:name="com.podorozhniak.kotlinx.practice.view.home.RipplesFragment"
         android:label="RipplesFragment"
         tools:layout="@layout/fragment_ripple" />
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.podorozhniak.kotlinx.practice.view.viewpager.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" />
 </navigation>

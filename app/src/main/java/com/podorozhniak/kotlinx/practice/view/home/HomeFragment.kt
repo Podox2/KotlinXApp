@@ -94,6 +94,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             btnThirdActivity.onClick {
                 (requireActivity() as MainActivity).openThirdActivityForResult()
             }
+            btnViewPager.onClick {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToViewPagerFragment())
+            }
 
             //UI changes
             btnChangeStatusBarColor.onClick {
