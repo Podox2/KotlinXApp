@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".practice.view.secondactivity.SecondActivity"></activity>
+        <activity android:name=".practice.view.secondactivity.SecondActivity" />
         <activity android:name=".practice.view.ThirdActivity" />
         <activity
             android:name=".practice.view.MainActivity"

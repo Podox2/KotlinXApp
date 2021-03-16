@@ -57,7 +57,7 @@ public class MatchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cl_final_list_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cl_final, parent, false);
             return new MatchViewHolder(view);
         } else if (viewType == TYPE_FOOTER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer,

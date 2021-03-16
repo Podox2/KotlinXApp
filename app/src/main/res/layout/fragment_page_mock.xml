@@ -12,6 +12,6 @@
         android:textSize="26sp"
         android:textColor="@color/purple_700"
         android:layout_gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:text="hello_blank_fragment" />
 
 </FrameLayout>

@@ -3,6 +3,8 @@ package com.podorozhniak.kotlinx.practice.view.home
 import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -60,10 +62,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             customSwitch.trackDrawable = getDrawable(R.drawable.switch_track_unchecked)
 
             customSwitch.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        switchOn()
-                    } else switchOff()
-
+                if (isChecked) {
+                    switchOn()
+                } else switchOff()
+            }
+            btnAr.onClick {
+                openArScene()
             }
             //navigation
             btnClFinals.onClick {
@@ -221,7 +225,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun switchOn(){
+    private fun switchOn() {
         showLoadingOnSwitch()
     }
 
@@ -274,6 +278,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val heightInDp = (requireActivity() as MainActivity).heightScreenInDp()
         log("in px - $heightInPx")
         log("in dp - $heightInDp")
+    }
+
+    private fun openArScene() {
+        val sceneViewerIntent = Intent(Intent.ACTION_VIEW)
+        val intentUri: Uri =
+            Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
+                .appendQueryParameter(
+                    "file",
+                    //"https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF/Avocado.gltf"
+                    "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb"
+                )
+                .appendQueryParameter("mode", "ar_only")
+                .build()
+        sceneViewerIntent.data = intentUri
+        sceneViewerIntent.setPackage("com.google.ar.core")
+        startActivity(sceneViewerIntent)
     }
 
     private fun checkMemories() {

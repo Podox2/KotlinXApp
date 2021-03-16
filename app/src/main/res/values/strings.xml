@@ -19,6 +19,7 @@
 
     <!--    cl finals-->
     <string name="search">Search</string>
+    <string name="ar">AR</string>
     <string name="show_cl_finals_list">Show CL finals list</string>
     <string name="to_be_continued">To be continued…</string>
     <string name="thats_all_folks">That\'s all folks!</string>
