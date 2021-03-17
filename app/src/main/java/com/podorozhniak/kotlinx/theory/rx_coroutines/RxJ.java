@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.theory.coroutines;
+package com.podorozhniak.kotlinx.theory.rx_coroutines;
 
 import com.podorozhniak.kotlinx.practice.data.remote.model.Message;
 import com.podorozhniak.kotlinx.practice.data.remote.service.MessagesService;

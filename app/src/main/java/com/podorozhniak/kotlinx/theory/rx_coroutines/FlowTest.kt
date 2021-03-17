@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.theory.coroutines
+package com.podorozhniak.kotlinx.theory.rx_coroutines
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

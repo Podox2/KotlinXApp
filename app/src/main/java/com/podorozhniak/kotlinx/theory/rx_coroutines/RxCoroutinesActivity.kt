@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.theory.coroutines
+package com.podorozhniak.kotlinx.theory.rx_coroutines
 
 import android.os.Bundle
 import android.os.SystemClock
@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class CoroutinesActivity : AppCompatActivity() {
+class RxCoroutinesActivity : AppCompatActivity() {
 
     private lateinit var api: MessagesService
     private lateinit var single: Single<Int>
