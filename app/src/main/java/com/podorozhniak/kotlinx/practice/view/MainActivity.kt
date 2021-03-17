@@ -24,7 +24,7 @@ import com.podorozhniak.kotlinx.practice.connection.broadcastreceiver.Connectivi
 import com.podorozhniak.kotlinx.practice.extensions.disableTooltip
 import com.podorozhniak.kotlinx.practice.extensions.setupWithNavController
 import com.podorozhniak.kotlinx.practice.util.Screen
-import com.podorozhniak.kotlinx.practice.view.secondactivity.SecondActivity
+import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 
 class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 

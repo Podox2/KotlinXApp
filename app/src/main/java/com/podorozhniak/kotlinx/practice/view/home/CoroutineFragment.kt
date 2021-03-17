@@ -9,9 +9,8 @@ import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentCoroutinesBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import com.podorozhniak.kotlinx.practice.di.appContext
-import com.podorozhniak.kotlinx.practice.extensions.onClick
 import com.podorozhniak.kotlinx.practice.view.MainActivity
-import com.podorozhniak.kotlinx.practice.view.secondactivity.SecondActivity
+import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 

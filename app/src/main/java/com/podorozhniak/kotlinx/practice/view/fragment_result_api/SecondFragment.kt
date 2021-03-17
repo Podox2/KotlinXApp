@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.view.secondactivity
+package com.podorozhniak.kotlinx.practice.view.fragment_result_api
 
 import android.os.Bundle
 import android.view.View
