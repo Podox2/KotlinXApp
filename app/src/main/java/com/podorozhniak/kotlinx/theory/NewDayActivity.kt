@@ -150,6 +150,13 @@ class NewDayActivity : AppCompatActivity() {
         for (i in diapason) {
             print(fizzBuzz(i))
         }
+        /* 1..10
+           1 until 10
+           10.downTo(1)
+           1..10 step 2*/
+
+        //Check if the value is in a range
+        if(2 in diapason){}
 
         //рандомить числов від до 100 включно
         val randomNumber = (1..100).shuffled().last()
@@ -241,7 +248,7 @@ class NewDayActivity : AppCompatActivity() {
         }
 
         //пройтись по елементам списку можна різними способами
-        for (name in names){
+        for (name in names) {
             println(name)
         }
         names.forEach {
@@ -251,7 +258,7 @@ class NewDayActivity : AppCompatActivity() {
             println("$index. $item")
         }
 
-        (0..9).forEach {  }
+        (0..9).forEach { }
 
         //видалити дублікати зі списку (зробити зі списку множину),
         //але мати доступ до елементів через індекс (вернутись до списку)

@@ -10,7 +10,8 @@ public class JavaFeatures {
     передал управление другому потоку, который изменил значение на a=2,
     потом управление вернулось. Так вот, без volatile значение a у первого
     потока будет 1, т.к. первый поток "помнит", что a=1, с volatile - 2, т.к.
-    первый поток снова прочтет значение и получит уже измененное.*/
+    первый поток снова прочтет значение и получит уже измененное.
+    happens before записи перед чтением*/
     @Volatile
     String s = "s";
 
@@ -25,5 +26,24 @@ public class JavaFeatures {
         synchronized (this) {
             System.out.println("synchronized");
         }
+    }
+
+    void testNonInterop() {
+        JvmNonInterop jvmNonInterop = new JvmNonInterop("name");
+        jvmNonInterop.setName("new name");
+        jvmNonInterop.setAge(22);
+        int number = JvmNonInterop.Companion.getNumber();
+        jvmNonInterop.defaultParam(10);
+    }
+
+    void testInterop() {
+        JvmInterop jvmInterop = new JvmInterop("name");
+        //сетити значення можна не через сеттер
+        jvmInterop.name = "new name";
+        jvmInterop.age = 22;
+        //виклик функції як статичної для класу
+        int number = JvmInterop.getNumber();
+        //виклик функції з дефолтними параметрами
+        jvmInterop.defaultParam();
     }
 }
