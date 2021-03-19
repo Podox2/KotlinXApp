@@ -44,7 +44,6 @@ class NetworkRequestViewModel(private val messagesRepo: MessagesRepo) : BaseView
     private val _infoFromRequestFlow = MutableStateFlow("")
     val infoFromRequestFlow: StateFlow<String> = _infoFromRequestFlow
 
-
     //проста реалізація flow через flow builder
     val latestNews: Flow<String> = flow {
         while(true) {
@@ -69,7 +68,6 @@ class NetworkRequestViewModel(private val messagesRepo: MessagesRepo) : BaseView
         val range = (1..30)
         return "${range.random()}, counter = $periodicRequestsCounter"
     }
-
 
     fun getInfoFromNetworkSimpleWay() {
         viewModelScope.launch {
