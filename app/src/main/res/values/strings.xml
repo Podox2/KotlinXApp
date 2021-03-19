@@ -77,6 +77,7 @@
     <string name="network_request">Network request</string>
     <string name="do_request_simple">Do request simple way</string>
     <string name="do_request_ext">Do request extension</string>
+    <string name="do_request_executor">Do request executor</string>
     <string name="do_request_adapter">Do request call adapter</string>
     <string name="do_request_rx">Do request rx</string>
     <string name="do_request_call">Do request call</string>

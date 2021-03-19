@@ -30,6 +30,9 @@ class NetworkRequestFragment : BaseFragment<FragmentNetworkRequestBinding>() {
             btnDoRequestExt.onClick {
                 viewModel.getInfoFromNetworkCoroutineExtension()
             }
+            btnDoRequestExecutor.onClick {
+                viewModel.getInfoFromNetworkViewModelExecutor()
+            }
             btnDoRequestAdapter.onClick {
                 viewModel.getInfoFromNetworkCallAdapter()
             }

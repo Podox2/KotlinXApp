@@ -2,6 +2,7 @@ package com.podorozhniak.kotlinx.practice.view.network_request
 
 import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.BaseViewModel
+import com.podorozhniak.kotlinx.practice.base.ViewModelExecutor
 import com.podorozhniak.kotlinx.practice.data.remote.model.Message
 import com.podorozhniak.kotlinx.practice.data.remote.repository.MessagesRepo
 import com.podorozhniak.kotlinx.practice.extensions.coroutines.launchWithHandlingIO
@@ -24,7 +25,7 @@ import retrofit2.Response
 import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
-class NetworkRequestViewModel(private val messagesRepo: MessagesRepo) : BaseViewModel() {
+class NetworkRequestViewModel(private val messagesRepo: MessagesRepo, viewModelExecutor: ViewModelExecutor) : BaseViewModel(viewModelExecutor) {
     private val refreshIntervalMs: Long = 2000
     var periodicRequestsCounter = 0
     var requestsCounter = 0
@@ -93,6 +94,22 @@ class NetworkRequestViewModel(private val messagesRepo: MessagesRepo) : BaseView
                 _infoFromRequest.postValue(it.localizedMessage)
             }
         )
+    }
+
+    fun getInfoFromNetworkViewModelExecutor() {
+        viewModelScope.launch {
+            runSafe(
+                operation = {
+                    messagesRepo.messages().size.toString()
+                },
+                onSuccess = {
+                    _infoFromRequest.postValue("get $it by ViewModelExecutor")
+                },
+                onError = {
+                    _infoFromRequest.postValue(it.localizedMessage)
+                }
+            )
+        }
     }
 
     fun getInfoFromNetworkCallAdapter() {
