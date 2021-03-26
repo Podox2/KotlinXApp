@@ -149,17 +149,17 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     //https://www.youtube.com/watch?v=t-3TOke8tq8&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=7
     private fun asyncAwait() {
         //два запити йдуть один за одним. два ділея "додаються"
-        /*GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.IO) {
             val time = measureTimeMillis {
                 val ans1 = suspendFunc()
                 val ans2 = suspendFunc2()
             }
             log("requests took $time ms")
-        }*/
+        }
 
 
         //запити виконаютсья паралельно. launch варіант (поганий)
-        /*GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.IO) {
             val time = measureTimeMillis {
                 var answer1: String? = null
                 var answer2: String? = null
@@ -172,7 +172,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
                 log("answer2 - $answer2")
             }
             log("requests took $time ms")
-        }*/
+        }
 
         //запити виконаютсья паралельно. async варіант (нормальний)
         GlobalScope.launch(Dispatchers.IO) {

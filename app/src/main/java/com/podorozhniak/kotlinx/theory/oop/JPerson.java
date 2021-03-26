@@ -1,5 +1,7 @@
 package com.podorozhniak.kotlinx.theory.oop;
 
+import java.util.Objects;
+
 public class JPerson {
 
     private String name;
@@ -47,5 +49,21 @@ public class JPerson {
     public void setWidth(int width) {
         if (width != 0)
             this.width = width;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JPerson jPerson = (JPerson) o;
+        return age == jPerson.age &&
+                height == jPerson.height &&
+                width == jPerson.width &&
+                Objects.equals(name, jPerson.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age, height, width);
     }
 }
