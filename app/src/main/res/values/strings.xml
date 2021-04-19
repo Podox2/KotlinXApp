@@ -93,4 +93,6 @@ Aenean in arcu laoreet, gravida orci et, faucibus velit. Etiam finibus viverra t
     <string name="content_text_two">Nam ultrices, nunc sit amet vulputate vehicula, eros sem malesuada augue, quis cursus sem orci id magna. Vestibulum neque nibh, scelerisque eget urna nec, malesuada aliquam magna. Aenean varius justo tellus. Donec non leo ut turpis condimentum pharetra. Vestibulum lacinia lobortis volutpat. Suspendisse viverra augue a quam pellentesque fringilla. Fusce at purus nisl. Maecenas at justo nec sem efficitur finibus. Etiam sodales sit amet nulla non dapibus. Donec eget ante quam.</string>
     <string name="some_button">some button</string>
 
+    <string name="start">Start service</string>
+    <string name="stop">Stop service</string>
 </resources>

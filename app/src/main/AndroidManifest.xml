@@ -15,17 +15,23 @@
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".practice.view.fragment_result_api.SecondActivity" />
-        <activity android:name=".practice.view.ThirdActivity" />
-        <activity
-            android:name=".practice.view.MainActivity"
-            android:launchMode="singleTop">
+        <service
+            android:name=".practice.view.services.MyService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".practice.view.services.ServiceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".practice.view.fragment_result_api.SecondActivity" />
+        <activity android:name=".practice.view.ThirdActivity" />
+        <activity
+            android:name=".practice.view.MainActivity"
+            android:launchMode="singleTop" />
 
         <service
             android:name=".practice.notifications.MyFirebaseMessagingService"
