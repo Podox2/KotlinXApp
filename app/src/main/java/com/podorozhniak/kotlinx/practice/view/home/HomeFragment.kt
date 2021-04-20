@@ -98,6 +98,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             btnThirdActivity.onClick {
                 (requireActivity() as MainActivity).openThirdActivityForResult()
             }
+            btnServiceActivity.onClick {
+                (requireActivity() as MainActivity).openServiceActivity()
+            }
+            btnBindServiceActivity.onClick {
+                (requireActivity() as MainActivity).openBindServiceActivity()
+            }
             btnViewPager.onClick {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToViewPagerFragment())
             }

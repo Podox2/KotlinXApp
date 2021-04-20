@@ -120,6 +120,20 @@
                 app:backgroundTint="@color/blue"/>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_service_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/service_activity"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_bind_service_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bind_service_activity"
+                app:backgroundTint="@color/blue"/>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_view_pager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

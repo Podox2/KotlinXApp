@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.view.services
+package com.podorozhniak.kotlinx.practice.view.services.start
 
 import android.content.Intent
 import android.content.IntentFilter
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.ActivityServiceBinding
 import com.podorozhniak.kotlinx.practice.extensions.onClick
+import com.podorozhniak.kotlinx.practice.view.services.*
 
 
 class ServiceActivity : AppCompatActivity() {

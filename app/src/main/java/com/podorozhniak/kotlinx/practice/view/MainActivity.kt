@@ -25,6 +25,8 @@ import com.podorozhniak.kotlinx.practice.extensions.disableTooltip
 import com.podorozhniak.kotlinx.practice.extensions.setupWithNavController
 import com.podorozhniak.kotlinx.practice.util.Screen
 import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
+import com.podorozhniak.kotlinx.practice.view.services.bind.BindServiceActivity
+import com.podorozhniak.kotlinx.practice.view.services.start.ServiceActivity
 
 class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -191,5 +193,21 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         val intent = Intent(this, ThirdActivity::class.java)
         resultLauncher.launch(intent)
         this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    fun openServiceActivity() {
+        startActivity(
+            Intent(
+                this, ServiceActivity::class.java
+            )
+        )
+    }
+
+    fun openBindServiceActivity() {
+        startActivity(
+            Intent(
+                this, BindServiceActivity::class.java
+            )
+        )
     }
 }

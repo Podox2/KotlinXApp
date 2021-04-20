@@ -1,8 +1,11 @@
-package com.podorozhniak.kotlinx.practice.view.services
+package com.podorozhniak.kotlinx.practice.view.services.start
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.podorozhniak.kotlinx.practice.view.services.PARAM_RESULT
+import com.podorozhniak.kotlinx.practice.view.services.PARAM_STATUS
+import com.podorozhniak.kotlinx.practice.view.services.PARAM_TASK
 
 class ServiceBroadcastReceiver(private val listener: (Int, Int, Int) -> Unit) : BroadcastReceiver() {
 

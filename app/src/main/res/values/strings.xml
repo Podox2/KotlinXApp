@@ -43,6 +43,8 @@
     <string name="alert_dialog">Material alert dialog</string>
     <string name="second_activity">Second activity</string>
     <string name="third_activity">Third Activity</string>
+    <string name="service_activity">Service Activity</string>
+    <string name="bind_service_activity">Bind Service Activity</string>
     <string name="view_pager">View Pager 2</string>
     <string name="third_activity_send_data">Third Activity.\nPress to send data</string>
     <string name="hide_system_ui">Hide system UI</string>
@@ -95,4 +97,8 @@ Aenean in arcu laoreet, gravida orci et, faucibus velit. Etiam finibus viverra t
 
     <string name="start">Start service</string>
     <string name="stop">Stop service</string>
+    <string name="bind">Bind</string>
+    <string name="unbind">Unbind</string>
+    <string name="up">Up</string>
+    <string name="down">Down</string>
 </resources>

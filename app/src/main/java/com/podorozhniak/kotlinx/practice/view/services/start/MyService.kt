@@ -1,15 +1,15 @@
-package com.podorozhniak.kotlinx.practice.view.services
+package com.podorozhniak.kotlinx.practice.view.services.start
 
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import com.podorozhniak.kotlinx.practice.view.services.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 
 class MyService : Service() {
-
 
     override fun onCreate() {
         super.onCreate()
