@@ -5,8 +5,8 @@ package com.podorozhniak.kotlinx.theory.oop
 //відразу прописується основний конструктор ( (val name: String) )
 //можна задавати поля по замовчуванню
 class Person private constructor(val name: String) {
-    //ініціалізувати щось при створенні об'єкту
-    init{
+    //проініціалізувати щось при створенні об'єкту
+    init {
         println("init")
     }
 

@@ -13,4 +13,7 @@ open class ClickableImpl : Clickable {
     //перевизначені методи по дефолту open
     final override fun click() = println("click")
 
+    //перевизначений метод, який має дефолтну реалізацію в інтерфейсі
+    override fun defClick() = println("defClick")
+
 }

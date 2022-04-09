@@ -33,6 +33,8 @@ public class JavaFeatures {
         jvmNonInterop.setName("new name");
         jvmNonInterop.setAge(22);
         int number = JvmNonInterop.Companion.getNumber();
+        //не можна
+        //jvmNonInterop.defaultParam();
         jvmNonInterop.defaultParam(10);
     }
 
