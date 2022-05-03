@@ -6,10 +6,10 @@ import com.google.firebase.messaging.RemoteMessage
 import com.podorozhniak.kotlinx.practice.util.NotificationUtil.showNotification
 
 /*
-* при використанні FirebaseMessagingService сповіщення може прийти в трьох випадках
-* при запущеній аплікусі - в цьому випадку, сповіщення не буде показане (така політика Firebase),
+* при використанні FirebaseMessagingService сповіщення може прийти в трьох випадках:
+* 1. при запущеній аплікусі - в цьому випадку, сповіщення не буде показане (така політика Firebase),
 * але його можна обробити в FirebaseMessagingService - отримати дані і створити сповіщення самостійно
-* при закритій або згорнутій аплікусі - сповіщення буде показане автоматично
+* 2. при закритій або 3. згорнутій аплікусі - сповіщення буде показане автоматично
 * */
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     companion object {

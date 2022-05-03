@@ -25,7 +25,7 @@ android {
         release {
             minifyEnabled true
             /*removes unused resources from your packaged app,
-            including unused resources in your app’s library dependencie*/
+            including unused resources in your app’s library dependencies*/
             //shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

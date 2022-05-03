@@ -7,6 +7,7 @@ import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentViewPagerBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
 
+//https://devcolibri.com/early-introduction-of-viewpager2/
 class ViewPagerFragment : BaseFragment<FragmentViewPagerBinding>() {
 
     private val recViewPagerAdapter = RecViewPagerAdapter()

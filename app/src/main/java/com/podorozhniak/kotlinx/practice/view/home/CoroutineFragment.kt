@@ -84,7 +84,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     private suspend fun switchContext() {
         log("Coroutine says from thread  ${Thread.currentThread().name}")
         GlobalScope.launch(Dispatchers.IO) {
-            //binding.btnCoroutine.text = "some text" //causes crash cos not main thread
+            //binding.btnCoroutine.text = "some text" //causes crash cause not main thread
             log("Coroutine says from thread  ${Thread.currentThread().name}")
             withContext(Dispatchers.Main) {
                 log("Coroutine says from thread  ${Thread.currentThread().name}")

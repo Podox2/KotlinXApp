@@ -7,13 +7,17 @@ public class Outer {
 
     class InnerOrNested {
         void test() {
-            Outer.this.privateString = "can change";
+            Outer.this.privateString = "can access";
+            Outer.this.publicString = "can access";
+            staticPrivateString = "can access";
         }
     }
 
     static class StaticInner {
         void test() {
-            //Outer.this.privateString = "asd";
+            staticPrivateString = "can access";
+            //Outer.this.publicString = "can't";
+            //Outer.this.privateString = "can't";
         }
     }
 }
