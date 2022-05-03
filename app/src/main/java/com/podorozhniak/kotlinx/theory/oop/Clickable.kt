@@ -4,7 +4,7 @@ package com.podorozhniak.kotlinx.theory.oop
 interface Clickable {
     fun click()
 
-    fun defCliсk(){
+    fun defClick() {
         println("def click")
     }
 }

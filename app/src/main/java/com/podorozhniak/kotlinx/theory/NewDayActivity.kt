@@ -78,7 +78,7 @@ fun funWithManyParametersButDefaultToo(
 }
 
 //коснтанта часу компіляції (значення присвоюється під час компіляції, а не під
-//час виконання програми. її неможливо змінити
+//час виконання програми) її неможливо змінити
 const val NUMBER: Int = 5000
 
 /*extension ф-ція скомпілюється в ф-цію, в яку передається об'єкт (з типом String в даному випадку),
@@ -277,7 +277,6 @@ class NewDayActivity : AppCompatActivity() {
     //функція, в яку не можна передати null-тип
     fun strLen(s: String): Int = s.length
 
-
     //функція, в яку  можна передати null-тип
     //оператор ?. -> if(s != null) s.length else null
     //тобто перевіряє на null, якщо не null, то верне значення, якщо null, верне null
@@ -312,6 +311,4 @@ class NewDayActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, getString(R.string.send_email)))
         }
     }
-
-
 }
