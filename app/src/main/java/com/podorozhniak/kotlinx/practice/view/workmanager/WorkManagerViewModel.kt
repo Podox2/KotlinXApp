@@ -20,9 +20,11 @@ import java.util.concurrent.TimeUnit
 
 class WorkManagerViewModel(application: Application) : AndroidViewModel(application) {
 
+    //WorkManager запустить роботу навіть якщо аплікуха була закрита або девайс був перезавантажений
+    //якщо його так налаштувати
     private val myWorkManager = WorkManager.getInstance(application)
     val outputWorkInfos: LiveData<List<WorkInfo>> =
-        myWorkManager.getWorkInfosByTagLiveData(TAG_PERIODIC_WORK)
+        myWorkManager.getWorkInfosByTagLiveData(TAG_SIMPLE_WORK)
 
     //запускає просту роботу
     fun startSimpleWork() {
@@ -44,7 +46,7 @@ class WorkManagerViewModel(application: Application) : AndroidViewModel(applicat
 
         myWorkManager.enqueue(oneTimeWorkRequest)
         //інший варіант запуску роботи
-        myWorkManager.beginWith(oneTimeWorkRequest).enqueue()
+        //myWorkManager.beginWith(oneTimeWorkRequest).enqueue()
     }
 
     fun stopSimpleWork() {

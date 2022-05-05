@@ -7,7 +7,8 @@ import androidx.fragment.app.viewModels
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentWorkManagerBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_NON_COROUTINE_WORK
+import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.RESULT
+import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_WORK
 
 class WorkManagerFragment : BaseFragment<FragmentWorkManagerBinding>() {
 
@@ -23,7 +24,7 @@ class WorkManagerFragment : BaseFragment<FragmentWorkManagerBinding>() {
         setClickListeners()
         workManagerViewModel.outputWorkInfos.observe(viewLifecycleOwner) { listOfWorkInfo ->
             if (listOfWorkInfo.isEmpty()) {
-                Log.d(TAG_NON_COROUTINE_WORK, "isEmpty")
+                Log.d(TAG_WORK, "is empty")
                 return@observe
             }
 
@@ -32,9 +33,10 @@ class WorkManagerFragment : BaseFragment<FragmentWorkManagerBinding>() {
             val workInfo = listOfWorkInfo[0]
 
             if (workInfo.state.isFinished) {
-                Log.d(TAG_NON_COROUTINE_WORK, "isFinished")
+                val result = workInfo.outputData.getString(RESULT)
+                Log.d(TAG_WORK, "finished. result is $result")
             } else {
-                Log.d(TAG_NON_COROUTINE_WORK, "in progress")
+                Log.d(TAG_WORK, "in progress")
             }
         }
     }

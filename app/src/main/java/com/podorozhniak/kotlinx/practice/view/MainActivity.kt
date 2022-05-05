@@ -21,6 +21,8 @@ import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.practice.connection.broadcastreceiver.ConnectivityReceiver
+import com.podorozhniak.kotlinx.practice.connection.broadcastreceiver.WorkManagerBroadcastReceiver
+import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.WORKER_INTENT
 import com.podorozhniak.kotlinx.practice.extensions.disableTooltip
 import com.podorozhniak.kotlinx.practice.extensions.setupWithNavController
 import com.podorozhniak.kotlinx.practice.util.Screen
@@ -28,12 +30,14 @@ import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import com.podorozhniak.kotlinx.practice.view.services.bind.BindServiceActivity
 import com.podorozhniak.kotlinx.practice.view.services.start.ServiceActivity
 
-class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
+class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener,
+    WorkManagerBroadcastReceiver.WorkManagerBroadcastHandler {
 
     lateinit var bottomNavigationView: BottomNavigationView
     private var currentNavController: LiveData<NavController>? = null
 
     private val connectivityReceiver = ConnectivityReceiver()
+    private val workManagerReceiver = WorkManagerBroadcastReceiver()
 
     var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -112,9 +116,15 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
     override fun onResume() {
         super.onResume()
         ConnectivityReceiver.connectivityReceiverListener = this
+        workManagerReceiver.broadcastHandler = this
+        //реєструємо якими ресіверами обробляти які інтенти
         registerReceiver(
             connectivityReceiver,
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+        registerReceiver(
+            workManagerReceiver,
+            IntentFilter(WORKER_INTENT)
         )
     }
 
@@ -132,6 +142,10 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         } else {
             Toast.makeText(this, "No connection to network", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun handleBroadcast(response: String) {
+        Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
     }
 
     /**
