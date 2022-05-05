@@ -12,6 +12,7 @@
     <string name="send_email">Send email..</string>
     <string name="work_manager">Work Manager</string>
     <string name="coroutines">Coroutines</string>
+    <string name="start_non_coroutine_work">Start non-coroutine work</string>
     <string name="start_simple_work">Start simple work</string>
     <string name="stop_simple_work">Stop simple work</string>
     <string name="start_periodic_work">Start periodic work</string>

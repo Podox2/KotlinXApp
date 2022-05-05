@@ -22,7 +22,6 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 class NetworkRequestViewModel(private val messagesRepo: MessagesRepo, viewModelExecutor: ViewModelExecutor) : BaseViewModel(viewModelExecutor) {

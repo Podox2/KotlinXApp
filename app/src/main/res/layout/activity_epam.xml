@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".epam.EpamActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -27,7 +28,7 @@
         android:id="@+id/btn_add_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add first fragment"
+        android:text="Add fragment"
         app:layout_constraintTop_toBottomOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
         />
@@ -36,7 +37,7 @@
         android:id="@+id/btn_replace_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Replace first fragment"
+        android:text="Replace fragment"
         app:layout_constraintTop_toBottomOf="@id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         />
