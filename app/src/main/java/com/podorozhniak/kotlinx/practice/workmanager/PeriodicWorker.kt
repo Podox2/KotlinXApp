@@ -1,10 +1,10 @@
-package com.podorozhniak.kotlinx.practice.connection.worker
+package com.podorozhniak.kotlinx.practice.workmanager
 
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_PERIODIC_WORK
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.TAG_PERIODIC_WORK
 
 class PeriodicWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {

@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.connection.broadcastreceiver
+package com.podorozhniak.kotlinx.practice.broadcastreceiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

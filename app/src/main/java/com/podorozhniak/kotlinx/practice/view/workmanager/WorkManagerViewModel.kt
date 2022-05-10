@@ -5,17 +5,17 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.work.*
-import com.podorozhniak.kotlinx.practice.connection.worker.NonCoroutineSecondWorker
-import com.podorozhniak.kotlinx.practice.connection.worker.NonCoroutineWorker
-import com.podorozhniak.kotlinx.practice.connection.worker.PeriodicWorker
-import com.podorozhniak.kotlinx.practice.connection.worker.SimpleWorker
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.INTERVAL_MINIMUM
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.KEY
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.NON_COROUTINE_WORK_NAME
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_NON_COROUTINE_WORK
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_PERIODIC_WORK
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_SIMPLE_WORK
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.VALUE
+import com.podorozhniak.kotlinx.practice.workmanager.NonCoroutineSecondWorker
+import com.podorozhniak.kotlinx.practice.workmanager.NonCoroutineWorker
+import com.podorozhniak.kotlinx.practice.workmanager.PeriodicWorker
+import com.podorozhniak.kotlinx.practice.workmanager.SimpleWorker
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.INTERVAL_MINIMUM
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.KEY
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.NON_COROUTINE_WORK_NAME
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.TAG_NON_COROUTINE_WORK
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.TAG_PERIODIC_WORK
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.TAG_SIMPLE_WORK
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.VALUE
 import java.util.concurrent.TimeUnit
 
 class WorkManagerViewModel(application: Application) : AndroidViewModel(application) {
@@ -116,5 +116,4 @@ class WorkManagerViewModel(application: Application) : AndroidViewModel(applicat
             )
             .enqueue()*/
     }
-
 }

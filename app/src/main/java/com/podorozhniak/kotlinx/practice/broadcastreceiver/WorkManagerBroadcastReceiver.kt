@@ -1,9 +1,9 @@
-package com.podorozhniak.kotlinx.practice.connection.broadcastreceiver
+package com.podorozhniak.kotlinx.practice.broadcastreceiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.RESULT
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.RESULT
 
 class WorkManagerBroadcastReceiver : BroadcastReceiver() {
 

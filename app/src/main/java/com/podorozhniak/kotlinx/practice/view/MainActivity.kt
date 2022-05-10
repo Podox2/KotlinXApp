@@ -20,9 +20,9 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.podorozhniak.kotlinx.R
-import com.podorozhniak.kotlinx.practice.connection.broadcastreceiver.ConnectivityReceiver
-import com.podorozhniak.kotlinx.practice.connection.broadcastreceiver.WorkManagerBroadcastReceiver
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.WORKER_INTENT
+import com.podorozhniak.kotlinx.practice.broadcastreceiver.ConnectivityReceiver
+import com.podorozhniak.kotlinx.practice.broadcastreceiver.WorkManagerBroadcastReceiver
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.WORKER_INTENT
 import com.podorozhniak.kotlinx.practice.extensions.disableTooltip
 import com.podorozhniak.kotlinx.practice.extensions.setupWithNavController
 import com.podorozhniak.kotlinx.practice.util.Screen

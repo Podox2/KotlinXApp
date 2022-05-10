@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.connection.worker
+package com.podorozhniak.kotlinx.practice.workmanager
 
 object WorkManagerConstants {
     const val INTERVAL_MINIMUM = 15

@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.practice.connection.worker
+package com.podorozhniak.kotlinx.practice.workmanager
 
 import android.content.Context
 import android.content.Intent
@@ -9,10 +9,10 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.google.firebase.messaging.RemoteMessage
 import com.podorozhniak.kotlinx.KotlinXApp
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.KEY
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.RESULT
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_SIMPLE_WORK
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.WORKER_INTENT
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.KEY
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.RESULT
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.TAG_SIMPLE_WORK
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.WORKER_INTENT
 import com.podorozhniak.kotlinx.practice.util.NotificationUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -38,7 +38,7 @@ class SimpleWorker(appContext: Context, workerParams: WorkerParameters) :
         //intent для бродкасту з власним action і бандлом
         val intent = Intent(WORKER_INTENT)
         intent.putExtra(RESULT, bundle)
-        //простіший варіант передати стрінгу
+        //простіший варіант передати стрінгу, а не bundle
         //intent.putExtra(RESULT, result)
 
         //можна показати сповіщення як варіант обробки роботи

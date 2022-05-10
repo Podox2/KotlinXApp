@@ -7,8 +7,8 @@ import androidx.fragment.app.viewModels
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentWorkManagerBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.RESULT
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_WORK
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.RESULT
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.TAG_WORK
 
 class WorkManagerFragment : BaseFragment<FragmentWorkManagerBinding>() {
 

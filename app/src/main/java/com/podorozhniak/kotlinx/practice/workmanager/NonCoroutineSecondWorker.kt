@@ -1,13 +1,13 @@
-package com.podorozhniak.kotlinx.practice.connection.worker
+package com.podorozhniak.kotlinx.practice.workmanager
 
 import android.content.Context
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.MULTIPLIED_VALUE_KEY
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.RANDOM_VALUE_KEY
-import com.podorozhniak.kotlinx.practice.connection.worker.WorkManagerConstants.TAG_NON_COROUTINE_WORK
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.MULTIPLIED_VALUE_KEY
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.RANDOM_VALUE_KEY
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.TAG_NON_COROUTINE_WORK
 
 //запускає роботу в бекграунд потоці
 class NonCoroutineSecondWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
