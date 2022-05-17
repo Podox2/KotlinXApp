@@ -10,14 +10,18 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialFadeThrough
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentHomeBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
+import com.podorozhniak.kotlinx.practice.base.Event
 import com.podorozhniak.kotlinx.practice.base.FullscreenDialogFragment
 import com.podorozhniak.kotlinx.practice.di.appContext
 import com.podorozhniak.kotlinx.practice.extensions.*
@@ -46,6 +50,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onCreateViewBinding(view: View) = FragmentHomeBinding.bind(view)
 
+    private val eventExample = MutableLiveData<Event<String>>()
+    private val eventExampleObserver = Observer<Event<String>> {
+        it.getContentIfNotHandled()?.let { content ->
+            toast(content)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFade().apply {
@@ -58,6 +69,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @ExperimentalTime
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        eventExample.observe(viewLifecycleOwner, eventExampleObserver)
+
         binding.apply {
             customSwitch.trackDrawable = getDrawable(R.drawable.switch_track_unchecked)
 
@@ -229,6 +243,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 true
             })*/
         }
+        eventExample.observe(viewLifecycleOwner, ::observeEvent)
+    }
+
+    private fun observeEvent(event: Event<String>) {
+        Snackbar.make(binding.root, event.peekContent(), Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            delay(2_000)
+            eventExample.value = Event("voila")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        eventExample.removeObserver(eventExampleObserver)
     }
 
     private fun switchOn() {

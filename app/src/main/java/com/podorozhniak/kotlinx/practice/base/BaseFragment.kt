@@ -105,5 +105,4 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         Toast.makeText(appContext, text, Toast.LENGTH_SHORT).show()
 
     protected fun log(text: String) = Log.d(TAG_TEST, text)
-
 }
