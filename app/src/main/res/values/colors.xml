@@ -10,7 +10,8 @@
 
 
     <color name="blue">#062468</color>
-    <color name="darkBlue">#04295C</color>
+    <color name="light_blue">#03A9F4</color>
+    <color name="dark_blue">#04295C</color>
     <color name="dark">#041737</color>
     <color name="lightGreen">#00FFCB</color>
     <color name="ripple_effect_color">#80FF0000</color>

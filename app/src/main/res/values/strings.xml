@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">KotlinX</string>
+    <string name="hello_world">Hello, world</string>
 
     <!--    bottom navigation-->
     <string name="home">Home</string>
+    <string name="flow">Flow</string>
     <string name="web_view">WebView</string>
 
     <!--    email  -->

@@ -158,6 +158,7 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
 
         val navGraphIds = listOf(
             R.navigation.nav_home,
+            R.navigation.nav_flow,
             R.navigation.nav_coroutines,
             R.navigation.nav_work_manager,
             R.navigation.nav_web_view

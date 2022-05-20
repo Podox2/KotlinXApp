@@ -7,6 +7,11 @@
         android:icon="@drawable/ic_tab_selector"/>
 
     <item
+        android:id="@+id/nav_flow"
+        android:title="@string/flow"
+        android:icon="@drawable/ic_tab_selector"/>
+
+    <item
         android:id="@+id/nav_coroutines"
         android:title="@string/coroutines"
         android:icon="@drawable/ic_tab_selector" />

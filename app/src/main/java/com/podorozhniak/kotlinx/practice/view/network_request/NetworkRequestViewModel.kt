@@ -24,7 +24,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-class NetworkRequestViewModel(private val messagesRepo: MessagesRepo, viewModelExecutor: ViewModelExecutor) : BaseViewModel(viewModelExecutor) {
+class NetworkRequestViewModel(
+    private val messagesRepo: MessagesRepo,
+    viewModelExecutor: ViewModelExecutor
+) : BaseViewModel(viewModelExecutor) {
     private val refreshIntervalMs: Long = 2000
     var periodicRequestsCounter = 0
     var requestsCounter = 0
