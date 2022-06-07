@@ -1,9 +1,6 @@
 package com.podorozhniak.kotlinx.practice.flow
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.Event
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -24,8 +21,36 @@ class FlowViewModel : ViewModel() {
     private val _textLiveData = MutableLiveData("Hello, world")
     val textLiveData: LiveData<String> = _textLiveData
 
+    //верхні поля можна замінити таким. в сетері (якщо він потрібний) треба змінювати тип до Mutable
+    val textLiveDataLaconic = liveData {
+        emit("Hello, world")
+    }
+
+    // Kotlin functions
+    val mappedTextLiveData = _textLiveData.map { text ->
+        "$text mapped Kotlin"
+    }
+
+    val switchMappedTextLiveData = _textLiveData.switchMap { text ->
+        liveData {
+            emit("$text switch mapped Kotlin")
+        }
+    }
+
+    // Java methods
+    val mappedTextLiveDataByJava = Transformations.map(_textLiveData) { text ->
+        "$text mapped Java"
+    }
+
+    val switchMappedTextLiveDataByJava = Transformations.switchMap(_textLiveData) { text ->
+        liveData {
+            emit("$text switch mapped Java")
+        }
+    }
+
     fun updateLiveData() {
         _textLiveData.value = "Live Data!"
+        //(textLiveDataLaconic as MutableLiveData).value = "Live Data!"
     }
 
     //event live data ~== shared flow

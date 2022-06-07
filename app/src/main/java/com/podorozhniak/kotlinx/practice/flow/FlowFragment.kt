@@ -51,7 +51,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
 
     private fun subscribeToObservables() {
         //при повороті екрану обробить значення і відобразиться тост
-        flowViewModel.textLiveData.observe(viewLifecycleOwner) {
+        flowViewModel.mappedTextLiveData.observe(viewLifecycleOwner) {
             binding.tvLiveData.text = it
             //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
         }

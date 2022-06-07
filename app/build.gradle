@@ -9,7 +9,6 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.podorozhniak.kotlinx"
@@ -19,7 +18,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs "en"/*, "fr", "de"*/ // All supported languages in your app
+        resConfigs 'en' /*, 'fr', 'de'*/ // All supported languages in your app
     }
     buildTypes {
         release {
