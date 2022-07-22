@@ -26,17 +26,17 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
         binding.apply {
             btnCoroutine.onClick {
                 customScope()
-                //startInGlobalScope()
+                startInGlobalScope()
 
-                /*GlobalScope.launch {
-                    //runSuspends()
+                GlobalScope.launch {
+                    runSuspends()
                     switchContext()
-                }*/
+                }
 
-                //runBlocking()
-                //jobEtc()
-                //asyncAwait()
-                //scopes()
+                runBlocking()
+                jobEtc()
+                asyncAwait()
+                scopes()
             }
             btnNetworkRequests.onClick {
                 findNavController().navigate(CoroutineFragmentDirections.actionCoroutineFragmentToNetworkRequestFragment())
