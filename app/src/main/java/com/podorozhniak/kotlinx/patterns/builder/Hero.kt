@@ -1,6 +1,6 @@
 package com.podorozhniak.kotlinx.patterns.builder
 
-/* якщо є об'єкти з великою кількістю полів, які мають дефолтні значення, але їх можна змінити*/
+// якщо є об'єкти з великою кількістю полів, які мають дефолтні значення, але їх можна змінити
 data class Hero(
     val healthPoints: Int,
     val manaPoints: Int,

@@ -20,9 +20,9 @@ public class MatchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_FOOTER = 2;
 
-    private List<Match> matchList = new ArrayList<>();
-    private List<Match> matchListCopy = new ArrayList<>();
-    private OnMatchClickListener onMatchClickListener;
+    private final List<Match> matchList = new ArrayList<>();
+    private final List<Match> matchListCopy = new ArrayList<>();
+    private final OnMatchClickListener onMatchClickListener;
 
     public interface OnMatchClickListener {
         void onMatchClick(Match match);

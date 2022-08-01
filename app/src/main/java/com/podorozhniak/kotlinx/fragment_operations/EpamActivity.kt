@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.epam
+package com.podorozhniak.kotlinx.fragment_operations
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

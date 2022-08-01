@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 
 // методи в'ю моделі, які дьоргає фрагмент не повинні бути suspend
 // для таких методів в фрагменті прийдеться запустити курутину і якщо відбудеться configuration change
-// курутина його не переживе і робота, яку вона виконувала зупиниться
+// курутина його не переживе і робота, яку вона виконувала, зупиниться
 class SomeFragment {
     private val someViewModel = SomeViewModel()
     private val correctSomeViewModel = CorrectSomeViewModel()
@@ -16,7 +16,7 @@ class SomeFragment {
         //виклик неможливий не з курутини
         //someViewModel.someMethod()
 
-        //курутина прив'язана до лайфсайкла фрагмента
+        //курутина прив'язана до лайфсайкла фрагмента - погано
         someCoroutineScope.launch {
             someViewModel.someMethod()
         }

@@ -16,7 +16,7 @@ class Covariance {
         val interfaceParent: SomeInterface<Parent> = child
         //val interfaceChild: SomeInterface<Child> = parent // помилка
 
-        //в список можна додати об'єкт типу SomeInterface<Child> // помилка
+        //в список можна додати об'єкт типу SomeInterface<Child>
         val parentList = mutableListOf<SomeInterface<Parent>>()
         parentList.add(parent)
         parentList.add(child)

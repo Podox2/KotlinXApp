@@ -60,31 +60,31 @@
         android:id="@+id/tv_info_manual_requests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginTop="12dp"
         android:layout_below="@+id/btn_do_request_call"
         android:layout_centerHorizontal="true"
-        tools:text="Info from request"/>
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        tools:text="Info from request" />
 
     <TextView
         android:id="@+id/tv_info_manual_requests_transformation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginTop="12dp"
         android:layout_below="@+id/tv_info_manual_requests"
         android:layout_centerHorizontal="true"
-        tools:text="Info from request"/>
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        tools:text="Info from request" />
 
     <TextView
         android:id="@+id/tv_info_periodic_request_flow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginTop="12dp"
         android:layout_below="@+id/tv_info_manual_requests_transformation"
         android:layout_centerHorizontal="true"
-        tools:text="Info from request"/>
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        tools:text="Info from request" />
 
     <TextView
         android:id="@+id/tv_info_periodic_request_live_data"
