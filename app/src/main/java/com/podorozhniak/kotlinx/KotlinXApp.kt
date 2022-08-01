@@ -1,6 +1,7 @@
 package com.podorozhniak.kotlinx
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.podorozhniak.kotlinx.practice.data.remote.service.MessagesService
 import com.podorozhniak.kotlinx.practice.di.dataSourceModule
 import com.podorozhniak.kotlinx.practice.di.repositoryModule
@@ -20,6 +21,12 @@ class KotlinXApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initialize(
+            Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .build()
+        )
         provideMessageApi()
         startKoin {
             androidContext(applicationContext)

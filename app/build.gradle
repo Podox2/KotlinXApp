@@ -116,4 +116,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+
+    implementation 'com.facebook.stetho:stetho:1.6.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.6.0'
+
 }

@@ -1,5 +1,6 @@
 package com.podorozhniak.kotlinx.practice.view.network_request
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.BaseViewModel
 import com.podorozhniak.kotlinx.practice.base.ViewModelExecutor
@@ -11,14 +12,11 @@ import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.asFailure
 import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.asSuccess
 import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.isSuccess
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,7 +50,7 @@ class NetworkRequestViewModel(
         while(true) {
             val latestNews = fetchSomeInfo()
             emit(latestNews) // Emits the result of the request to the flow
-            kotlinx.coroutines.delay(refreshIntervalMs) // Suspends the coroutine for some time
+            delay(refreshIntervalMs) // Suspends the coroutine for some time
         }
     }
 
@@ -62,7 +60,7 @@ class NetworkRequestViewModel(
         while(true) {
             val latestNews = fetchSomeInfo()
             emit(latestNews) // Emits the result of the request to the flow
-            kotlinx.coroutines.delay(refreshIntervalMs) // Suspends the coroutine for some time
+            delay(refreshIntervalMs) // Suspends the coroutine for some time
         }
     }
 
@@ -149,6 +147,10 @@ class NetworkRequestViewModel(
         val call = messagesRepo.messagesCall()
         call.enqueue(object : Callback<List<Message>> {
             override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {
+                Log.d(
+                    "Cache",
+                    "onResponse response -> ${response.raw().networkResponse}, cache -> ${response.raw().cacheResponse}"
+                )
                 _infoFromRequest.value =
                     "get ${response.body()?.size.toString()} by Call"
             }
