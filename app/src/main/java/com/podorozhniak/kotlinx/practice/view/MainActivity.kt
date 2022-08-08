@@ -29,6 +29,7 @@ import com.podorozhniak.kotlinx.practice.util.Screen
 import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import com.podorozhniak.kotlinx.practice.view.services.bind.BindServiceActivity
 import com.podorozhniak.kotlinx.practice.view.services.start.ServiceActivity
+import com.podorozhniak.kotlinx.theory.reified.startActivity
 
 class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener,
     WorkManagerBroadcastReceiver.WorkManagerBroadcastHandler {
@@ -196,11 +197,14 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
     }
 
     fun openSecondActivity() {
-        startActivity(
+        // old boring approach
+        /*startActivity(
             Intent(
                 this, SecondActivity::class.java
             )
-        )
+        )*/
+        // cool modern Kotlin-way reified extension fun
+        this.startActivity<SecondActivity>()
         //this.overridePendingTransition(R.anim.slide_up, R.anim.wait)
     }
 
