@@ -206,7 +206,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     tiPhoneNumber,
                     PHONE_PATTERN
                 ) { etPhoneNumber, tiPhoneNumber ->
-                    etPhoneNumber.isPhoneValid(tiPhoneNumber)
+                   etPhoneNumber.isPhoneValid(tiPhoneNumber)
                 })
 
             etPassword.setOnEditorActionListener { _, actionId, _ ->
