@@ -17,11 +17,11 @@ cold - не емітить
 class FlowViewModel : ViewModel() {
 
     //live data ~== state flow
-    //LiveData is an lifecycle aware observable data holder (means it knows the lifecycle of the activity or an fragment) use it when you play with UI elements(views).
+    //LiveData is an lifecycle aware observable data holder (means it knows the lifecycle of the activity or an fragment) use it when you play with UI elements (views).
     private val _textLiveData = MutableLiveData("Hello, world")
     val textLiveData: LiveData<String> = _textLiveData
 
-    //верхні поля можна замінити таким. в сетері (якщо він потрібний) треба змінювати тип до Mutable
+    //верхні поля можна замінити таким. в сетері (якщо він потрібний) треба змінювати тип до Mutable (53-й рядок)
     val textLiveDataLaconic = liveData {
         emit("Hello, world")
     }
@@ -50,7 +50,7 @@ class FlowViewModel : ViewModel() {
 
     fun updateLiveData() {
         _textLiveData.value = "Live Data!"
-        //(textLiveDataLaconic as MutableLiveData).value = "Live Data!"
+        (textLiveDataLaconic as MutableLiveData).value = "Live Data!"
     }
 
     //event live data ~== shared flow

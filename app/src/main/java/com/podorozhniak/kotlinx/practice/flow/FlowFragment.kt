@@ -78,10 +78,12 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
 
         //при повороті екрану тост не відобразиться
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            flowViewModel.textSharedFlow.collectLatest {
-                binding.tvSharedFlow.text = it
-                //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
-            }
+            flowViewModel.textSharedFlow
+                .map { text -> "$text was mapped" }
+                .collectLatest {
+                    binding.tvSharedFlow.text = it
+                    //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                }
         }
     }
 
