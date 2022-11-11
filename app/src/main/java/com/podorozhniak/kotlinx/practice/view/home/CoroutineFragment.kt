@@ -2,9 +2,9 @@ package com.podorozhniak.kotlinx.practice.view.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentCoroutinesBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
@@ -12,10 +12,16 @@ import com.podorozhniak.kotlinx.practice.di.appContext
 import com.podorozhniak.kotlinx.practice.extensions.onClick
 import com.podorozhniak.kotlinx.practice.view.MainActivity
 import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
+import com.podorozhniak.kotlinx.theory.coroutines.handler
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 
 class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
+
+    private val COR_DEBUG = "coroutine debug:"
+    // є ось такий вид джобів. можна перевіряти чи джоба виконана
+    private var completableJob: CompletableJob? = null
+
     override val layoutId: Int
         get() = R.layout.fragment_coroutines
 
@@ -24,26 +30,34 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            btnCoroutine.onClick {
-                customScope()
-                startInGlobalScope()
-
-                GlobalScope.launch {
-                    runSuspends()
-                    switchContext()
-                }
-
-                runBlocking()
-                jobEtc()
-                asyncAwait()
-                scopes()
+            btnCallsByLaunch.onClick {
+                fakeApiCallsByLaunch()
             }
-            btnNetworkRequests.onClick {
-                findNavController().navigate(CoroutineFragmentDirections.actionCoroutineFragmentToNetworkRequestFragment())
+            btnCallsByAsyncAwait.onClick {
+                fakeApiCallsByAsyncAwait()
+            }
+            btnCallsSequential.onClick {
+                fakeApiCallsSequential()
+            }
+            btnSimpleSequential.onClick {
+                simpleSequential()
+            }
+            btnRunBlocking.onClick {
+                runBlockingExample()
+            }
+            btnGlobalScope.onClick {
+                globalScopeIssue()
+            }
+            btnGlobalScopeSecond.onClick {
+                globalScopeIssueAnotherExample()
+            }
+            btnHandler.onClick {
+                handlerApproach()
             }
         }
     }
 
+    // custom scope
     private val uiJob = Job()
     //Scope = context в якому працює курутина
     private val uiScope = CoroutineScope(context = Dispatchers.Main + uiJob)
@@ -52,176 +66,321 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
             log("uiScope")
         }
     }
-
-    //треба самому відміняти job, якщо кастомний скоуп
+    // !! треба самому відміняти job, якщо кастомний скоуп
     override fun onDestroyView() {
         super.onDestroyView()
         uiJob.cancel()
     }
 
-    //https://www.youtube.com/watch?v=kvfpuzSwVZ8&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=2
-    //якщо закрити аплікуху, то знищиться і мейн тред, і курутина в ній -> не виведетсья лог
-    private fun startInGlobalScope() {
-        GlobalScope.launch {
-            delay(5_000L)
-            log("Coroutine says from thread  ${Thread.currentThread().name}")
+    // паралельне виконання через launch
+    private fun fakeApiCallsByLaunch() {
+        val startTime = System.currentTimeMillis().toInt()
+        // запускаємо батьківську корутину, щоб в принципі викликати suspend функції
+        val parentJob = lifecycleScope.launch {
+            // переключаємось на IO потік (в цьому прикладі це не важливо, але в цілому потрібно)
+            withContext(Dispatchers.IO) {
+                // запускаємо першу дочірню корутину для першого реквесту
+                val job1 = launch {
+                    val time = measureTimeMillis {
+                        Log.e(COR_DEBUG, "launching job1 in ${getThreadName()}")
+                        val response1 = fakeRequest1()
+                        Log.e(COR_DEBUG, response1)
+                    }
+                    Log.e(COR_DEBUG, "job1 time - $time ms")
+                }
+
+                // запускаємо другу дочірню корутину для другого реквесту.
+                // вона буде виконуватись паралельно першій корутині
+                val job2 = launch {
+                    val time2 = measureTimeMillis {
+                        Log.e(COR_DEBUG, "launching job2 in ${getThreadName()}")
+                        val response2 = fakeRequest2()
+                        Log.e(COR_DEBUG, response2)
+                    }
+                    Log.e(COR_DEBUG, "job2 time - $time2 ms")
+                }
+            }
         }
-        log("Coroutine says from thread  ${Thread.currentThread().name}")
+        // загальний час виконання ~= роботі довшого (другого) реквесту
+        // бо реквести виконались паралельно
+        parentJob.invokeOnCompletion {
+            val totalTime = System.currentTimeMillis().toInt() - startTime
+            Log.e(COR_DEBUG, "total $totalTime ms")
+        }
     }
 
-    //https://www.youtube.com/watch?v=yc_WfBp-PdE&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=3
-    //suspend ф-ції запускаються в курутинах, або інших suspend ф-ціях
-    //два ділея будуть по черзі виконані. вивід відбудеться через 4 секунди
-    private suspend fun runSuspends() {
-        log("start coroutines")
-        val response = suspendFunc()
-        val response2 = suspendFunc2()
-        log(response)
-        log(response2)
+    // паралельне виконання через async / await
+    // всі коментарі зверху правдиві і тут
+    private fun fakeApiCallsByAsyncAwait() {
+        val startTime = System.currentTimeMillis().toInt()
+        val parentJob = lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                // запускаємо першу корутину для першого реквесту
+                val job1: Deferred<String> = async {
+                    Log.e(COR_DEBUG, "launching job1 in ${getThreadName()}")
+                    fakeRequest1()
+                }
+
+                val job2: String = async {
+                    Log.e(COR_DEBUG, "launching job2 in ${getThreadName()}")
+                    fakeRequest2()
+                }.await()
+
+                Log.e(COR_DEBUG, job1.await())
+                Log.e(COR_DEBUG, job2)
+            }
+        }
+        // загальний час виконання ~= роботі довшого (другого) реквесту
+        // бо реквести виконались паралельно
+        parentJob.invokeOnCompletion {
+            val totalTime = System.currentTimeMillis().toInt() - startTime
+            Log.e(COR_DEBUG, "total $totalTime ms")
+        }
     }
 
-    //https://www.youtube.com/watch?v=71NrkkRNXG4&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=4
-    private suspend fun switchContext() {
-        log("Coroutine says from thread  ${Thread.currentThread().name}")
-        GlobalScope.launch(Dispatchers.IO) {
-            //binding.btnCoroutine.text = "some text" //causes crash cause not main thread
-            log("Coroutine says from thread  ${Thread.currentThread().name}")
-            withContext(Dispatchers.Main) {
-                log("Coroutine says from thread  ${Thread.currentThread().name}")
+    // послідовне виконання через async / await
+    // всі коментарі зверху правдиві і тут
+    private fun fakeApiCallsSequential() {
+        val startTime = System.currentTimeMillis().toInt()
+        val parentJob = lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                // запускаємо першу корутину для першого реквесту
+                // job1 - Deferred<String>
+                val job1: Deferred<String> = async {
+                    Log.e(COR_DEBUG, "launching job1 in ${getThreadName()}")
+                    fakeRequest1()
+                }
+
+                val job2: String = async {
+                    Log.e(COR_DEBUG, "launching job2 in ${getThreadName()}")
+                    // очікуємо виконання job1, щоб використати результат
+                    fakeRequest3(job1.await())
+                }.await()
+                Log.e(COR_DEBUG, job2)
+
+                /*
+                // інший варіант - await() в кінці лямбди
+                // job3 - стрінга
+                val job3: String = async {
+                    Log.e("$COR_DEBUG launching job1 in ${getThreadName()}")
+                    fakeRequest1()
+                }.await()
+
+                val job4: String = async {
+                    Log.e("$COR_DEBUG launching job2 in ${getThreadName()}")
+                    // очікуємо виконання job1, щоб використати результат
+                    fakeRequest3(job3)
+                }.await()
+                Log.e("$COR_DEBUG $job4")
+                 */
+            }
+        }
+        // загальний час виконання ~= сумарно роботі двох реквестів
+        // бо реквести виконались послідовно один за одним
+        parentJob.invokeOnCompletion {
+            val totalTime = System.currentTimeMillis().toInt() - startTime
+            Log.e(COR_DEBUG, "total $totalTime ms")
+        }
+    }
+
+    // взагалі якщо потрібно щось виконати послідовно, то можна це робити в одній корутині (що логічно)
+    private fun simpleSequential() {
+        val startTime = System.currentTimeMillis().toInt()
+        val parentJob = lifecycleScope.launch {
+            val response = fakeRequest1()
+            val response3 = fakeRequest3(response)
+            Log.e(COR_DEBUG, response3)
+        }
+        parentJob.invokeOnCompletion {
+            val totalTime = System.currentTimeMillis().toInt() - startTime
+            Log.e(COR_DEBUG, "total $totalTime ms")
+        }
+    }
+
+    // runBlocking { } блокує потік, в якому викликається
+    // перший fakeRequest2() встигає спрацювати (бо в нього ділей 1 секунда)
+    // далі потік блокується на 3 секунди, після розблокування виконуються наступні 2 реквести
+    private fun runBlockingExample() {
+        lifecycleScope.launch {
+            Log.e(COR_DEBUG, fakeRequest2())
+            Log.e(COR_DEBUG, fakeRequest2())
+            Log.e(COR_DEBUG, fakeRequest2())
+        }
+
+        lifecycleScope.launch {
+            // ділей 1.5 секунди - більше ніж ділей першого реквесту
+            delay(1_500)
+            runBlocking {
+                Log.e(COR_DEBUG, "thread is blocked")
+                delay(3_000)
+                Log.e(COR_DEBUG, "thread is unblocked")
             }
         }
     }
 
-    //https://www.youtube.com/watch?v=k9yisEEPC8g&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=5
-    private fun runBlocking() {
+    private fun blockThreadExamples() {
         //не заблокує потік
         GlobalScope.launch(Dispatchers.Main) {
             delay(5_000L)
         }
-
-        //заблокує потік
-        //можна юзати замість lifecycleScope.launch { delay(1_000L) }
+        // заблокує потік
         runBlocking {
-            //можна запускати інші корутини
             launch {
-                delay(1_000L)
-                log("another coroutine")
+                delay(5_000L)
             }
-
-            log("runBlocking started")
-            delay(5_000)
-            log("runBlocking finished")
         }
-
         //варіант без корутин
-        /*log("runBlocking started")
         Thread.sleep(5_000L)
-        log("runBlocking finished")*/
     }
 
-    //https://www.youtube.com/watch?v=55W60o9uzVc&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=6
-    private fun jobEtc() {
-        val job = GlobalScope.launch(Dispatchers.Default) {
-            for (i in 0..10) {
-                //без перевірки незважаючи на cancel, курутина буде виконувати роботу
-                if (isActive) {
-                    log(longWork())
-                }
+    // при використанні GlobalScope не дотримується structured concurrency
+    // globalJob (~250 рядок) виступає як парент для двох дочірніх джоб
+    // але він нічого не знає про них, тому відразу буде виконаний invokeOnCompletion
+    // життєвий цикл джобів запущений в GlobalScope неможливо відслідкувати
+    private fun globalScopeIssue() {
+        val startTime = System.currentTimeMillis().toInt()
+        // нормальний скоуп
+        val parentJob = lifecycleScope.launch {
+            launch {
+                Log.e(COR_DEBUG, "correct job - ${fakeRequest1()}")
+            }
+            launch {
+                // вивід не відбудеться, батьківська корутина відмінить себе і дочірні джоби
+                Log.e(COR_DEBUG, fakeRequest2())
             }
         }
-        runBlocking {
-            delay(2_000L)
-            job.cancel()
-            log("Main Thread is continuing...")
+        // відміняємо парент джоб, щоб відмінити дочірні джоби, які ще активні
+        lifecycleScope.launch {
+            delay(500)
+            // друга дочірня корутина відміниться
+            parentJob.cancel()
         }
 
-        //job'а зупиниться після 3 секунд
-        /*val jobTimeOut = GlobalScope.launch(Dispatchers.Default) {
+        val globalJob = lifecycleScope.launch {
+            GlobalScope.launch {
+                Log.e(COR_DEBUG, "global job - ${fakeRequest1()}")
+            }
+            GlobalScope.launch {
+                // вивід відбудеться, батьківська корутина не відмінить дочірні джоби
+                Log.e(COR_DEBUG, "global job - ${fakeRequest2()}")
+            }
+        }
+        // намагаємось відмінити парент джобу, щоб відмінити дочірні джоби, які ще активні (але вони не відміняться)
+        lifecycleScope.launch {
+            delay(500)
+            // батьківська джоба не зможе відмінити дочірні
+            globalJob.cancel()
+        }
+
+        // виконається правильно - після виконання (або відміни) двох дочірніх джоб
+        parentJob.invokeOnCompletion {
+            val totalTime = System.currentTimeMillis().toInt() - startTime
+            Log.e(COR_DEBUG, "correct job total $totalTime ms")
+        }
+        // виконається миттєво при створенні батьківської джоби, бо дочірні джоби в глобал скоупі
+        globalJob.invokeOnCompletion {
+            val totalTime = System.currentTimeMillis().toInt() - startTime
+            Log.e(COR_DEBUG, "global job total $totalTime ms")
+        }
+    }
+
+    //курутина запущена в глобал скоупі, навіть після знищення актівіті, буде жива
+    private fun globalScopeIssueAnotherExample() {
+        // ця корутина не буде знищена після закриття актівіті
+        // що логічно, бо GlobalScope != lifecycleScope актівіті (або якогось view)
+        GlobalScope.launch {
+            while (true) {
+                Log.e(COR_DEBUG, "GlobalScope coroutine still alive!")
+                delay(1_000L)
+            }
+        }
+        // ця корутина буде знищена після закриття актівіті
+        lifecycleScope.launch {
+            while (true) {
+                Log.e(COR_DEBUG, "lifecycleScope coroutine still alive!")
+                delay(1_000L)
+            }
+        }
+
+        lifecycleScope.launch {
+            delay(3_000L)
+            startActivity(Intent(appContext, SecondActivity::class.java))
+            delay(2_000L)
+            Log.e(COR_DEBUG, "closing activity")
+            (requireActivity() as MainActivity).finish()
+        }
+    }
+
+    // якщо треба оновити змінну, яка знаходиться поза скоупом корутини при використанні launch
+    // треба викликати join(), щоб дочекатись значення
+    private fun joinExample() {
+        var someString = ""
+        var someStringJoin = ""
+         lifecycleScope.launch {
+             val job = launch {
+                 someString = fakeRequest1()
+                 someStringJoin = fakeRequest1()
+             }
+             job.join()
+        }
+        Log.e(COR_DEBUG, "someString = $someString")
+        Log.e(COR_DEBUG, "someStringJoin = $someStringJoin")
+    }
+
+    //джоба зупиниться після 3 секунд
+    private fun jobWithTimeOut() {
+        val jobTimeOut = lifecycleScope.launch {
             withTimeout(3_000L) {
                 repeat(5) {
                     log("Coroutine is still working $it")
                     delay(1500L)
                 }
             }
-        }*/
-    }
-
-    //https://www.youtube.com/watch?v=t-3TOke8tq8&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=7
-    private fun asyncAwait() {
-        //два запити йдуть один за одним. два ділея "додаються"
-        GlobalScope.launch(Dispatchers.IO) {
-            val time = measureTimeMillis {
-                val ans1 = suspendFunc()
-                val ans2 = suspendFunc2()
-            }
-            log("requests took $time ms")
-        }
-
-
-        //запити виконаютсья паралельно. launch варіант (поганий)
-        GlobalScope.launch(Dispatchers.IO) {
-            val time = measureTimeMillis {
-                var answer1: String? = null
-                var answer2: String? = null
-                val job1 = launch { answer1 = suspendFunc() }
-                val job2 = launch { answer2 = suspendFunc2() }
-                //без join робота програми продовжиться і в логах виведуться null'и
-                job1.join()
-                job2.join()
-                log("answer1 - $answer1")
-                log("answer2 - $answer2")
-            }
-            log("requests took $time ms")
-        }
-
-        //запити виконаютсья паралельно. async варіант (нормальний)
-        GlobalScope.launch(Dispatchers.IO) {
-            val time = measureTimeMillis {
-                val answer1 = async { suspendFunc() }
-                val answer2 = async { suspendFunc2() }.await()
-                log("answer1 - ${answer1.await()}")
-                log("answer2 - $answer2")
-            }
-            log("requests took $time ms")
         }
     }
 
-    //https://www.youtube.com/watch?v=uiPYcSSjNTI&list=PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_&index=8
-    //курутина запущена в глобал скоупі, навіть після знищення актівіті, буде жива
-    private fun scopes() {
-        GlobalScope.launch {
-            while (true) {
-                log("GlobalScope coroutine still alive!")
-                delay(1_000L)
+    // код з StructuredConcurrency2.kt
+    // аплікуха не крешнеться
+    // друга дочірня і батьківська джоби зафейляться
+    private fun handlerApproach() {
+        //val parentJobWithExcHandler = CoroutineScope(Dispatchers.Default + handler).launch {
+        // код змінений на більш для фрагменту
+        val parentJobWithExcHandler = lifecycleScope.launch(handler) {
+            launch {
+                delay(400)
+                throw Exception("some exc")
+            }
+            launch {
+                delay(1000)
+                // не виведиться, бо джоба зафейлиться
+                Log.e(COR_DEBUG, "Second job is finished")
             }
         }
-        lifecycleScope.launch {
-            while (true) {
-                log("lifecycleScope coroutine still alive!")
-                delay(1_000L)
+        parentJobWithExcHandler.invokeOnCompletion { throwable ->
+            if (throwable != null) {
+                // виведиться "some exc"
+                Log.e(COR_DEBUG, "${throwable.message}")
+            } else {
+                // не виведиться, бо джоба зафейлиться
+                Log.e(COR_DEBUG, "nice")
             }
         }
-        GlobalScope.launch {
-            delay(3_000L)
-            startActivity(Intent(appContext, SecondActivity::class.java))
-            delay(2_000L)
-            (requireActivity() as MainActivity).finish()
-        }
     }
 
-    private suspend fun suspendFunc(): String {
-        delay(2_000L)
-        return "response"
+    private fun getThreadName() = Thread.currentThread().name
+
+    private suspend fun fakeRequest1(): String {
+        delay(300)
+        return "Fake response 1"
     }
 
-    private suspend fun suspendFunc2(): String {
-        delay(2_000L)
-        return "response2"
+    private suspend fun fakeRequest2(): String {
+        delay(1_000)
+        return "Fake response 2"
     }
 
-    private fun longWork(): String {
-        Thread.sleep(500L)
-        return "longWork done"
+    private suspend fun fakeRequest3(param: String): String {
+        delay(1_000)
+        return "Fake response 2"
     }
 }
-

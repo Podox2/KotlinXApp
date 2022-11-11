@@ -1,7 +1,7 @@
 package com.podorozhniak.kotlinx.theory.variances.metanit_example
 
-//контрваріантність
-//  в дженеріках можна використовувати базвоий тип
+// контрваріантність
+// в дженеріках можна використовувати базвоий тип
 class Contrvariance {
     interface SomeInterface<in T : Parent> {
         //fun someMethod(): T

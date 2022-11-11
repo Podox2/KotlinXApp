@@ -1,24 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/blue"
     tools:context=".practice.view.home.CoroutineFragment">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_coroutine"
+        android:id="@+id/btn_calls_by_launch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_the_coroutine"
+        android:text="calls_by_launch"
         android:textColor="@color/white"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_calls_by_async_await"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="calls_by_async_await"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_calls_sequential"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="calls_sequential"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_simple_sequential"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="simple_sequential"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_run_blocking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="run_blocking"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_global_scope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="global_scope"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_global_scope_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="global_scope_2"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_handler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="handler"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_network_requests"
@@ -26,10 +87,7 @@
         android:layout_height="wrap_content"
         android:text="@string/network_request"
         android:textColor="@color/white"
-        android:textSize="26sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/btn_coroutine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="40dp"/>
+</LinearLayout>

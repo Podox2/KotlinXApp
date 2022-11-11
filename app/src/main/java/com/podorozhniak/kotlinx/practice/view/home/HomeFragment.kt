@@ -247,7 +247,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun observeEvent(event: Event<String>) {
-        Snackbar.make(binding.root, event.peekContent(), Snackbar.LENGTH_LONG).show()
+        //Snackbar.make(binding.root, event.peekContent(), Snackbar.LENGTH_LONG).show()
     }
 
     override fun onResume() {

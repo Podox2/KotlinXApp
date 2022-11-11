@@ -9,7 +9,7 @@ import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 // ключове слово reified. А його можна використовувати тільки для inline функцій
 
 // fun <reified T> isANotInline(value: Any) = value is T // помилка - треба inline
-// inline fun <T> isANotReified(value: Any) = value is T // помилка - тип стриається, треба reified
+// inline fun <T> isANotReified(value: Any) = value is T // помилка - тип стирається, треба reified
 // робоча функція
 inline fun <reified T> isA(value: Any) = value is T
 
