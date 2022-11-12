@@ -14,6 +14,7 @@ import com.podorozhniak.kotlinx.practice.view.MainActivity
 import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import com.podorozhniak.kotlinx.theory.coroutines.handler
 import kotlinx.coroutines.*
+import kotlin.coroutines.coroutineContext
 import kotlin.system.measureTimeMillis
 
 class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
@@ -31,7 +32,8 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             btnCallsByLaunch.onClick {
-                fakeApiCallsByLaunch()
+                //fakeApiCallsByLaunch()
+                executeInCustomScope()
             }
             btnCallsByAsyncAwait.onClick {
                 fakeApiCallsByAsyncAwait()
@@ -57,19 +59,71 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
         }
     }
 
+    /*
+    * Кожна корутина виконується в якомусь контексті. Цей контекст представляється класом
+    * CoroutineContext. Це набір параметрів (джоба, диспатчер, ексепшн хендлер).
+    * Можна додавати контексти, можна видаляти або змінювати елементи в ньому (наприклад, диспатчер).
+    * Job - об'єкт задачі, яка виконуєтсья у фоні. За допомогою джоби можна керувати роботою корутини,
+    * джобу можна відмінити, вона має свій життєвий цикл і на основі її можна створити ієрархію
+    * батько - дитина.
+    *
+    * ЖЦ джоби:
+    * new -> active -> completing -> completed
+    *          |___________|
+    *               |
+    *          cancelling-> cancelled
+    *
+    * Dispatchers (відповідають за потоки):
+    *   Main - головний потік; в Андроїд - UI потік
+    *   Default - для інтенсивної обчислювальної роботи
+    *   IO - для IO операцій
+    *   Unconfined - не прив'язаний до конкретного потоку. Виконання корутин відбувається в тому ж
+    *                потоці, в якому корутина була створена і запущена.
+    *
+    *
+    * CoroutineScope - життєвий цикл для виконання асинхронних операцій. Відповідає за свої дочірні корутини.
+    * Всі корутини мають бути прив'язані до скоупу. Виключення - білдер runBlocking { }.
+    * runBlocking - блокує потік, поки не корутина не виконає роботу, тому і не потрібний скоуп.
+    *
+    * Structured concurrency - механізм, який надає ієрархічну структуру для організації роботи корутин.
+    * По суті вс принципи SC будуються на основі CoroutineScope. А під капотом через відношення батько-дитина в джоб.
+    * Принципи роботи CoroutineScope:
+    * 1. Відміна скоуп - відміна корутин
+    * 2. Скоуп знає про всі корутини (зберігає ссилки на них, які запущені в рамках нього)
+    * 3. Скоуп очікує на виконання всіх дочірніх корутин (успішно або з помилкою) , але не обов'язково завершується разом з ними.
+    *
+    * Scope vs Context
+    * якщо глянути на реалізацію CoroutineScope, то можна побачити, що це лише обгортка над контекстом (має одне поле coroutineContext)
+    * Головна різниця між ними - це їхнє цільове призначення.
+    * Context - набір параметрів для виконання корутини; Scope - призначений для об'єднання корутин, запущених в рамках нього
+    * і надає спільну батьківську джобу для цих корутин.
+    *
+    * GlobalScope - живе поки живе процес
+    */
+
     // custom scope
-    private val uiJob = Job()
-    //Scope = context в якому працює курутина
-    private val uiScope = CoroutineScope(context = Dispatchers.Main + uiJob)
-    private fun customScope() {
+    private val uiJob = SupervisorJob()
+    //Scope в якому працює курутина, може задаватись елементами як контекст, джоба, хендлер
+    private val uiScope = CoroutineScope(context = Dispatchers.Default + uiJob + handler)
+    private fun executeInCustomScope() {
+        // можна задавати ім'я корутині
         uiScope.launch {
-            log("uiScope")
+            Log.e(COR_DEBUG,"uiScope")
         }
     }
-    // !! треба самому відміняти job, якщо кастомний скоуп
+    // !! треба самому відміняти скоуп, якщо він кастомний (відміняться всі запущені корутини в рамках нього)
     override fun onDestroyView() {
         super.onDestroyView()
-        uiJob.cancel()
+        uiScope.cancel()
+    }
+
+    // функція coroutineScope { } використовується, коли в suspend fun треба запустити корутину
+    private suspend fun anotherWayToCreateScope() {
+        coroutineScope {
+            // паралельні операції
+            launch { }
+            launch { }
+        }
     }
 
     // паралельне виконання через launch
