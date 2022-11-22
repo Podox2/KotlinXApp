@@ -32,8 +32,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             btnCallsByLaunch.onClick {
-                //fakeApiCallsByLaunch()
-                executeInCustomScope()
+                fakeApiCallsByLaunch()
             }
             btnCallsByAsyncAwait.onClick {
                 fakeApiCallsByAsyncAwait()
@@ -62,7 +61,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     /*
     * Кожна корутина виконується в якомусь контексті. Цей контекст представляється класом
     * CoroutineContext. Це набір параметрів (джоба, диспатчер, ексепшн хендлер).
-    * Можна додавати контексти, можна видаляти або змінювати елементи в ньому (наприклад, диспатчер).
+    * Можна додавати контексти, можна видаляти або змінювати елементи в ньому (наприклад, диспатчер через witchContext()).
     * Job - об'єкт задачі, яка виконуєтсья у фоні. За допомогою джоби можна керувати роботою корутини,
     * джобу можна відмінити, вона має свій життєвий цикл і на основі її можна створити ієрархію
     * батько - дитина.
@@ -90,7 +89,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     * Принципи роботи CoroutineScope:
     * 1. Відміна скоуп - відміна корутин
     * 2. Скоуп знає про всі корутини (зберігає ссилки на них, які запущені в рамках нього)
-    * 3. Скоуп очікує на виконання всіх дочірніх корутин (успішно або з помилкою) , але не обов'язково завершується разом з ними.
+    * 3. Скоуп очікує на виконання всіх дочірніх корутин (успішно або з помилкою), але не обов'язково завершується разом з ними.
     *
     * Scope vs Context
     * якщо глянути на реалізацію CoroutineScope, то можна побачити, що це лише обгортка над контекстом (має одне поле coroutineContext)
@@ -121,8 +120,20 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     private suspend fun anotherWayToCreateScope() {
         coroutineScope {
             // паралельні операції
-            launch { }
-            launch { }
+            launch {
+
+            }
+            launch {
+                try {
+                } catch (e: Exception) {
+                } finally {
+                    // NonCancellable - спеціальна версія джоби, яку не можна відмінити
+                    // якщо потрібно обов'язково щось виконати, навіть якщо відбулась помилка
+                    // правильно використовувати тільки з withContext { }
+                    withContext(NonCancellable) {
+                    }
+                }
+            }
         }
     }
 

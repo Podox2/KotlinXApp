@@ -5,7 +5,7 @@ import kotlinx.coroutines.delay
 import retrofit2.HttpException
 
 //якщо так оброблювати помилки, то батьківська курутина не буде знати про відміну
-suspend fun rickyTask() {
+suspend fun riskyTask() {
     try {
         delay(1_000)
         println("The answer is ${10 / 0}")

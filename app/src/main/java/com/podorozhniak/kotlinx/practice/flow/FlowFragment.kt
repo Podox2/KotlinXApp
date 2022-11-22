@@ -1,6 +1,7 @@
 package com.podorozhniak.kotlinx.practice.flow
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,9 +34,11 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
         binding.apply {
             btnLiveData.setOnClickListener {
                 flowViewModel.updateLiveData()
+                flowViewModel.liveData1.value = "ld1"
             }
             btnEvent.setOnClickListener {
                 flowViewModel.updateEventLiveData()
+                flowViewModel.liveData2.value = "ld2"
             }
             btnStateFlow.setOnClickListener {
                 flowViewModel.updateStateFlow()
@@ -50,6 +53,10 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
     }
 
     private fun subscribeToObservables() {
+        flowViewModel.mediatorLiveData.observe(viewLifecycleOwner) {
+            Log.d("MEDIATOR_TAG", it)
+        }
+
         //при повороті екрану обробить значення і відобразиться тост
         flowViewModel.mappedTextLiveData.observe(viewLifecycleOwner) {
             binding.tvLiveData.text = it

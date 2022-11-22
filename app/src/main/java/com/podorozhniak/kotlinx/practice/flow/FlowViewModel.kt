@@ -16,6 +16,22 @@ cold - не емітить
  */
 class FlowViewModel : ViewModel() {
 
+    // медіатор лайв дата
+    // тригериться на кожне оновлення source-лайвдат
+    // тобто, навіть якщо одна з лайв дат без значення - підписникам прийде оновлення
+    val liveData1 = MutableLiveData<String>()
+    val liveData2 = MutableLiveData<String>()
+    val mediatorLiveData = MediatorLiveData<String>()
+
+    init {
+        mediatorLiveData.addSource(liveData1) {
+            mediatorLiveData.value = "$it is from livedata1, ${liveData2.value} is from livedata2"
+        }
+        mediatorLiveData.addSource(liveData2) {
+            mediatorLiveData.value = "${liveData1.value} is from livedata1, $it is from livedata2"
+        }
+    }
+
     //live data ~== state flow
     //LiveData is an lifecycle aware observable data holder (means it knows the lifecycle of the activity or an fragment) use it when you play with UI elements (views).
     private val _textLiveData = MutableLiveData("Hello, world")

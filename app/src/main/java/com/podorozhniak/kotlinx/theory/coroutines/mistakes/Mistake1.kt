@@ -5,16 +5,19 @@ import kotlinx.coroutines.*
 //https://youtu.be/cr5xLjPC4-0
 fun main() {
     println("start")
-    val list = mutableListOf<String>()
+    val idList = mutableListOf<String>()
     (0..9).forEach {
-        list.add(it.toString())
+        idList.add(it.toString())
     }
+    var userFirstNamesList: List<String>
 
     runBlocking {
-        //getUserFirstNames(list)
-        getUserFirstNamesCorrect(list)
+        userFirstNamesList = getUserFirstNames(idList)
+        //userFirstNamesList = getUserFirstNamesCorrect(idList)
     }
-    println("end")
+    userFirstNamesList.forEach {
+        println(it)
+    }
 }
 
 //виклики getFirstName() послідовні
@@ -33,10 +36,10 @@ suspend fun getUserFirstNamesCorrect(userIds: List<String>): List<String> {
     val firstNames = mutableListOf<Deferred<String>>()
     coroutineScope {
         for (id in userIds) {
-            val firstName = async {
+            val firstName = CoroutineScope(Dispatchers.Default).async {
                 getFirstName(id)
             }
-            println(firstName)
+            println(firstName) // виведе Deferred об'єкт
             firstNames.add(firstName)
         }
     }
@@ -45,5 +48,5 @@ suspend fun getUserFirstNamesCorrect(userIds: List<String>): List<String> {
 
 suspend fun getFirstName(userId: String): String {
     delay(1_000)
-    return "First name"
+    return "First name $userId"
 }
