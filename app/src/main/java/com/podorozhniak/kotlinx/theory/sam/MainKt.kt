@@ -5,30 +5,33 @@ package com.podorozhniak.kotlinx.theory.sam
 fun main() {
     val samImpl = SamKtImpl()
 
+    // Kotlin реалізації
     // реалізація через object
     val samByObject = object : SamKt {
         override fun saySomething(): String {
-            return "qwe"
+            return "said something"
         }
     }
     // реалізація через лямбду (для цього і потрібні SAM)
-    val samByLambda = SamKt { "wqe" }
+    val samByLambda = SamKt { "said something" }
 
 
-    // реалізація через object
+    // реалізація через object. не можна реалізувати через лямбду
+    // студія не підказує, що можна конвертувати в лямбду
     val notSamByObject = object : NotSamKt {
         override fun saySomething(): String {
-            return "qwe"
+            return "said something"
         }
     }
     // реалізація через лямбду неможлива (бо інтерфейс не помічений fun)
-    //val notSamByLambda = NotSamKt { "wqe" }
+    //val notSamByLambda = NotSamKt { "said something" }
 
 
+    // Java реалізації
     val samJByObject = object: SamJ {
         override fun saySomething(): String {
-            return "qweqwe"
+            return "said something"
         }
     }
-    val samJByLambda = SamJ { "qwe" }
+    val samJByLambda = SamJ { "said something" }
 }

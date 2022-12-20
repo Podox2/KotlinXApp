@@ -8,29 +8,32 @@ public class MainJ {
         SamJ samJByAnonClass = new SamJ() {
             @Override
             public String saySomething() {
-                return "null";
+                return "said something";
             }
         };
-        SamJ samJByLambda = () -> "null";
+        SamJ samJByLambda = () -> "said something";
 
 
         SamKt samKt = new SamKt() {
             @NonNull
             @Override
             public String saySomething() {
-                return "null";
+                return "said something";
             }
         };
-        SamKt samKtByLambda = () -> "null";
+        SamKt samKtByLambda = () -> "said something";
+
 
 
         NotSamKt notSamKt = new NotSamKt() {
             @NonNull
             @Override
             public String saySomething() {
-                return "null";
+                return "said something";
             }
         };
-        NotSamKt notSamKtByLambda = () -> "null";
+        // основна відмінність.
+        // навіть не функціональний Kotlin-інтерфейс можна реалзіувати через лямбду
+        NotSamKt notSamKtByLambda = () -> "said something";
     }
 }
