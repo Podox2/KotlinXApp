@@ -14,6 +14,8 @@ suspend fun doSomething() {
         var random = Random.nextInt(10)
         //без перевірки isActive курутина не зупиниться після виклику cancel
         while (random != 5 && isActive) {
+            // ensureActive() робить те саме, що і перевірка isActive + викидає CancellationException
+            ensureActive()
             delay(500)
             random = Random.nextInt(10)
             println(random)

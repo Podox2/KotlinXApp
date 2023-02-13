@@ -179,7 +179,7 @@ suspend fun getResultOrCancellationException(number: Int): Int {
 
 suspend fun secondJobExceptionSupervisor() {
     withContext(Dispatchers.IO) {
-        // використання хендлера має фіксити креш апплікухи. але консольна програма чомусь все рівно крешиться
+        // використання хендлера має фіксити креш апплікухи. але консольна програма чомусь все рівно крешиться (13.02.23 не крешиться)
         val parentJob = launch(handler) {
             supervisorScope {
 
