@@ -69,7 +69,7 @@ fun main(args: Array<String>) {
     }
     funAsParam("string", funForFun)
 
-//laconic
+    //laconic
     println("\n")
     funAsParamLaconic("string", ::showNumber) { s: String, n: Int ->
         "$s and $n"

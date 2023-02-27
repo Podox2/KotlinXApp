@@ -10,8 +10,7 @@ import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 
 // fun <reified T> isANotInline(value: Any) = value is T // помилка - треба inline
 // inline fun <T> isANotReified(value: Any) = value is T // помилка - тип стирається, треба reified
-// робоча функція
-inline fun <reified T> isA(value: Any) = value is T
+inline fun <reified T> isA(value: Any) = value is T // робоча функція
 
 fun main() {
     // якщо задебажити, то буде видно тільки тип ArrayList, а не ArrayList<String>
@@ -24,7 +23,7 @@ fun main() {
     println(isA<String>(1)) // false
 }
 
-// юзаємо тип T як аргумент
+// юзаємо тип T як аргумент функції
 inline fun <reified T> Context.startActivity() {
     val intent = Intent(this, T::class.java)
     startActivity(intent)

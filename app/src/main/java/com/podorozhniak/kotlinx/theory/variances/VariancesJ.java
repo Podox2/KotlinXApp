@@ -3,8 +3,8 @@ package com.podorozhniak.kotlinx.theory.variances;
 import java.util.ArrayList;
 
 // типи Parent і Child знаходяться в одній ієрархії класів
-// інтуїтивно можна подумати, що і типи List<Parent> і List<Child> зв'язані
-// але це не так. Всі контейнери в Java і більшість(всі крім List<>?) в Kotlin інваріантні
+// інтуїтивно можна подумати, що і типи List<Parent> і List<Child> зв'язані,
+// але це не так. Всі контейнери в Java і більшість (всі крім List<>?) в Kotlin інваріантні
 // тип List<> в Kotlin біваріантний(?)
 public class VariancesJ {
     static class GrandParent  {

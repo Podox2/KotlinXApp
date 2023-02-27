@@ -8,7 +8,7 @@ while their wrappers don't get any special treatment.*/
 @JvmInline
 value class Password(val value: String) {
 
-    /*Inline classes support some functionality of regular classes. In particular,
+    /*Inline (value) classes support some functionality of regular classes. In particular,
      they are allowed to declare properties and functions, and have the init block*/
     init {
         require(value.isNotEmpty()) { }
