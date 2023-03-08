@@ -9,7 +9,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentFlowBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -96,9 +99,13 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
 
     private fun subscribeToFlow() {
         lifecycleScope.launch {
-            flowViewModel.triggerFlow().collectLatest {
-                binding.tvFlow.text = it
-            }
+            flowViewModel.triggerFlow()
+                .map { "$it is mapped" }
+                .flowOn(Dispatchers.Main)
+                .catch { it.printStackTrace() }
+                .collectLatest {
+                    binding.tvFlow.text = it
+                }
         }
     }
 }

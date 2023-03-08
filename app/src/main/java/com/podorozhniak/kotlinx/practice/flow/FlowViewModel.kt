@@ -7,8 +7,17 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /*
-hot stream - емітить значення без колекторів (підписників)
-cold - не емітить
+hot stream - емітить значення без колекторів (підписників).
+працює як ТБ канал, його може ніхто і не дивитись, але він і надалі буде надсилати "івенти".
+This is good when you want values computed in the background fast, preparing them
+for multiple observers you already have waiting. But if you’re going to add observers
+after the fact, you could lose the data. Additionally, if the producer of values is hot, it can keep producing values even
+though there are no consumers. This effectively wastes resources, and you have to
+close the stream manually if you stop using it.
+Приклад гарячих потоків - Channels
+
+cold - не емітить значення без колекторів.
+Приклад - Flow.
 
 гарячий - створюється 1 раз і при підписці нового не буде перестворюватись, а розішле значення підписникам
 емітить значення навіть якщо немає підписників
@@ -88,6 +97,8 @@ class FlowViewModel : ViewModel() {
     //має поле value, з якого можна отримати поточне значення. Тому при створенні потрібно обов'язково вказати якесь значення
     //якщо нове значення == старому значенню (equals == true), то не буде емітитись новий івент
     //при повороті екрану заемітить значення і воно буде оброблене, тому для тостів і т.д. не підходить
+    // It’s recommended to change the state of the StateFlow using functions like emit
+    // and tryEmit rather than using the value accessor directly (e.g. stateFlow.value = "Author: Luka" )
     private val _textStateFlow = MutableStateFlow("Hello, world")
     val textStateFlow: StateFlow<String> =
         _textStateFlow.asStateFlow() //asStateFlow щоб повернути read only тип. без цього можна змінити тип на MutableStateFlow
@@ -111,6 +122,11 @@ class FlowViewModel : ViewModel() {
     //SharedFlow - окрема реалізація StateFlow, не має поля value і не потрібне початкове значення
     //не зберігає стейт
     //для one-time івентів (тости, снекбари)
+    // One key aspect of a SharedFlow is that it never completes. Because it represents a
+    // possibly infinite stream of new information shared across multiple subscribers
+    // you have to make sure you close the Flow as soon as you don’t need it
+    //it can replay the last 1 event it processed and emitted to the rest of the subscribers
+    //private val _textSharedFlow = MutableSharedFlow<String>(replay = 1)
     private val _textSharedFlow = MutableSharedFlow<String>()
     val textSharedFlow: SharedFlow<String> = _textSharedFlow.asSharedFlow()
 
