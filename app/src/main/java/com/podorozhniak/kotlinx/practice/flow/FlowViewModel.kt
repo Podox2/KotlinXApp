@@ -2,9 +2,11 @@ package com.podorozhniak.kotlinx.practice.flow
 
 import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.Event
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 /*
 hot stream - емітить значення без колекторів (підписників).
@@ -147,5 +149,15 @@ class FlowViewModel : ViewModel() {
                 delay(1_000)
             }
         }
+    }
+
+    fun endlessFLow(): Flow<Int> {
+        return flow {
+            while (true) {
+                emit(Random.nextInt())
+                println("FLOW: Emitting item")
+                delay(500)
+            }
+        }.flowOn(Dispatchers.Default)
     }
 }

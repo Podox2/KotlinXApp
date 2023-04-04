@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.google.android.material.snackbar.Snackbar
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentFlowBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
@@ -95,6 +96,54 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
                     //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                 }
         }
+
+        /*Note: In Fragments, always use viewLifecycleOwner.lifecycleScope.
+        That’s because the Fragment’s view lifecycle can be different from the lifecycle
+        of the Fragment itself.*/
+        // поганий варіант - launch. flow створює айтеми навіть, якщо згорнути аплікуху.
+        // а фрагмент досі живий і обробляє їх.
+        /*viewLifecycleOwner.lifecycleScope.launch {
+            flowViewModel.endlessFLow().collectLatest {
+                println("FLOW: value is: $it")
+            }
+        }*/
+
+        // правильніший варіант - launchWhenStarted. фрагмент не обробляє дані, але флоу досі їхтворює
+        // This isn’t a desired behavior because it can waste CPU resources for something that might never appear on the screen
+        /*viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            flowViewModel.endlessFLow().collectLatest {
+                println("FLOW: value is: $it")
+            }
+        }*/
+
+        // правильний варіант - repeatOnLifecycle
+        /*First, you need to launch a new coroutine because repeatOnLifecycle is a suspend
+        function. It also takes a Lifecycle.State as a parameter. This parameter
+        automatically runs the code block in the coroutine when the lifecycle reaches the
+        specified state. The coroutine will be canceled when the ON_STOP event happens and
+        will restart its execution if the lifecycle receives the ON_START event again. You can
+        remove flowCollectorJob?.cancel() from onStop because you don’t need it
+        anymore.
+        Note: It’s recommended to call repeatOnX methods from an activity’s
+        onCreate or fragments onViewCreated methods to avoid unexpected
+        behavior.*/
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                flowViewModel.endlessFLow().collectLatest {
+                    println("FLOW: value is: $it")
+                }
+            }
+        }
+
+        // інший правильний варіант - flowWithLifecycle
+        /*A good recommendation is to use flowWithLifecycle when you need to collect only one flow
+        and use repeatOnLifecycle when you have multiple flows*/
+        /*viewLifecycleOwner.lifecycleScope.launch {
+            flowViewModel.endlessFLow().flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest {
+                    println("FLOW: value is: $it")
+                }
+        }*/
     }
 
     private fun subscribeToFlow() {
