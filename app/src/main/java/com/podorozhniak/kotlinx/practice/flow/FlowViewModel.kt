@@ -3,6 +3,7 @@ package com.podorozhniak.kotlinx.practice.flow
 import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.Event
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -159,5 +160,14 @@ class FlowViewModel : ViewModel() {
                 delay(500)
             }
         }.flowOn(Dispatchers.Default)
+    }
+
+    private val _channel : Channel<String> = Channel()
+    val channel = _channel.receiveAsFlow()
+
+    fun setEffect(data: String) {
+        viewModelScope.launch {
+            _channel.send(data)
+        }
     }
 }

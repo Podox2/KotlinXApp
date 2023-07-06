@@ -23,6 +23,7 @@ class ThirdActivity : AppCompatActivity() {
         this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)

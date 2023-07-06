@@ -20,6 +20,7 @@ class ProgressWebViewClient(private val progress: ProgressBar) : WebViewClient()
     }
 
     //handle play market's deep links
+    @Deprecated("Deprecated in Java")
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         if(url.contains(URL_DEEP_LINK_MARKET)) {
             val intent = Intent(Intent.ACTION_VIEW)

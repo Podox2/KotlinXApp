@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentFlowBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
@@ -53,6 +54,9 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
             btnFlow.setOnClickListener {
                 subscribeToFlow()
             }
+            btnChannel.setOnClickListener {
+                flowViewModel.setEffect("string")
+            }
         }
     }
 
@@ -69,9 +73,11 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
 
         //при повороті екрану значення вже буде оброблене до цього і тому тост не відобразиться
         flowViewModel.textEventLivaData.observe(viewLifecycleOwner) {
-            binding.tvEvent.text = it.getContentIfNotHandled()
+            binding.tvEvent.text = it.peekContent()
             it.getContentIfNotHandled()?.let { text ->
-                Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show()
+                lifecycleScope.launch {
+                    Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show()
+                }
             }
         }
 
@@ -83,7 +89,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
                 .map { text -> "$text was mapped" }
                 .collectLatest {
                     binding.tvStateFlow.text = it
-                    //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                 }
         }
 
@@ -93,7 +99,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
                 .map { text -> "$text was mapped" }
                 .collectLatest {
                     binding.tvSharedFlow.text = it
-                    //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                 }
         }
 
@@ -144,6 +150,13 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
                     println("FLOW: value is: $it")
                 }
         }*/
+
+        lifecycleScope.launchWhenStarted {
+            flowViewModel.channel.collectLatest {
+                binding.tvChannel.text = it
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun subscribeToFlow() {
