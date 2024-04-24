@@ -37,7 +37,7 @@ class NetworkRequestViewModel(
         get() = _infoFromRequest
 
     val stringToStringTrans: LiveData<String> =
-        Transformations.map(_infoFromRequest) {
+        _infoFromRequest.map {
             "transformed $it"
         }
 

@@ -1,9 +1,13 @@
 package com.podorozhniak.kotlinx.practice.flow
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentFlowBinding
@@ -31,6 +35,9 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
 
     private fun setOnClickListeners() {
         binding.apply {
+            btnNavigate.setOnClickListener {
+                findNavController().navigate(FlowFragmentDirections.openEpamFragment())
+            }
             btnLiveData.setOnClickListener {
                 flowViewModel.updateLiveData()
             }
@@ -44,7 +51,11 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
                 flowViewModel.updateSharedFlow()
             }
             btnFlow.setOnClickListener {
-                subscribeToFlow()
+                subscribeToObservables()
+                //subscribeToFlow()
+            }
+            btnChannel.setOnClickListener {
+                flowViewModel.updateChannel()
             }
         }
     }
@@ -53,14 +64,14 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
         //при повороті екрану обробить значення і відобразиться тост
         flowViewModel.mappedTextLiveData.observe(viewLifecycleOwner) {
             binding.tvLiveData.text = it
-            //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+            //Snackbar.make(binding.root, "$it (LiveData)", Snackbar.LENGTH_LONG).show()
         }
 
         //при повороті екрану значення вже буде оброблене до цього і тому тост не відобразиться
-        flowViewModel.textEventLivaData.observe(viewLifecycleOwner) {
+        flowViewModel.textEventLiveData.observe(viewLifecycleOwner) {
             binding.tvEvent.text = it.getContentIfNotHandled()
             it.getContentIfNotHandled()?.let { text ->
-                Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show()
+                //Snackbar.make(binding.root, "$text (EventLivaData)", Snackbar.LENGTH_LONG).show()
             }
         }
 
@@ -69,7 +80,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
         //при повороті екрану flow заемітить значення, воно обробиться і відобразиться тост
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             flowViewModel.textStateFlow
-                .map { text -> "$text was mapped" }
+                .map { text -> "$text was mapped (StateFlow)" }
                 .collectLatest {
                     binding.tvStateFlow.text = it
                     //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
@@ -79,11 +90,31 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
         //при повороті екрану тост не відобразиться
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             flowViewModel.textSharedFlow
-                .map { text -> "$text was mapped" }
+                .map { text -> "$text was mapped (SharedFlow)" }
                 .collectLatest {
+                    Log.d("Flows_TAG", "$it (SharedFlow)")
                     binding.tvSharedFlow.text = it
-                    //Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                 }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                flowViewModel.channel.collect {
+                    Log.d("Flows_TAG", "$it (Channel)" )
+                    binding.tvChannel.text = it
+                    Snackbar.make(binding.root, "$it (Channel)", Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                flowViewModel.channel.collect {
+                    Log.d("Flows_TAG", "$it (Channel2)" )
+                    binding.tvChannel.text = it
+                    Snackbar.make(binding.root, "$it (Channel2)", Snackbar.LENGTH_LONG).show()
+                }
+            }
         }
     }
 

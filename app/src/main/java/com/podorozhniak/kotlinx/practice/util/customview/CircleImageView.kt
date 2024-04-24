@@ -62,12 +62,12 @@ class CircleImageView @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         val x = width / DEFAULT_BORDER_SIZE_DP
         val y = height / DEFAULT_BORDER_SIZE_DP
 
         clipPath.addCircle(x, y, Math.min(x, y), Path.Direction.CW)
-        canvas?.clipPath(clipPath)
+        canvas.clipPath(clipPath)
 
         super.onDraw(canvas)
 
@@ -77,7 +77,7 @@ class CircleImageView @JvmOverloads constructor(
             strokeWidth = borderWidth
         }
 
-        canvas?.drawCircle(x, y, min(x, y), paint)
+        canvas.drawCircle(x, y, min(x, y), paint)
     }
 
 }

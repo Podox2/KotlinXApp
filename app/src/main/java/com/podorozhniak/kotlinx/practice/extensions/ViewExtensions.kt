@@ -143,7 +143,7 @@ fun <T : View> T?.onClick(
     this?.let { view ->
         callbackFlow {
             view.setOnClickListener {
-                offer(Unit)
+                trySend(Unit)
             }
             awaitClose {
                 view.setOnClickListener(null)

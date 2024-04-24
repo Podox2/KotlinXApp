@@ -9,5 +9,15 @@
         android:id="@+id/flowFragment"
         android:name="com.podorozhniak.kotlinx.practice.flow.FlowFragment"
         android:label="fragment_flow"
-        tools:layout="@layout/fragment_flow" />
+        tools:layout="@layout/fragment_flow" >
+        <action
+            android:id="@+id/openEpamFragment"
+            app:destination="@id/epamFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/epamFragment"
+        android:name="com.podorozhniak.kotlinx.fragment_operations.EpamFragment"
+        android:label="fragment_epam"
+        tools:layout="@layout/fragment_epam" />
 </navigation>

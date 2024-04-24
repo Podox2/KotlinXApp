@@ -1,7 +1,9 @@
 package com.podorozhniak.kotlinx.practice.flow
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.Event
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,6 +17,8 @@ cold - не емітить
 має буфер значень, які будуть розіслані
  */
 class FlowViewModel : ViewModel() {
+
+    private var counter = 0
 
     //live data ~== state flow
     //LiveData is an lifecycle aware observable data holder (means it knows the lifecycle of the activity or an fragment) use it when you play with UI elements (views).
@@ -37,8 +41,16 @@ class FlowViewModel : ViewModel() {
         }
     }
 
-    // Java methods
-    val mappedTextLiveDataByJava = Transformations.map(_textLiveData) { text ->
+    init {
+        viewModelScope.launch {
+            delay(2_000)
+            Log.d("COR_TEST", "coroutine")
+        }
+        Log.d("COR_TEST", "thread")
+    }
+
+    // old Java methods
+    /*val mappedTextLiveDataByJava = Transformations.map(_textLiveData) { text ->
         "$text mapped Java"
     }
 
@@ -46,7 +58,7 @@ class FlowViewModel : ViewModel() {
         liveData {
             emit("$text switch mapped Java")
         }
-    }
+    }*/
 
     fun updateLiveData() {
         _textLiveData.value = "Live Data!"
@@ -55,16 +67,17 @@ class FlowViewModel : ViewModel() {
 
     //event live data ~== shared flow
     private val _textEventLiveData = MutableLiveData<Event<String>>()
-    val textEventLivaData = _textEventLiveData
+    val textEventLiveData = _textEventLiveData
 
     fun updateEventLiveData() {
         _textEventLiveData.value = Event("Event!")
     }
 
-    //~== live data
-    //StateFlow (hot stream)  does similar things like LiveData but it is made using flow by kotlin guys and
+
+    //StateFlow (hot stream) does similar things like LiveData but it is made using flow by kotlin guys and
     // only difference compare to LiveData is its not lifecycle aware but this is also been solved using repeatOnLifecycle api's,
     // So whatever LiveData can do StateFlow can do much better with power of flow's api.
+    // ~== live data
 
     //state flow можна порівняти з лайв датою, але має більший функціонал (функціонал flow (map, filter і т.д.))
     //використовується для зберігання значення або стану (state) як і лайв дата
@@ -85,7 +98,12 @@ class FlowViewModel : ViewModel() {
     */
 
     fun updateStateFlow() {
-        _textStateFlow.value = "State Flow!"
+        counter += 1
+        _textStateFlow.value = "${counter} State Flow!"
+        // via update
+        /*_textStateFlow.update {
+            "State Flow!"
+        }*/
     }
 
     //~== event live data
@@ -99,8 +117,9 @@ class FlowViewModel : ViewModel() {
     val textSharedFlow: SharedFlow<String> = _textSharedFlow.asSharedFlow()
 
     fun updateSharedFlow() {
+        counter = counter++
         viewModelScope.launch {
-            _textSharedFlow.emit("Shared Flow!")
+            _textSharedFlow.emit("${counter} Shared Flow!")
         }
     }
 
@@ -114,6 +133,16 @@ class FlowViewModel : ViewModel() {
                 emit("emit ${it + 1}")
                 delay(1_000)
             }
+        }
+    }
+
+    private val _channel: Channel<String> = Channel()
+    val channel = _channel.receiveAsFlow()
+
+    fun updateChannel() {
+        counter = counter++
+        viewModelScope.launch {
+            _channel.send("$counter Channel")
         }
     }
 }

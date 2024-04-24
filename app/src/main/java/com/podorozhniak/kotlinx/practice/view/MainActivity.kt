@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.podorozhniak.kotlinx.ConnectivityObserver
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.practice.broadcastreceiver.ConnectivityReceiver
 import com.podorozhniak.kotlinx.practice.broadcastreceiver.WorkManagerBroadcastReceiver
@@ -30,12 +32,18 @@ import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import com.podorozhniak.kotlinx.practice.view.services.bind.BindServiceActivity
 import com.podorozhniak.kotlinx.practice.view.services.start.ServiceActivity
 import com.podorozhniak.kotlinx.theory.reified.startActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener,
     WorkManagerBroadcastReceiver.WorkManagerBroadcastHandler {
 
     lateinit var bottomNavigationView: BottomNavigationView
     private var currentNavController: LiveData<NavController>? = null
+
+    private lateinit var connectivityObserver: ConnectivityObserver
 
     private val connectivityReceiver = ConnectivityReceiver()
     private val workManagerReceiver = WorkManagerBroadcastReceiver()
@@ -55,6 +63,13 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         setContentView(R.layout.activity_main)
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.disableTooltip()
+
+        connectivityObserver = ConnectivityObserver(applicationContext)
+        lifecycleScope.launch {
+            connectivityObserver.observe().collectLatest {
+                Toast.makeText(applicationContext, "connection status is ${it.name}", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
@@ -119,10 +134,10 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         ConnectivityReceiver.connectivityReceiverListener = this
         workManagerReceiver.broadcastHandler = this
         //реєструємо якими ресіверами обробляти які інтенти
-        registerReceiver(
+        /*registerReceiver(
             connectivityReceiver,
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
+        )*/
         registerReceiver(
             workManagerReceiver,
             IntentFilter(WORKER_INTENT)
