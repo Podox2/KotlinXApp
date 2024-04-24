@@ -9,10 +9,10 @@ import kotlinx.coroutines.*
 // обробляємо креші (try/catch або coroutine exception handler) - аплікуха не крешиться, джоби фейляться
 // обробляємо креші і використовуємо supervisor scope - аплікуха не крешиться, джоби не фейляться
 fun main(): Unit = runBlocking {
-    //exceptionLogicInCoroutines()
+    exceptionLogicInCoroutines()
     // coroutine exception handler + supervisor
     //simpleApproach()
-    handlerApproach()
+    //handlerApproach()
     //supervisorAndHandlerApproach()
 }
 
@@ -59,7 +59,7 @@ suspend fun exceptionLogicInCoroutines() {
     }
 }
 
-// без ніякої додаткової лоігки
+// без ніякої додаткової логіки
 // аплікуха крешнеться
 // друга дочірня і батьківська джоби зафейляться, бо в першій дочірній ексепшн
 suspend fun simpleApproach() {
@@ -76,7 +76,7 @@ suspend fun simpleApproach() {
         }
         parentJob.invokeOnCompletion { throwable ->
             if (throwable != null) {
-                println(throwable.stackTrace)
+                println("parentJob received throwable")
             } else {
                 println("nice")
             }
@@ -104,7 +104,7 @@ suspend fun handlerApproach() {
         }
         parentJobWithExcHandler.invokeOnCompletion { throwable ->
             if (throwable != null) {
-                println(throwable.message)
+                println("parentJob received throwable")
             } else {
                 println("nice")
             }
@@ -131,7 +131,7 @@ suspend fun supervisorAndHandlerApproach() {
         }
         superVisorParentJobWithExcHandler.invokeOnCompletion { throwable ->
             if (throwable != null) {
-                println(throwable.message)
+                println("parentJob received throwable")
             } else {
                 println("nice")
             }

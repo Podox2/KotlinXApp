@@ -138,15 +138,15 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
             connectivityReceiver,
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )*/
-        registerReceiver(
+        /*registerReceiver(
             workManagerReceiver,
             IntentFilter(WORKER_INTENT)
-        )
+        )*/
     }
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(connectivityReceiver)
+        //unregisterReceiver(connectivityReceiver)
     }
 
     override fun onNetworkConnectionChanged() {

@@ -2,6 +2,7 @@ package com.podorozhniak.kotlinx.theory.rx_coroutines
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
 import retrofit2.*
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -35,7 +37,7 @@ class RxCoroutinesActivity : AppCompatActivity() {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://rawgit.com/startandroid/data/master/messages/")
             .addConverterFactory(GsonConverterFactory.create())
-            //.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
@@ -62,28 +64,28 @@ class RxCoroutinesActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object: Consumer<List<Message>> {
                     override fun accept(t: List<Message>?) {
-                        TODO("Not yet implemented")
+                        Log.d("RX_TAG", "accept")
                     }
                 }, object: Consumer<Throwable>{
                     override fun accept(t: Throwable?) {
-                        TODO("Not yet implemented")
+                        Log.d("RX_TAG", t?.message ?: "")
                     }
                 }))
 
         val l = api.messagesSingle()
-        val s = l.subscribe()
+        //val s = l.subscribe()
         single = Single.fromCallable{work2()}
         val l2 = RxJ.createSingle().subscribe(object: SingleObserver<String>{
             override fun onSubscribe(d: Disposable) {
-                TODO("Not yet implemented")
+                Log.d("RX_TAG", "onSubscribe")
             }
 
             override fun onSuccess(t: String) {
-                TODO("Not yet implemented")
+                Log.d("RX_TAG", t)
             }
 
             override fun onError(e: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("RX_TAG", e.message ?: "")
             }
         })
 
@@ -97,11 +99,11 @@ class RxCoroutinesActivity : AppCompatActivity() {
 
         val l4 = RxJ.createSingle().subscribe(object: Consumer<String> {
             override fun accept(t: String?) {
-                TODO("Not yet implemented")
+                Log.d("RX_TAG", "accept")
             }
         }, object: Consumer<Throwable>{
             override fun accept(t: Throwable?) {
-                TODO("Not yet implemented")
+                Log.d("RX_TAG", t?.message ?: "")
             }
         })
 

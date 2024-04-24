@@ -11,7 +11,7 @@
         android:label="CoroutineFragment"
         tools:layout="@layout/fragment_coroutines">
         <action
-            android:id="@+id/action_coroutineFragment_to_networkRequestFragment"
+            android:id="@+id/openNetworkRequestFragment"
             app:destination="@id/networkRequestFragment" />
     </fragment>
     <fragment

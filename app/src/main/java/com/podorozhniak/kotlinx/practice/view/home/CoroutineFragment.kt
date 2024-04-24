@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentCoroutinesBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
@@ -14,7 +15,6 @@ import com.podorozhniak.kotlinx.practice.view.MainActivity
 import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import com.podorozhniak.kotlinx.theory.coroutines.handler
 import kotlinx.coroutines.*
-import kotlin.coroutines.coroutineContext
 import kotlin.system.measureTimeMillis
 
 class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
@@ -32,8 +32,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             btnCallsByLaunch.onClick {
-                //fakeApiCallsByLaunch()
-                executeInCustomScope()
+                fakeApiCallsByLaunch()
             }
             btnCallsByAsyncAwait.onClick {
                 fakeApiCallsByAsyncAwait()
@@ -55,6 +54,9 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
             }
             btnHandler.onClick {
                 handlerApproach()
+            }
+            btnNetworkRequests.onClick {
+                findNavController().navigate(CoroutineFragmentDirections.openNetworkRequestFragment())
             }
         }
     }
@@ -83,7 +85,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     *
     * CoroutineScope - життєвий цикл для виконання асинхронних операцій. Відповідає за свої дочірні корутини.
     * Всі корутини мають бути прив'язані до скоупу. Виключення - білдер runBlocking { }.
-    * runBlocking - блокує потік, поки не корутина не виконає роботу, тому і не потрібний скоуп.
+    * runBlocking - блокує потік, поки корутина не виконає роботу, тому і не потрібний скоуп.
     *
     * Structured concurrency - механізм, який надає ієрархічну структуру для організації роботи корутин.
     * По суті всі принципи SC будуються на основі CoroutineScope. А під капотом через відношення батько-дитина в джоб.
@@ -288,7 +290,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     }
 
     // при використанні GlobalScope не дотримується structured concurrency
-    // globalJob (~250 рядок) виступає як парент для двох дочірніх джоб
+    // globalJob (~313 рядок) виступає як парент для двох дочірніх джоб
     // але він нічого не знає про них, тому відразу буде виконаний invokeOnCompletion
     // життєвий цикл джобів запущений в GlobalScope неможливо відслідкувати
     private fun globalScopeIssue() {
@@ -367,6 +369,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
 
     // якщо треба оновити змінну, яка знаходиться поза скоупом корутини при використанні launch
     // треба викликати join(), щоб дочекатись значення
+    // UPD. 24.04.2024 щось не працює
     private fun joinExample() {
         var someString = ""
         var someStringJoin = ""
