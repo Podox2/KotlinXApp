@@ -24,7 +24,7 @@ class ServiceActivity : AppCompatActivity() {
 
         binding.apply {
             btnStart.onClick {
-                //startService(Intent(this@ServiceActivity, MyService::class.java))
+                startService(Intent(this@ServiceActivity, MyService::class.java))
                 startService()
             }
 

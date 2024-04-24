@@ -33,6 +33,9 @@ public class JavaFeatures {
         jvmNonInterop.setName("new name");
         jvmNonInterop.setAge(22);
         int number = JvmNonInterop.Companion.getNumber();
+        String s = JvmNonInterop.Companion.getNONE();
+        // const val
+        String s2 = JvmNonInterop.CONST_NONE;
         //не можна
         //jvmNonInterop.defaultParam();
         jvmNonInterop.defaultParam(10);
@@ -45,6 +48,8 @@ public class JavaFeatures {
         jvmInterop.age = 22;
         //виклик функції як статичної для класу
         int number = JvmInterop.getNumber();
+        String s = JvmInterop.NONE;
+        String s2 = JvmInterop.CONST_NONE;
         //виклик функції з дефолтними параметрами
         jvmInterop.defaultParam();
     }

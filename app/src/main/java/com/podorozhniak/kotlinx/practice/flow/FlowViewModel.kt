@@ -4,13 +4,25 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.podorozhniak.kotlinx.practice.base.Event
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 /*
-hot stream - емітить значення без колекторів (підписників)
-cold - не емітить
+hot stream - емітить значення без колекторів (підписників).
+працює як ТБ канал, його може ніхто і не дивитись, але він і надалі буде надсилати "івенти".
+This is good when you want values computed in the background fast, preparing them
+for multiple observers you already have waiting. But if you’re going to add observers
+after the fact, you could lose the data. Additionally, if the producer of values is hot, it can keep producing values even
+though there are no consumers. This effectively wastes resources, and you have to
+close the stream manually if you stop using it.
+Приклад гарячих потоків - Channels
+
+cold - не емітить значення без колекторів.
+Приклад - Flow.
 
 гарячий - створюється 1 раз і при підписці нового не буде перестворюватись, а розішле значення підписникам
 емітить значення навіть якщо немає підписників
@@ -19,6 +31,22 @@ cold - не емітить
 class FlowViewModel : ViewModel() {
 
     private var counter = 0
+
+    // медіатор лайв дата
+    // тригериться на кожне оновлення source-лайвдат
+    // тобто, навіть якщо одна з лайв дат без значення - підписникам прийде оновлення
+    val liveData1 = MutableLiveData<String>()
+    val liveData2 = MutableLiveData<String>()
+    val mediatorLiveData = MediatorLiveData<String>()
+
+    init {
+        mediatorLiveData.addSource(liveData1) {
+            mediatorLiveData.value = "$it is from livedata1, ${liveData2.value} is from livedata2"
+        }
+        mediatorLiveData.addSource(liveData2) {
+            mediatorLiveData.value = "${liveData1.value} is from livedata1, $it is from livedata2"
+        }
+    }
 
     //live data ~== state flow
     //LiveData is an lifecycle aware observable data holder (means it knows the lifecycle of the activity or an fragment) use it when you play with UI elements (views).
@@ -85,6 +113,8 @@ class FlowViewModel : ViewModel() {
     //має поле value, з якого можна отримати поточне значення. Тому при створенні потрібно обов'язково вказати якесь значення
     //якщо нове значення == старому значенню (equals == true), то не буде емітитись новий івент
     //при повороті екрану заемітить значення і воно буде оброблене, тому для тостів і т.д. не підходить
+    // It’s recommended to change the state of the StateFlow using functions like emit
+    // and tryEmit rather than using the value accessor directly (e.g. stateFlow.value = "Author: Luka" )
     private val _textStateFlow = MutableStateFlow("Hello, world")
     val textStateFlow: StateFlow<String> =
         _textStateFlow.asStateFlow() //asStateFlow щоб повернути read only тип. без цього можна змінити тип на MutableStateFlow
@@ -113,6 +143,11 @@ class FlowViewModel : ViewModel() {
     //SharedFlow - окрема реалізація StateFlow, не має поля value і не потрібне початкове значення
     //не зберігає стейт
     //для one-time івентів (тости, снекбари)
+    // One key aspect of a SharedFlow is that it never completes. Because it represents a
+    // possibly infinite stream of new information shared across multiple subscribers
+    // you have to make sure you close the Flow as soon as you don’t need it
+    //it can replay the last 1 event it processed and emitted to the rest of the subscribers
+    //private val _textSharedFlow = MutableSharedFlow<String>(replay = 1)
     private val _textSharedFlow = MutableSharedFlow<String>()
     val textSharedFlow: SharedFlow<String> = _textSharedFlow.asSharedFlow()
 
@@ -143,6 +178,22 @@ class FlowViewModel : ViewModel() {
         counter = counter++
         viewModelScope.launch {
             _channel.send("$counter Channel")
+        }
+    }
+
+    fun endlessFLow(): Flow<Int> {
+        return flow {
+            while (true) {
+                emit(Random.nextInt())
+                println("FLOW: Emitting item")
+                delay(500)
+            }
+        }.flowOn(Dispatchers.Default)
+    }
+
+    fun setEffect(data: String) {
+        viewModelScope.launch {
+            _channel.send(data)
         }
     }
 }

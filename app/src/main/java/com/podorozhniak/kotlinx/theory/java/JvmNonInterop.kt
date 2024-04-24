@@ -6,6 +6,8 @@ class JvmNonInterop(var name: String) {
 
     companion object {
         fun getNumber() = 1
+        val NONE = ""
+        const val CONST_NONE = ""
     }
 
     fun defaultParam(number: Int = 10) {

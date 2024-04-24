@@ -16,7 +16,7 @@ class MyService : Service() {
         log("onCreate")
     }
 
-    //срабатывает, когда сервис запущен методом startService
+    // спрацьовує, коли сервіс запущений методом startService
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         log("onStartCommand")
         //someTask()

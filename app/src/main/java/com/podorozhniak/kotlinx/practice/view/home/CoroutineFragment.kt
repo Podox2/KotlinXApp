@@ -20,7 +20,7 @@ import kotlin.system.measureTimeMillis
 class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
 
     private val COR_DEBUG = "coroutine debug:"
-    // є ось такий вид джобів. можна перевіряти чи джоба виконана
+    // вид джобів, які дозволяють перевіряти чи джоба виконана
     private var completableJob: CompletableJob? = null
 
     override val layoutId: Int
@@ -62,12 +62,12 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     }
 
     /*
-    * Кожна корутина виконується в якомусь контексті. Цей контекст представляється класом
-    * CoroutineContext. Це набір параметрів (джоба, диспатчер, ексепшн хендлер).
-    * Можна додавати контексти, можна видаляти або змінювати елементи в ньому (наприклад, диспатчер).
+    * Кожна корутина виконується в якомусь контексті. Цей контекст представляється класом CoroutineContext.
+    * Цей контексе - це набір параметрів (джоба, диспатчер, ексепшн хендлер).
+    * Можна додавати контексти (cntxt+cntxt), можна видаляти або змінювати елементи в ньому (наприклад, диспатчер через witchContext()).
     * Job - об'єкт задачі, яка виконуєтсья у фоні. За допомогою джоби можна керувати роботою корутини,
-    * джобу можна відмінити, вона має свій життєвий цикл і на основі її можна створити ієрархію
-    * батько - дитина.
+    * джобу можна відмінити, вона має свій життєвий цикл і на основі її можна створити ієрархію батько - дитина.
+    *
     *
     * ЖЦ джоби:
     * new -> active -> completing -> completed
@@ -78,7 +78,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     * Dispatchers (відповідають за потоки):
     *   Main - головний потік; в Андроїд - UI потік
     *   Default - для інтенсивної обчислювальної роботи
-    *   IO - для IO операцій
+    *   IO - для I/O операцій
     *   Unconfined - не прив'язаний до конкретного потоку. Виконання корутин відбувається в тому ж
     *                потоці, в якому корутина була створена і запущена.
     *
@@ -96,7 +96,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     *
     * Scope vs Context
     * якщо глянути на реалізацію CoroutineScope, то можна побачити, що це лише обгортка над контекстом (має одне поле coroutineContext)
-    * Головна різниця між ними - це їхнє цільове призначення.
+    * Головна різниця між ними - їхнє цільове призначення.
     * Context - набір параметрів для виконання корутини; Scope - призначений для об'єднання корутин, запущених в рамках нього
     * і надає спільну батьківську джобу для цих корутин.
     *
@@ -123,8 +123,20 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     private suspend fun anotherWayToCreateScope() {
         coroutineScope {
             // паралельні операції
-            launch { }
-            launch { }
+            launch {
+
+            }
+            launch {
+                try {
+                } catch (e: Exception) {
+                } finally {
+                    // NonCancellable - спеціальна версія джоби, яку не можна відмінити
+                    // якщо потрібно обов'язково щось виконати, навіть якщо відбулась помилка
+                    // правильно використовувати тільки з withContext { }
+                    withContext(NonCancellable) {
+                    }
+                }
+            }
         }
     }
 
@@ -301,7 +313,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
                 Log.e(COR_DEBUG, "correct job - ${fakeRequest1()}")
             }
             launch {
-                // вивід не відбудеться, батьківська корутина відмінить себе і дочірні джоби
+                // вивід не відбудеться, адже джоба відміниться, тому що батьківська корутина відмінить себе і дочірні джоби
                 Log.e(COR_DEBUG, fakeRequest2())
             }
         }
@@ -344,6 +356,7 @@ class CoroutineFragment : BaseFragment<FragmentCoroutinesBinding>() {
     private fun globalScopeIssueAnotherExample() {
         // ця корутина не буде знищена після закриття актівіті
         // що логічно, бо GlobalScope != lifecycleScope актівіті (або якогось view)
+        // GlobalScope прив'язаний до ЖЦ аплікухи / процесу
         GlobalScope.launch {
             while (true) {
                 Log.e(COR_DEBUG, "GlobalScope coroutine still alive!")

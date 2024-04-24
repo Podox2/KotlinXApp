@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
                 this, SecondActivity::class.java
             )
         )*/
-        // cool modern Kotlin-way reified extension fun
+        // cool modern Kotlin-way reified extension fun to start Activity
         this.startActivity<SecondActivity>()
         //this.overridePendingTransition(R.anim.slide_up, R.anim.wait)
     }

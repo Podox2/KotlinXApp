@@ -4,7 +4,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import retrofit2.HttpException
 
-//якщо так оброблювати помилки, то батьківська курутина не буде знати про відміну
+//якщо так оброблювати помилки, то батьківська курутина не буде знати про відміну корутини
+// бо всі ексепшени, ловляться в try / catch включно з CancellationException
 suspend fun riskyTask() {
     try {
         delay(1_000)
@@ -27,7 +28,7 @@ suspend fun riskyTaskCorrect() {
     }
 }
 
-// можна вказати конкретний вид помилки
+// можна вказати конкретний вид помилки, який ми хочемо хендлити в try / catch
 suspend fun riskyTaskCorrect2() {
     try {
         delay(1_000)

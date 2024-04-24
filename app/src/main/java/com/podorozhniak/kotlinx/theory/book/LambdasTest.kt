@@ -1,7 +1,7 @@
 package com.podorozhniak.kotlinx.theory.book
 
 /*лямбда - невеликий фрагмент коду, який можна передавати в функції*/
-fun main(args: Array<String>) {
+fun main() {
     val letters = "Missss".count { char ->
         char == 's'
     }
@@ -69,7 +69,7 @@ fun main(args: Array<String>) {
     }
     funAsParam("string", funForFun)
 
-//laconic
+    //laconic
     println("\n")
     funAsParamLaconic("string", ::showNumber) { s: String, n: Int ->
         "$s and $n"

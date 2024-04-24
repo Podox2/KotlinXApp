@@ -8,6 +8,7 @@ val lambdaWithArgument: (String) -> Unit = { text: String ->
     println(text)
 }
 
+// якщо
 fun main() {
     // () == .invoke()
     lambda()
@@ -19,6 +20,8 @@ fun main() {
 
     // оверрайднутий оператор в класі
     val invokeExample = InvokeExample()
+    // це не виклик функції invokeExample()
+    // це виклик функції invoke(), який можна написати як ()
     invokeExample()
     invokeExample.invoke()
 }

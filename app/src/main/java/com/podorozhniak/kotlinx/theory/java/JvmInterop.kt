@@ -8,6 +8,9 @@ class JvmInterop(@JvmField var name: String) {
     companion object {
         @JvmStatic
         fun getNumber() = 1
+        @JvmField
+        val NONE = ""
+        const val CONST_NONE = ""
     }
 
     @JvmOverloads
