@@ -70,12 +70,7 @@ class CLFinalsFragment : BaseFragment<FragmentClFinalsBinding>(){
         matches.add(Match("Man U 1 (6):(5) 1 Chelsea", "2007/08"))
         matches.add(Match("Barcelona 2:0 Man U", "2008/09"))
         matches.add(Match("Bayern Munich 0:2 Inter", "2009/10"))
-        matches.add(
-            Match(
-                "Barcelona 3:1 Man U", "201" +
-                        "0/11"
-            )
-        )
+        matches.add(Match("Barcelona 3:1 Man U", "2010/11"))
         matches.add(Match("Bayern Munich 1 (3):(4) 1 Chelsea", "2011/12"))
         matches.add(Match("Borussia D 1:2 Bayern Munich", "2012/13"))
         matches.add(Match("Real Madrid 4:1 Atlético M", "2013/14"))
@@ -85,6 +80,9 @@ class CLFinalsFragment : BaseFragment<FragmentClFinalsBinding>(){
         matches.add(Match("Real Madrid 3:1 Liverpool", "2017/18"))
         matches.add(Match("Tottenham 0:2 Liverpool", "2018/19"))
         matches.add(Match("Paris Saint-Germain 0:1 Bayern Munich", "2019/20"))
+        matches.add(Match("Man City 0:1 Chelsea", "2020/21"))
+        matches.add(Match("Liverpool 0:1 Real Madrid", "2021/22"))
+        matches.add(Match("Man City 1:0 Inter", "2022/23"))
         matches.reverse()
     }
 

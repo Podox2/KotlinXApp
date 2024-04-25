@@ -22,7 +22,7 @@ object MemoryManager {
         return formatSize(totalBlocks * blockSize)
     }
 
-    private fun formatSize(_size: Long): String? {
+    private fun formatSize(_size: Long): String {
         var size = _size
         var suffix: String? = null
         if (size >= 1024) {

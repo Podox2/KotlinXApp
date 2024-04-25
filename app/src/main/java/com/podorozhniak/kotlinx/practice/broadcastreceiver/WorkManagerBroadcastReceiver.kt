@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.RESULT
 
+// бродкасти надсилає SimpleWorker
 class WorkManagerBroadcastReceiver : BroadcastReceiver() {
 
     var broadcastHandler: WorkManagerBroadcastHandler? = null

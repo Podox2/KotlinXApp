@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 class ConnectivityObserver(
-    private val context: Context
+    context: Context
 ) {
 
     private val connectivityManager =

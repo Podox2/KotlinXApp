@@ -1,10 +1,8 @@
 package com.podorozhniak.kotlinx.practice.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -14,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -22,33 +21,28 @@ import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.podorozhniak.kotlinx.ConnectivityObserver
 import com.podorozhniak.kotlinx.R
-import com.podorozhniak.kotlinx.practice.broadcastreceiver.ConnectivityReceiver
 import com.podorozhniak.kotlinx.practice.broadcastreceiver.WorkManagerBroadcastReceiver
-import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.WORKER_INTENT
 import com.podorozhniak.kotlinx.practice.extensions.disableTooltip
 import com.podorozhniak.kotlinx.practice.extensions.setupWithNavController
 import com.podorozhniak.kotlinx.practice.util.Screen
 import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import com.podorozhniak.kotlinx.practice.view.services.bind.BindServiceActivity
 import com.podorozhniak.kotlinx.practice.view.services.start.ServiceActivity
+import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.WORKER_INTENT
 import com.podorozhniak.kotlinx.theory.reified.startActivity
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener,
-    WorkManagerBroadcastReceiver.WorkManagerBroadcastHandler {
+class MainActivity : AppCompatActivity(), WorkManagerBroadcastReceiver.WorkManagerBroadcastHandler {
 
-    lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var bottomNavigationView: BottomNavigationView
     private var currentNavController: LiveData<NavController>? = null
 
     private lateinit var connectivityObserver: ConnectivityObserver
 
-    private val connectivityReceiver = ConnectivityReceiver()
     private val workManagerReceiver = WorkManagerBroadcastReceiver()
 
-    var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+    private var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             // There are no request codes
             val data: Intent? = result.data
@@ -61,6 +55,7 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         setTheme(R.style.Theme_KotlinX)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.disableTooltip()
 
@@ -95,17 +90,17 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
                 } catch (e: Exception) {
                 }
             }
-        } /*else {
+        } else {
             val cutout =
                 WindowInsetsCompat.toWindowInsetsCompat(window.decorView.rootWindowInsets).displayCutout
             if (cutout != null) {
                 try {
                     val boundingRects = cutout.boundingRects
-                    BitmapCreator.screenCutout = boundingRects[0].height()
+                    Screen.screenCutout = boundingRects[0].height()
                 } catch (e: Exception) {
                 }
             }
-        }*/
+        }
     }
 
     fun hideSystemUI() {
@@ -131,33 +126,12 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
 
     override fun onResume() {
         super.onResume()
-        ConnectivityReceiver.connectivityReceiverListener = this
         workManagerReceiver.broadcastHandler = this
         //реєструємо якими ресіверами обробляти які інтенти
-        /*registerReceiver(
-            connectivityReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )*/
-        /*registerReceiver(
+        registerReceiver(
             workManagerReceiver,
             IntentFilter(WORKER_INTENT)
-        )*/
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //unregisterReceiver(connectivityReceiver)
-    }
-
-    override fun onNetworkConnectionChanged() {
-        val connMgr =
-            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connMgr.activeNetworkInfo
-        if (networkInfo != null && networkInfo.isConnectedOrConnecting) {
-            //Toast.makeText(this, "Connected to network", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "No connection to network", Toast.LENGTH_SHORT).show()
-        }
+        )
     }
 
     override fun handleBroadcast(response: String) {
@@ -220,7 +194,7 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         )*/
         // cool modern Kotlin-way reified extension fun to start Activity
         this.startActivity<SecondActivity>()
-        //this.overridePendingTransition(R.anim.slide_up, R.anim.wait)
+        this.overridePendingTransition(R.anim.slide_up, R.anim.wait)
     }
 
     fun openThirdActivityForResult() {

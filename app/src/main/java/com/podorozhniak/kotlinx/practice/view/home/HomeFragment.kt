@@ -10,21 +10,25 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialFadeThrough
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentHomeBinding
 import com.podorozhniak.kotlinx.practice.base.BaseFragment
-import com.podorozhniak.kotlinx.practice.base.Event
 import com.podorozhniak.kotlinx.practice.base.FullscreenDialogFragment
 import com.podorozhniak.kotlinx.practice.di.appContext
-import com.podorozhniak.kotlinx.practice.extensions.*
+import com.podorozhniak.kotlinx.practice.extensions.animationStatusBarColor
+import com.podorozhniak.kotlinx.practice.extensions.heightScreenInDp
+import com.podorozhniak.kotlinx.practice.extensions.heightScreenInPx
+import com.podorozhniak.kotlinx.practice.extensions.hideKeyboard
+import com.podorozhniak.kotlinx.practice.extensions.isPersonNameValid
+import com.podorozhniak.kotlinx.practice.extensions.isPhoneValid
+import com.podorozhniak.kotlinx.practice.extensions.onClick
+import com.podorozhniak.kotlinx.practice.extensions.widthScreenInDp
+import com.podorozhniak.kotlinx.practice.extensions.widthScreenInPx
 import com.podorozhniak.kotlinx.practice.util.MemoryManager
 import com.podorozhniak.kotlinx.practice.util.Screen
 import com.podorozhniak.kotlinx.practice.util.getDrawable
@@ -36,7 +40,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 import kotlin.time.ExperimentalTime
-
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     companion object {
@@ -50,13 +53,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onCreateViewBinding(view: View) = FragmentHomeBinding.bind(view)
 
-    private val eventExample = MutableLiveData<Event<String>>()
-    private val eventExampleObserver = Observer<Event<String>> {
-        it.getContentIfNotHandled()?.let { content ->
-            toast(content)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFade().apply {
@@ -69,8 +65,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @ExperimentalTime
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        eventExample.observe(viewLifecycleOwner, eventExampleObserver)
 
         binding.apply {
             customSwitch.trackDrawable = getDrawable(R.drawable.switch_track_unchecked)
@@ -88,8 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCLFinalsFragment())
             }
             btnClCountdown.onClick {
-                /*val navOptions =
-                    NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()*/
                 findNavController().navigate(R.id.action_homeFragment_to_CLCountdownFragment)
             }
             btnFragmentsTransitionAnimation.onClick {
@@ -100,7 +92,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
             btnFullscreenDialog.onClick {
                 val fullscreenDialog = FullscreenDialogFragment()
-                //fullscreenDialog.isCancelable = false
                 fullscreenDialog.show(this@HomeFragment.childFragmentManager, fullscreenDialog.tag)
             }
             btnMaterialAlertDialog.onClick {
@@ -243,24 +234,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 true
             })*/
         }
-        eventExample.observe(viewLifecycleOwner, ::observeEvent)
-    }
-
-    private fun observeEvent(event: Event<String>) {
-        //Snackbar.make(binding.root, event.peekContent(), Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launch {
-            delay(2_000)
-            eventExample.value = Event("voila")
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        eventExample.removeObserver(eventExampleObserver)
     }
 
     private fun switchOn() {

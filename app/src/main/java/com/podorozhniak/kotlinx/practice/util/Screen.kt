@@ -8,7 +8,7 @@ import org.koin.java.KoinJavaComponent.get
 import kotlin.math.roundToInt
 
 object Screen {
-    /*updates in {@link MainActivity}*/
+    /* stores size of cutout. updates in MainActivity*/
     var screenCutout = 0
 
     fun convertDpToPx(dp: Float) : Float = dp * Resources.getSystem().displayMetrics.density
@@ -31,14 +31,8 @@ object Screen {
         return dpWidth.toInt()
     }
 
-    /*fun isTablet(context: Context? = null): Boolean {
+    fun isTablet(context: Context? = null): Boolean {
         val mContext: Context = context ?: get(Context::class.java)
-
-        val result: Boolean? =
-            com.google.android.gms.common.util.DeviceProperties.isTablet(mContext.resources)
-
-        return result ?: ((mContext.resources.configuration.screenLayout
-                and Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE)
-    }*/
+        return com.google.android.gms.common.util.DeviceProperties.isTablet(mContext.resources)
+    }
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -30,6 +31,11 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
     }
 
     private val flowViewModel: FlowViewModel by viewModels()
+
+    // observer винесений в поле класу
+    private val liveDataObserver = Observer<String> {
+        Log.d("MEDIATOR_TAG", it)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,9 +73,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
     }
 
     private fun subscribeToObservables() {
-        flowViewModel.mediatorLiveData.observe(viewLifecycleOwner) {
-            Log.d("MEDIATOR_TAG", it)
-        }
+        flowViewModel.mediatorLiveData.observe(viewLifecycleOwner, liveDataObserver)
 
         //при повороті екрану обробить значення і відобразиться тост
         flowViewModel.mappedTextLiveData.observe(viewLifecycleOwner) {

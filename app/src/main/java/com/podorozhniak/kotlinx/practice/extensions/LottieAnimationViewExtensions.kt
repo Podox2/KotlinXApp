@@ -22,12 +22,11 @@ fun LottieAnimationView.animate(animate: Boolean) {
 fun LottieAnimationView.setColor(context: Context, color: Int){
     this.addValueCallback(
         KeyPath("**"),
-        LottieProperty.COLOR_FILTER,
-        {
-            PorterDuffColorFilter(
-                ContextCompat.getColor(context, color),
-                PorterDuff.Mode.SRC_ATOP
-            )
-        }
-    )
+        LottieProperty.COLOR_FILTER
+    ) {
+        PorterDuffColorFilter(
+            ContextCompat.getColor(context, color),
+            PorterDuff.Mode.SRC_ATOP
+        )
+    }
 }
