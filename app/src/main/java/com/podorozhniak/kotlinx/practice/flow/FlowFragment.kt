@@ -5,10 +5,10 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.databinding.FragmentFlowBinding
@@ -44,11 +44,11 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
             }
             btnLiveData.setOnClickListener {
                 flowViewModel.updateLiveData()
-                flowViewModel.liveData1.value = "ld1"
+                //flowViewModel.liveDataSource1.value = "ld1"
             }
             btnEvent.setOnClickListener {
                 flowViewModel.updateEventLiveData()
-                flowViewModel.liveData2.value = "ld2"
+                //flowViewModel.liveDataSource2.value = "ld2"
             }
             btnStateFlow.setOnClickListener {
                 flowViewModel.updateStateFlow()
@@ -57,8 +57,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
                 flowViewModel.updateSharedFlow()
             }
             btnFlow.setOnClickListener {
-                subscribeToObservables()
-                //subscribeToFlow()
+                subscribeToFlow()
             }
             btnChannel.setOnClickListener {
                 flowViewModel.updateChannel()
@@ -88,27 +87,31 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
             }
         }
 
-        //потрібно юзати launchWhenStarted
-        //можна робити всякі операції з flow (н-д, map)
-        //при повороті екрану flow заемітить значення, воно обробиться і відобразиться тост
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            flowViewModel.textStateFlow
-                .map { text -> "$text was mapped (StateFlow)" }
-                .collectLatest {
-                    binding.tvStateFlow.text = it
-                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
-                }
+        // можна робити всякі операції з flow (н-д, map)
+        // при повороті екрану flow заемітить значення, воно обробиться і відобразиться тост
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                flowViewModel.textStateFlow
+                    .map { text -> "$text was mapped (StateFlow)" }
+                    .collectLatest {
+                        binding.tvStateFlow.text = it
+                        Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                    }
+            }
         }
 
-        //при повороті екрану тост не відобразиться
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            flowViewModel.textSharedFlow
-                .map { text -> "$text was mapped (SharedFlow)" }
-                .collectLatest {
-                    Log.d("Flows_TAG", "$it (SharedFlow)")
-                    binding.tvSharedFlow.text = it
-                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
-                }
+        // при повороті екрану тост не відобразиться
+        // sharedFlow не зберігає значення
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                flowViewModel.textSharedFlow
+                    .map { text -> "$text was mapped (SharedFlow)" }
+                    .collectLatest {
+                        Log.d("Flows_TAG", "$it (SharedFlow)")
+                        binding.tvSharedFlow.text = it
+                        Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+                    }
+            }
         }
 
         /*Note: In Fragments, always use viewLifecycleOwner.lifecycleScope.
@@ -124,6 +127,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
 
         // правильніший варіант - launchWhenStarted. фрагмент не обробляє дані, але флоу досі їхтворює
         // This isn’t a desired behavior because it can waste CPU resources for something that might never appear on the screen
+        // вже Deprecated
         /*viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             flowViewModel.endlessFLow().collectLatest {
                 println("FLOW: value is: $it")
@@ -149,23 +153,18 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
             }
         }
 
-        // інший правильний варіант - flowWithLifecycle
+        // інший правильний варіант - flowWithLifecycle (extension)
         /*A good recommendation is to use flowWithLifecycle when you need to collect only one flow
         and use repeatOnLifecycle when you have multiple flows*/
-        /*viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             flowViewModel.endlessFLow().flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collectLatest {
                     println("FLOW: value is: $it")
                 }
-        }*/
-
-        lifecycleScope.launchWhenStarted {
-            flowViewModel.channel.collectLatest {
-                binding.tvChannel.text = it
-                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
-            }
         }
 
+        // при повороті екрану тост не відобразиться
+        // sharedFlow не зберігає значення
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 flowViewModel.channel.collect {
@@ -175,6 +174,7 @@ class FlowFragment : BaseFragment<FragmentFlowBinding>() {
                 }
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 flowViewModel.channel.collect {

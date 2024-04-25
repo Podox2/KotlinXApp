@@ -1,13 +1,29 @@
 package com.podorozhniak.kotlinx.practice.flow
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.podorozhniak.kotlinx.practice.base.Event
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
@@ -35,46 +51,44 @@ class FlowViewModel : ViewModel() {
     // медіатор лайв дата
     // тригериться на кожне оновлення source-лайвдат
     // тобто, навіть якщо одна з лайв дат без значення - підписникам прийде оновлення
-    val liveData1 = MutableLiveData<String>()
-    val liveData2 = MutableLiveData<String>()
+    val liveDataSource1 = MutableLiveData<String>()
+    val liveDataSource2 = MutableLiveData<String>()
     val mediatorLiveData = MediatorLiveData<String>()
 
     init {
-        mediatorLiveData.addSource(liveData1) {
-            mediatorLiveData.value = "$it is from livedata1, ${liveData2.value} is from livedata2"
+        mediatorLiveData.addSource(liveDataSource1) {
+            mediatorLiveData.value = "$it is from livedata1, ${liveDataSource2.value} is from livedata2"
         }
-        mediatorLiveData.addSource(liveData2) {
-            mediatorLiveData.value = "${liveData1.value} is from livedata1, $it is from livedata2"
+        mediatorLiveData.addSource(liveDataSource2) {
+            mediatorLiveData.value = "${liveDataSource1.value} is from livedata1, $it is from livedata2"
         }
     }
 
-    //live data ~== state flow
-    //LiveData is an lifecycle aware observable data holder (means it knows the lifecycle of the activity or an fragment) use it when you play with UI elements (views).
+    // live data ~== state flow
+    // LiveData is an lifecycle aware observable data holder (means it knows the lifecycle of the activity or an fragment)
+    // use it when you play with UI elements (views).
     private val _textLiveData = MutableLiveData("Hello, world")
     val textLiveData: LiveData<String> = _textLiveData
 
-    //верхні поля можна замінити таким. в сетері (якщо він потрібний) треба змінювати тип до Mutable (53-й рядок)
-    val textLiveDataLaconic = liveData {
+    // верхні поля можна замінити таким. в сетері (якщо він потрібний) треба змінювати тип до Mutable (80-й рядок)
+    private val textLiveDataLaconic = liveData {
         emit("Hello, world")
     }
 
+    fun updateLiveData() {
+        _textLiveData.value = "Live Data!"
+        (textLiveDataLaconic as MutableLiveData).value = "Live Data!"
+    }
+
     // Kotlin functions
-    val mappedTextLiveData = _textLiveData.map { text ->
+    val mappedTextLiveData: LiveData<String> = _textLiveData.map { text ->
         "$text mapped Kotlin"
     }
 
-    val switchMappedTextLiveData = _textLiveData.switchMap { text ->
+    val switchMappedTextLiveData: LiveData<String> = _textLiveData.switchMap { text ->
         liveData {
             emit("$text switch mapped Kotlin")
         }
-    }
-
-    init {
-        viewModelScope.launch {
-            delay(2_000)
-            Log.d("COR_TEST", "coroutine")
-        }
-        Log.d("COR_TEST", "thread")
     }
 
     // old Java methods
@@ -88,9 +102,12 @@ class FlowViewModel : ViewModel() {
         }
     }*/
 
-    fun updateLiveData() {
-        _textLiveData.value = "Live Data!"
-        (textLiveDataLaconic as MutableLiveData).value = "Live Data!"
+    init {
+        viewModelScope.launch {
+            delay(2_000)
+            Log.d("COR_TEST", "coroutine")
+        }
+        Log.d("COR_TEST", "thread")
     }
 
     //event live data ~== shared flow
@@ -101,18 +118,18 @@ class FlowViewModel : ViewModel() {
         _textEventLiveData.value = Event("Event!")
     }
 
-
-    //StateFlow (hot stream) does similar things like LiveData but it is made using flow by kotlin guys and
+    // StateFlow (hot stream) does similar things like LiveData but it is made using flow by kotlin guys and
     // only difference compare to LiveData is its not lifecycle aware but this is also been solved using repeatOnLifecycle api's,
     // So whatever LiveData can do StateFlow can do much better with power of flow's api.
     // ~== live data
 
-    //state flow можна порівняти з лайв датою, але має більший функціонал (функціонал flow (map, filter і т.д.))
-    //використовується для зберігання значення або стану (state) як і лайв дата
-    //гарячий стрім
-    //має поле value, з якого можна отримати поточне значення. Тому при створенні потрібно обов'язково вказати якесь значення
-    //якщо нове значення == старому значенню (equals == true), то не буде емітитись новий івент
-    //при повороті екрану заемітить значення і воно буде оброблене, тому для тостів і т.д. не підходить
+    // StateFlow окрема реалізація SharedFlow
+    // state flow можна порівняти з лайв датою, але має більший функціонал (функціонал flow (map, filter і т.д.))
+    // використовується для зберігання значення або стану (state) як і лайв дата
+    // гарячий стрім
+    // має поле value, з якого можна отримати поточне значення. Тому при створенні потрібно обов'язково вказати якесь значення
+    // якщо нове значення == старому значенню (equals == true), то не буде емітитись новий івент
+    // при повороті екрану заемітить значення і воно буде оброблене, тому для тостів і т.д. не підходить
     // It’s recommended to change the state of the StateFlow using functions like emit
     // and tryEmit rather than using the value accessor directly (e.g. stateFlow.value = "Author: Luka" )
     private val _textStateFlow = MutableStateFlow("Hello, world")
@@ -129,48 +146,38 @@ class FlowViewModel : ViewModel() {
 
     fun updateStateFlow() {
         counter += 1
-        _textStateFlow.value = "${counter} State Flow!"
-        // via update
-        /*_textStateFlow.update {
-            "State Flow!"
-        }*/
+        _textStateFlow.update {
+            "$counter State Flow!"
+        }
     }
 
-    //~== event live data
-    //SharedFlow (hot stream) - name itself says it is shared, this flow can be shared by multiple consumers,
+    // SharedFlow (hot stream) - name itself says it is shared, this flow can be shared by multiple consumers,
     // I mean if multiple collect calls happening on the sharedflow there will be a single flow which will get shared across all the consumers unlike normal flow.
+    // ~== event live data
 
-    //SharedFlow - окрема реалізація StateFlow, не має поля value і не потрібне початкове значення
-    //не зберігає стейт
-    //для one-time івентів (тости, снекбари)
+    // SharedFlow - не має поля value і не потрібне початкове значення
+    // не зберігає стейт
+    // для one-time івентів (тости, снекбари)
     // One key aspect of a SharedFlow is that it never completes. Because it represents a
     // possibly infinite stream of new information shared across multiple subscribers
     // you have to make sure you close the Flow as soon as you don’t need it
-    //it can replay the last 1 event it processed and emitted to the rest of the subscribers
-    //private val _textSharedFlow = MutableSharedFlow<String>(replay = 1)
+    // it can replay the last 1 event it processed and emitted to the rest of the subscribers
+    // private val _textSharedFlow = MutableSharedFlow<String>(replay = 1)
     private val _textSharedFlow = MutableSharedFlow<String>()
     val textSharedFlow: SharedFlow<String> = _textSharedFlow.asSharedFlow()
 
     fun updateSharedFlow() {
         counter = counter++
         viewModelScope.launch {
-            _textSharedFlow.emit("${counter} Shared Flow!")
+            _textSharedFlow.emit("$counter Shared Flow!")
         }
     }
 
-    //Flow (cold stream) - In general think of it like a stream of data flowing in a pipe with both ends having a producer and consumer running on a coroutine.
-    //flow не зберігає стейт. при повороті екрану не буде заемічене останнє значення
-    //відробить роботу і зупиниться
-    //курутина, яка емітить значення
-    fun triggerFlow(): Flow<String> {
-        return flow {
-            repeat(5) {
-                emit("emit ${it + 1}")
-                delay(1_000)
-            }
-        }
-    }
-
+    // With the channel, each event is delivered to a single subscriber.
+    // An attempt to post an event without subscribers will suspend as soon as the channel buffer becomes full,
+    // waiting for a subscriber to appear. Posted events are never dropped by default.
+    // не зберігає стейт
+    // для one-time івентів (тости, снекбари)
     private val _channel: Channel<String> = Channel()
     val channel = _channel.receiveAsFlow()
 
@@ -178,6 +185,26 @@ class FlowViewModel : ViewModel() {
         counter = counter++
         viewModelScope.launch {
             _channel.send("$counter Channel")
+        }
+    }
+
+    fun setEffect(data: String) {
+        viewModelScope.launch {
+            _channel.send(data)
+        }
+    }
+
+    // Flow (cold stream) - In general think of it like a stream of data flowing in a pipe
+    // with both ends having a producer and consumer running on a coroutine.
+    // flow не зберігає стейт. при повороті екрану не буде заемічене останнє значення
+    // відробить роботу і зупиниться
+    // курутина, яка емітить значення
+    fun triggerFlow(): Flow<String> {
+        return flow {
+            repeat(5) {
+                emit("emit ${it + 1}")
+                delay(1_000)
+            }
         }
     }
 
@@ -189,11 +216,4 @@ class FlowViewModel : ViewModel() {
                 delay(500)
             }
         }.flowOn(Dispatchers.Default)
-    }
-
-    fun setEffect(data: String) {
-        viewModelScope.launch {
-            _channel.send(data)
-        }
-    }
-}
+    }}
