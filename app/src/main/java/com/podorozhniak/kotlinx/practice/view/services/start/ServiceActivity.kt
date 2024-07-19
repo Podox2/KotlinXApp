@@ -10,7 +10,6 @@ import com.podorozhniak.kotlinx.databinding.ActivityServiceBinding
 import com.podorozhniak.kotlinx.practice.extensions.onClick
 import com.podorozhniak.kotlinx.practice.view.services.*
 
-
 class ServiceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityServiceBinding

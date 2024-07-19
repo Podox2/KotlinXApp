@@ -6,8 +6,7 @@ package com.podorozhniak.kotlinx.theory.oop
 open class ClickableImpl : Clickable {
 
     //методи також final по дефолту
-    open fun doSomething(){}
-
+    open fun doSomething() {}
 
     //override = @Override
     //перевизначені методи по дефолту open
@@ -15,5 +14,4 @@ open class ClickableImpl : Clickable {
 
     //перевизначений метод, який має дефолтну реалізацію в інтерфейсі
     override fun defClick() = println("defClick")
-
 }

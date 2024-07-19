@@ -1,10 +1,6 @@
 package com.podorozhniak.kotlinx.theory.rx_coroutines;
 
-import com.podorozhniak.kotlinx.practice.data.remote.model.Message;
 import com.podorozhniak.kotlinx.practice.data.remote.service.MessagesService;
-
-import java.util.List;
-
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,10 +23,9 @@ public class RxJ {
 
         api = retrofit.create(MessagesService.class);
 
-
         CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(api.messagesSingle().subscribe());
-        Single<List<Message>> single = api.messagesSingle();
+
         createSingle().subscribe(new SingleObserver<String>() {
             @Override
             public void onSubscribe(Disposable d) {

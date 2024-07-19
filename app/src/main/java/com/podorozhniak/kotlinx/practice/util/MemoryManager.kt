@@ -6,7 +6,7 @@ import android.os.StatFs
 import android.util.Log
 
 object MemoryManager {
-    fun getAvailableInternalMemorySize(): String? {
+    fun getAvailableInternalMemorySize(): String {
         val path = Environment.getDataDirectory()
         val stat = StatFs(path.path)
         val blockSize = stat.blockSizeLong
@@ -14,7 +14,7 @@ object MemoryManager {
         return formatSize(availableBlocks * blockSize)
     }
 
-    fun getTotalInternalMemorySize(): String? {
+    fun getTotalInternalMemorySize(): String {
         val path = Environment.getDataDirectory()
         val stat = StatFs(path.path)
         val blockSize = stat.blockSizeLong
@@ -34,7 +34,7 @@ object MemoryManager {
             }
         }
         val resultBuffer =
-            StringBuilder(java.lang.Long.toString(size))
+            StringBuilder(size.toString())
         var commaOffset = resultBuffer.length - 3
         while (commaOffset > 0) {
             resultBuffer.insert(commaOffset, ',')

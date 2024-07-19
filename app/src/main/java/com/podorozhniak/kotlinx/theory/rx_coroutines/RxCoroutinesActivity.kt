@@ -18,8 +18,12 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.*
-import retrofit2.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -74,7 +78,7 @@ class RxCoroutinesActivity : AppCompatActivity() {
 
         val l = api.messagesSingle()
         //val s = l.subscribe()
-        single = Single.fromCallable{work2()}
+        single = Single.fromCallable{ work2() }
         val l2 = RxJ.createSingle().subscribe(object: SingleObserver<String>{
             override fun onSubscribe(d: Disposable) {
                 Log.d("RX_TAG", "onSubscribe")
@@ -140,7 +144,7 @@ class RxCoroutinesActivity : AppCompatActivity() {
             )
         }
 
-/*        api.messagesCall().enqueue(object: Callback<List<Message>>{
+       /*api.messagesCall().enqueue(object: Callback<List<Message>>{
             override fun onFailure(call: Call<List<Message>>, t: Throwable) {
                 Toast.makeText(applicationContext, t.localizedMessage, Toast.LENGTH_SHORT).show()
             }
@@ -159,7 +163,7 @@ class RxCoroutinesActivity : AppCompatActivity() {
                     if (response.isNotEmpty()) {
                         Toast.makeText(applicationContext, "Coroutine!!! Size = ${response.size}", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(applicationContext, "${response}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "$response", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: HttpException) {
                     Toast.makeText(applicationContext, e.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -168,25 +172,14 @@ class RxCoroutinesActivity : AppCompatActivity() {
                 }
             }
         }
-
-        GlobalScope.launch (Dispatchers.Main){
-            //toast("Hello it has started")
-            delay(2000)
-            //textView.text = "I have changed after 10 seconds"
-        }
     }
 
-    fun work(): Single<Int>{
+    private fun work(): Single<Int>{
         return Single.just(2)
     }
 
-    fun work2(): Int {
+    private fun work2(): Int {
         SystemClock.sleep(3000)
         return 2
-    }
-
-    suspend fun workCor(){
-        val list: Deferred<List<Message>> = api.messagesDeferred()
-        list.toString()
     }
 }
