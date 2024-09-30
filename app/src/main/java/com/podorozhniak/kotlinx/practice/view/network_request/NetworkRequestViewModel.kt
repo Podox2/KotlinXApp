@@ -1,7 +1,11 @@
 package com.podorozhniak.kotlinx.practice.view.network_request
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.podorozhniak.kotlinx.practice.base.BaseViewModel
 import com.podorozhniak.kotlinx.practice.base.ViewModelExecutor
 import com.podorozhniak.kotlinx.practice.data.remote.model.Message
@@ -12,16 +16,22 @@ import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.asFailure
 import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.asSuccess
 import com.podorozhniak.kotlinx.practice.util.retrofit_call_adapter.isSuccess
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.koin.android.annotation.KoinViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
+@KoinViewModel
 class NetworkRequestViewModel(
     private val messagesRepo: MessagesRepo,
     viewModelExecutor: ViewModelExecutor
