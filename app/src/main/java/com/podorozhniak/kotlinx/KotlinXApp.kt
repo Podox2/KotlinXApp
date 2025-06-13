@@ -29,7 +29,7 @@ class KotlinXApp : Application() {
         )
         provideMessageApi()
         startKoin {
-            androidContext(applicationContext)
+            androidContext(this@KotlinXApp)
             modules(listOf(retrofitModule, dataSourceModule, repositoryModule, viewModelsModule))
         }
     }

@@ -10,28 +10,23 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.RemoteMessage
 import com.podorozhniak.kotlinx.R
 import com.podorozhniak.kotlinx.practice.view.MainActivity
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
 object NotificationUtil {
     private const val CHANNEL_ID = "kotlin_x_channel_id"
     private const val CHANNEL_NAME = "KotlinX"
     private const val REQUEST_CODE = 113
 
-    val context by KoinJavaComponent.inject(Context::class.java)
-    private val notificationManager: NotificationManager
+    private val context: Context by inject(Context::class.java)
+    private val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     init {
-        notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        notificationManager.createNotificationChannel(channel)
     }
 
     fun showNotification(remoteMessage: RemoteMessage) {

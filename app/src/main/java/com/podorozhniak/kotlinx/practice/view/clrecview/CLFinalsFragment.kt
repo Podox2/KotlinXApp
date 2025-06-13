@@ -83,6 +83,8 @@ class CLFinalsFragment : BaseFragment<FragmentClFinalsBinding>(){
         matches.add(Match("Man City 0:1 Chelsea", "2020/21"))
         matches.add(Match("Liverpool 0:1 Real Madrid", "2021/22"))
         matches.add(Match("Man City 1:0 Inter", "2022/23"))
+        matches.add(Match("Borussia Dortmund 0:2 Real Madrid", "2023/24"))
+        matches.add(Match("Paris Saint-Germain 5:0 Inter", "2024/25"))
         matches.reverse()
     }
 
