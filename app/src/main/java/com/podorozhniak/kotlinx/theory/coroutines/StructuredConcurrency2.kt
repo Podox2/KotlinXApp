@@ -9,10 +9,10 @@ import kotlinx.coroutines.*
 // обробляємо креші (try/catch або coroutine exception handler) - аплікуха не крешиться, джоби фейляться
 // обробляємо креші і використовуємо supervisor scope - аплікуха не крешиться, джоби не фейляться
 fun main(): Unit = runBlocking {
-    exceptionLogicInCoroutines()
+    //exceptionLogicInCoroutines()
     // coroutine exception handler + supervisor
     //simpleApproach()
-    //handlerApproach()
+    handlerApproach()
     //supervisorAndHandlerApproach()
 }
 
@@ -24,7 +24,7 @@ suspend fun exceptionLogicInCoroutines() {
             try {
                 throw Exception()
             } catch (e: Exception) {
-                println("e caught")
+                println("e caught 1")
             }
         }
 
@@ -38,7 +38,7 @@ suspend fun exceptionLogicInCoroutines() {
             // ось цей ексепшн буде оброблений
             throw Exception()
         } catch (e: Exception) {
-            println("e caught")
+            println("e caught 2")
         }
 
         ////////////////////////////////////////////////
@@ -87,7 +87,7 @@ suspend fun simpleApproach() {
 // з coroutine exception handler
 // аплікуха не крешнеться
 // друга дочірня і батьківська джоби зафейляться
-// !! в консольній аплікусі воно працює чомусь не так (взагалі нічого не виводиться в консолі). це зв'язано зі скоупами скоріш за все
+// !! в консольній аплікусі воно працює тільки з join() (без взагалі нічого не виводиться в консолі). це зв'язано зі скоупами
 // якщо, наприклад, в фрагменті (див. CoroutineFragment.handlerApproach()) написати цей код
 // без withContext (тому що не має контекста, який можна переключити) все працює правильно
 suspend fun handlerApproach() {
@@ -109,6 +109,7 @@ suspend fun handlerApproach() {
                 println("nice")
             }
         }
+        parentJobWithExcHandler.join()
     }
 }
 
@@ -133,7 +134,7 @@ suspend fun supervisorAndHandlerApproach() {
             if (throwable != null) {
                 println("parentJob received throwable")
             } else {
-                println("nice")
+                println("parent job is finished")
             }
         }
     }

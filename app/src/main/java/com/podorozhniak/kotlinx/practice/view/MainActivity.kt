@@ -6,12 +6,16 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -52,9 +56,23 @@ class MainActivity : AppCompatActivity(), WorkManagerBroadcastReceiver.WorkManag
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //enableEdgeToEdge()
         setTheme(R.style.Theme_KotlinX)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val root = findViewById<ConstraintLayout>(R.id.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(root) { view, _ ->
+            view.setPadding(0, 0, 0, 0)
+
+            // Also reset margins if any
+            val params = view.layoutParams as? ViewGroup.MarginLayoutParams
+            params?.setMargins(0, 0, 0, 0)
+            view.layoutParams = params
+
+            WindowInsetsCompat.CONSUMED
+        }
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.disableTooltip()
@@ -79,59 +97,59 @@ class MainActivity : AppCompatActivity(), WorkManagerBroadcastReceiver.WorkManag
         setupBottomNavigationBar()
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val cutout = window.decorView.rootWindowInsets.displayCutout
-            if (cutout != null) {
-                try {
-                    val boundingRects = cutout.boundingRects
-                    Screen.screenCutout = boundingRects[0].height()
-                } catch (e: Exception) {
-                }
-            }
-        } else {
-            val cutout =
-                WindowInsetsCompat.toWindowInsetsCompat(window.decorView.rootWindowInsets).displayCutout
-            if (cutout != null) {
-                try {
-                    val boundingRects = cutout.boundingRects
-                    Screen.screenCutout = boundingRects[0].height()
-                } catch (e: Exception) {
-                }
-            }
-        }
-    }
+//    override fun onAttachedToWindow() {
+//        super.onAttachedToWindow()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            val cutout = window.decorView.rootWindowInsets.displayCutout
+//            if (cutout != null) {
+//                try {
+//                    val boundingRects = cutout.boundingRects
+//                    Screen.screenCutout = boundingRects[0].height()
+//                } catch (e: Exception) {
+//                }
+//            }
+//        } else {
+//            val cutout =
+//                WindowInsetsCompat.toWindowInsetsCompat(window.decorView.rootWindowInsets).displayCutout
+//            if (cutout != null) {
+//                try {
+//                    val boundingRects = cutout.boundingRects
+//                    Screen.screenCutout = boundingRects[0].height()
+//                } catch (e: Exception) {
+//                }
+//            }
+//        }
+//    }
 
-    fun hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                // Set the content to appear under the system bars so that the
-                // content doesn't resize when the system bars hide and show.
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                // Hide the nav bar and status bar
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN)
-    }
+//    fun hideSystemUI() {
+//        // Enables regular immersive mode.
+//        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+//        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//                // Set the content to appear under the system bars so that the
+//                // content doesn't resize when the system bars hide and show.
+//                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                // Hide the nav bar and status bar
+//                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+//    }
 
-    fun changeNavBarColor() {
-        val window: Window = window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.dark)
-    }
+//    fun changeNavBarColor() {
+//        val window: Window = window
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//        window.navigationBarColor = ContextCompat.getColor(this, R.color.dark)
+//    }
 
     override fun onResume() {
         super.onResume()
         workManagerReceiver.broadcastHandler = this
         //реєструємо якими ресіверами обробляти які інтенти
-        registerReceiver(
-            workManagerReceiver,
-            IntentFilter(WORKER_INTENT)
-        )
+//        registerReceiver(
+//            workManagerReceiver,
+//            IntentFilter(WORKER_INTENT)
+//        )
     }
 
     override fun handleBroadcast(response: String) {

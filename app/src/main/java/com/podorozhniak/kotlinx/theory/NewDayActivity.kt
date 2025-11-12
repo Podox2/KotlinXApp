@@ -166,8 +166,6 @@ class NewDayActivity : AppCompatActivity() {
             print(fizzBuzz(i))
         }
 
-        //обробка помилок в цілому як у Java
-
         //is аналог instanceof в Java
         //автоматичне приведення типу
         //після перевірки тип не потрібно переводити в інший
