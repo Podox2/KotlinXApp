@@ -128,9 +128,11 @@ class MainActivity : AppCompatActivity(), WorkManagerBroadcastReceiver.WorkManag
         super.onResume()
         workManagerReceiver.broadcastHandler = this
         //реєструємо якими ресіверами обробляти які інтенти
-        registerReceiver(
+        ContextCompat.registerReceiver(
+            this,
             workManagerReceiver,
-            IntentFilter(WORKER_INTENT)
+            IntentFilter(WORKER_INTENT),
+            ContextCompat.RECEIVER_NOT_EXPORTED
         )
     }
 
