@@ -173,6 +173,7 @@ class FlowViewModel : ViewModel() {
         }
     }
 
+    // hot
     // With the channel, each event is delivered to a single subscriber.
     // An attempt to post an event without subscribers will suspend as soon as the channel buffer becomes full,
     // waiting for a subscriber to appear. Posted events are never dropped by default.

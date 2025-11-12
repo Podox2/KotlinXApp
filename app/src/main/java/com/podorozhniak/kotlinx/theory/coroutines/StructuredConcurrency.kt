@@ -19,15 +19,15 @@ val childHandler = CoroutineExceptionHandler { coroutineContext, exception ->
 }
 
 fun main(): Unit = runBlocking {
-    secondJobException()
+    //secondJobException()
     //secondJobCancellation()
-    //secondJobExceptionSupervisor()
+    secondJobExceptionSupervisor()
 }
 
 // без супервайзера і ексепшн хендлера по дефолту, якщо в якійсь джобі викидується ексепшн, то він прокидується і в батьківську джобу
 // а з неї і в решту активних дочірніх джоб. тобто всі ці джоби фейляться
 
-// викидуємо ексепшн в другій джобі
+// викидуємо ексепшн в jobB
 // jobA встигне виконатись
 // jobB спеціально фейлимо
 // ексепшн прокинеться в батьківську джобу - батьківська джоба зафейлиться
@@ -49,6 +49,7 @@ suspend fun secondJobException() {
             }
 
             val jobB = launch {
+                // throws exception
                 val resultB = getResultOrException(2)
                 println("resultB - $resultB")
             }
@@ -82,17 +83,9 @@ suspend fun secondJobException() {
     }
 }
 
-suspend fun getResultOrException(number: Int): Int {
-    delay(number * 500L)
-    // викидуємо ексепшн для другої джоби
-    if (number == 2) {
-        throw Exception("Error getting result for number $number")
-    }
-    return number * 2
-}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // якщо якась джоба кенселиться (не фейлиться), то це ніяк не впливає на батьківську або дочірні джоби
-// CancellationException'и джоби хендлять самі під капотом, тому
+// CancellationException'и джоби хендляться самі під капотом, тому
 
 // кенсилемо (або викидуємо CancellationException) другу джобу
 suspend fun secondJobCancellation() {
@@ -149,34 +142,9 @@ suspend fun secondJobCancellation() {
     }
 }
 
-// відмінити джобу можна типу через виклик cancel()
-// але так джоба не відміниться просто під капотом викинеться CancellationException()
-// документація каже не юзати цей метод
-@OptIn(InternalCoroutinesApi::class)
-suspend fun getResultOrCancel(number: Int): Int {
-    delay(number * 500L)
-    if (number == 2) {
-        //не робить нічого! все спрацює успішно
-        cancel(CancellationException("Error getting result for number $number"))
-    }
-    return number * 2
-}
-
-// спеціальний вид ексепшенів - CancellationException
-// не впливає на інші дочірні і батьківську джобу
-// виклик cancel() робить теж саме
-suspend fun getResultOrCancellationException(number: Int): Int {
-    delay(number * 500L)
-    // викидуємо ексепшн для другої джоби
-    if (number == 2) {
-        throw CancellationException("Error getting result for number $number")
-    }
-    return number * 2
-}
 //////////////////////////////////////////////////////////////////////////////////////
 // з супервайзером, якщо в якійсь джобі викидується ексепшн, то він не вплине на інші джоби
 // потрібно обов'язково використовувати з CoroutineExceptionHandler'ом
-
 suspend fun secondJobExceptionSupervisor() {
     withContext(Dispatchers.IO) {
         // використання хендлера має фіксити креш апплікухи. але консольна програма чомусь все рівно крешиться (13.02.23 не крешиться)
@@ -231,4 +199,37 @@ suspend fun secondJobExceptionSupervisor() {
             }
         }
     }
+}
+
+suspend fun getResultOrException(number: Int): Int {
+    delay(number * 500L)
+    // викидуємо ексепшн для другої джоби
+    if (number == 2) {
+        throw Exception("Error getting result for number $number")
+    }
+    return number * 2
+}
+
+// спеціальний вид ексепшенів - CancellationException
+// не впливає на інші дочірні і батьківську джобу
+// виклик cancel() робить теж саме
+suspend fun getResultOrCancellationException(number: Int): Int {
+    delay(number * 500L)
+    // викидуємо ексепшн для другої джоби
+    if (number == 2) {
+        throw CancellationException("Error getting result for number $number")
+    }
+    return number * 2
+}
+
+// відмінити джобу можна типу через виклик cancel()
+// але так джоба не відміниться просто під капотом викинеться CancellationException()
+// документація каже не юзати цей метод
+suspend fun getResultOrCancel(number: Int): Int {
+    delay(number * 500L)
+    if (number == 2) {
+        //не робить нічого! все спрацює успішно
+        cancel(CancellationException("Error getting result for number $number"))
+    }
+    return number * 2
 }

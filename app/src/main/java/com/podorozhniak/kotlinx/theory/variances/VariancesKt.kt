@@ -62,3 +62,32 @@ class VariancesKt {
         list.add(GrandChild())
     }
 }
+
+class CovTest {
+    open class Parentt(open val name: String)
+    class Childd(name: String) : Parentt(name)
+
+    fun main() {
+        val parents = mutableListOf<Parentt>()
+        val children = mutableListOf<Childd>()
+
+        checkParentList(parents)
+        checkParentList(children)
+        checkParentList2(parents)
+        checkParentList2(children)
+
+        checkChildList(parents)
+        checkChildList(children)
+
+        //checkChildList2(parents)
+        checkChildList2(children)
+    }
+
+    fun checkParentList(parents: MutableList<out Parentt>) {}
+    fun checkParentList2(parents: List<Parentt>) {}
+
+
+    fun checkChildList(parents: MutableList<in Childd>) {}
+    fun checkChildList2(parents: List<Childd>) {}
+
+}

@@ -36,7 +36,7 @@ suspend fun getUserFirstNamesCorrect(userIds: List<String>): List<String> {
     val firstNames = mutableListOf<Deferred<String>>()
     coroutineScope {
         for (id in userIds) {
-            val firstName = CoroutineScope(Dispatchers.Default).async {
+            val firstName = async {
                 getFirstName(id)
             }
             println(firstName) // виведе Deferred об'єкт
@@ -44,6 +44,19 @@ suspend fun getUserFirstNamesCorrect(userIds: List<String>): List<String> {
         }
     }
     return firstNames.awaitAll()
+}
+
+suspend fun test(userIds: List<String>): List<String> {
+    val defList = mutableListOf<Deferred<String>>()
+    coroutineScope {
+        for (id in userIds) {
+            val defString = async {
+                getFirstName(id)
+            }
+            defList.add(defString)
+        }
+    }
+    return defList.awaitAll()
 }
 
 suspend fun getFirstName(userId: String): String {
