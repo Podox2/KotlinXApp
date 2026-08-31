@@ -1,6 +1,5 @@
 package com.podorozhniak.kotlinx.practice.view
 
-import android.app.Activity
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
@@ -28,6 +27,7 @@ import com.podorozhniak.kotlinx.practice.util.Screen
 import com.podorozhniak.kotlinx.practice.view.fragment_result_api.SecondActivity
 import com.podorozhniak.kotlinx.practice.view.services.bind.BindServiceActivity
 import com.podorozhniak.kotlinx.practice.view.services.start.ServiceActivity
+import com.podorozhniak.kotlinx.practice.view.timer.TimerActivity
 import com.podorozhniak.kotlinx.practice.workmanager.WorkManagerConstants.WORKER_INTENT
 import com.podorozhniak.kotlinx.theory.reified.startActivity
 import kotlinx.coroutines.flow.collectLatest
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), WorkManagerBroadcastReceiver.WorkManag
     private val workManagerReceiver = WorkManagerBroadcastReceiver()
 
     private var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == RESULT_OK) {
             // There are no request codes
             val data: Intent? = result.data
             val dataValue = data?.getStringExtra("key")
@@ -183,6 +183,10 @@ class MainActivity : AppCompatActivity(), WorkManagerBroadcastReceiver.WorkManag
         //return currentNavController?.value?.navigateUp() ?: false
         return Navigation.findNavController(this, R.id.main_nav_host_container).navigateUp()
                 || super.onSupportNavigateUp()
+    }
+
+    fun openTimerActivity() {
+        this.startActivity<TimerActivity>()
     }
 
     fun openSecondActivity() {

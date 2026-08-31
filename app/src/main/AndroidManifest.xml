@@ -39,6 +39,7 @@
         <activity android:name=".practice.view.fragment_result_api.SecondActivity" />
         <activity android:name=".practice.view.services.start.ServiceActivity" />
         <activity android:name=".practice.view.services.bind.BindServiceActivity" />
+        <activity android:name=".practice.view.timer.TimerActivity" />
 
         <service
             android:name=".practice.view.services.start.MyService"

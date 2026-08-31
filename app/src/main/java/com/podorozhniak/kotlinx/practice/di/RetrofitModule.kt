@@ -25,6 +25,9 @@ private const val CACHE_SIZE = 5L * 1024 * 1024 // 5 Mb
 private const val PRAGMA_HEADER = "pragma"
 private const val CACHE_CONTROL_HEADER = "cache-control"
 
+/*retrofit надстройка над okhttp, дозволяє додавати конвертери і т.п.
+okhttp бібліотека, яка робить за нас кучу всяких двіжух для роботи з мережею
+okhttp logging interceptor надає нам логи по запитам в мережу*/
 val retrofitModule = module {
     single { provideGson() }
     single { provideCallFactory() }

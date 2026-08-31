@@ -64,6 +64,13 @@
                 app:backgroundTint="@color/blue" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timer"
+                app:backgroundTint="@color/blue" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cl_finals"
                 android:theme="@style/ButtonExample.Theme"
                 android:layout_width="wrap_content"

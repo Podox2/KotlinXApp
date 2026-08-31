@@ -78,6 +78,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 openArScene()
             }
             //navigation
+            btnTimer.onClick {
+                (requireActivity() as MainActivity).openTimerActivity()
+            }
             btnClFinals.onClick {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCLFinalsFragment())
             }
