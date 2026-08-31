@@ -76,9 +76,7 @@ class RxCoroutinesActivity : AppCompatActivity() {
                     }
                 }))
 
-        val l = api.messagesSingle()
-        //val s = l.subscribe()
-        single = Single.fromCallable{ work2() }
+        single = Single.fromCallable { work2() }
         val l2 = RxJ.createSingle().subscribe(object: SingleObserver<String>{
             override fun onSubscribe(d: Disposable) {
                 Log.d("RX_TAG", "onSubscribe")
