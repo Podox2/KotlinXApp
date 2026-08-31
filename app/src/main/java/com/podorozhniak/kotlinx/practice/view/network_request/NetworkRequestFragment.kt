@@ -9,10 +9,12 @@ import com.podorozhniak.kotlinx.practice.base.BaseFragment
 import com.podorozhniak.kotlinx.practice.extensions.onClick
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.getValue
 
 @ExperimentalCoroutinesApi
 class NetworkRequestFragment : BaseFragment<FragmentNetworkRequestBinding>() {
-    private lateinit var viewModel: NetworkRequestViewModel
+    private val viewModel: NetworkRequestViewModel by viewModel()
 
     override val layoutId: Int
         get() = R.layout.fragment_network_request
@@ -27,9 +29,6 @@ class NetworkRequestFragment : BaseFragment<FragmentNetworkRequestBinding>() {
             }
             btnDoRequestExt.onClick {
                 viewModel.getInfoFromNetworkCoroutineExtension()
-            }
-            btnDoRequestExecutor.onClick {
-                viewModel.getInfoFromNetworkViewModelExecutor()
             }
             btnDoRequestAdapter.onClick {
                 viewModel.getInfoFromNetworkCallAdapter()

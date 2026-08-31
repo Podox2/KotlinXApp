@@ -173,11 +173,12 @@ class FlowViewModel : ViewModel() {
         }
     }
 
-    // With the channel, each event is delivered to a single subscriber.
+    // With the channel (hot flow), each event is delivered to a SINGLE subscriber.
     // An attempt to post an event without subscribers will suspend as soon as the channel buffer becomes full,
     // waiting for a subscriber to appear. Posted events are never dropped by default.
     // не зберігає стейт
     // для one-time івентів (тости, снекбари)
+    // !!! якщо буде 2 і більше підписника, повідомлення отримає тільки якийсь один
     private val _channel: Channel<String> = Channel()
     val channel = _channel.receiveAsFlow()
 

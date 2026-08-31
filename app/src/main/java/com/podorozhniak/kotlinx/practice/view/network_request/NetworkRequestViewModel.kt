@@ -3,11 +3,10 @@ package com.podorozhniak.kotlinx.practice.view.network_request
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.podorozhniak.kotlinx.practice.base.BaseViewModel
-import com.podorozhniak.kotlinx.practice.base.ViewModelExecutor
 import com.podorozhniak.kotlinx.practice.data.remote.model.Message
 import com.podorozhniak.kotlinx.practice.data.remote.repository.MessagesRepo
 import com.podorozhniak.kotlinx.practice.extensions.coroutines.launchWithHandlingIO
@@ -25,17 +24,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.annotation.KoinViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-@KoinViewModel
 class NetworkRequestViewModel(
-    private val messagesRepo: MessagesRepo,
-    viewModelExecutor: ViewModelExecutor
-) : BaseViewModel(viewModelExecutor) {
+    private val messagesRepo: MessagesRepo
+) : ViewModel() {
     private val refreshIntervalMs: Long = 2000
     var periodicRequestsCounter = 0
     var requestsCounter = 0
@@ -104,22 +100,6 @@ class NetworkRequestViewModel(
                 _infoFromRequest.postValue(it.localizedMessage)
             }
         )
-    }
-
-    fun getInfoFromNetworkViewModelExecutor() {
-        viewModelScope.launch {
-            runSafe(
-                operation = {
-                    messagesRepo.messages().size.toString()
-                },
-                onSuccess = {
-                    _infoFromRequest.postValue("get $it by ViewModelExecutor")
-                },
-                onError = {
-                    _infoFromRequest.postValue(it.localizedMessage)
-                }
-            )
-        }
     }
 
     fun getInfoFromNetworkCallAdapter() {
