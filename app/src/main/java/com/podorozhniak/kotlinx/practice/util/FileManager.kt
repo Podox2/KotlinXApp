@@ -32,7 +32,7 @@ object FileManager {
     }
 
     private fun createFile(baseFolder: File, name: String) =
-        File(baseFolder, "${name.toLowerCase().capitalize()}_${Random.nextInt(0, 999)}.png")
+        File(baseFolder, "${name.lowercase().capitalize()}_${Random.nextInt(0, 999)}.png")
 
     fun saveToStorageAsync(
         context: Context, stateImage: Bitmap, imageFileName: String

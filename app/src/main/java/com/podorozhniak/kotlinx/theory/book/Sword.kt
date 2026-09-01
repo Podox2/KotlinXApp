@@ -7,7 +7,7 @@ class Sword(_name: String) {
             return "The Legendary $field"
         }
         set(value) {
-            field = value.toLowerCase().reversed().capitalize()
+            field = value.lowercase().reversed().capitalize()
         }
 
     init {
