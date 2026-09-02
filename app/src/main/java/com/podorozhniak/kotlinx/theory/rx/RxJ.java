@@ -1,4 +1,4 @@
-package com.podorozhniak.kotlinx.theory.rx_coroutines;
+package com.podorozhniak.kotlinx.theory.rx;
 
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
