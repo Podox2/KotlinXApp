@@ -31,6 +31,7 @@ class LambdasAnons {
     fun test() {
         printLengthLambda("qweqe")
         printLengthLambdaReceiver("wqe")
+        "qwe".printLengthLambdaReceiver()
     }
 
     // звичайна функція
